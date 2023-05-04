@@ -1,0 +1,1 @@
+function showHint(e){const t=document.createElement("span");t.classList.add("hint__text"),e.center&&t.classList.add("hint__text--center"),t.textContent=e.message,t.style.display="block",e.container.appendChild(t),setTimeout((()=>e.container.removeChild(t)),e.delay||1e3)}

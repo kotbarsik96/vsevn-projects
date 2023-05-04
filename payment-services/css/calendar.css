@@ -1,0 +1,244 @@
+.calendar-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar-container .wrapper {
+    min-width: 235px;
+    border: 1px solid #E3DCB2;
+    padding: 5px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.calendar-container .wrapper:first-child {
+    border-radius: 5px 0 0 5px;
+}
+
+.calendar-container .wrapper:last-child {
+    border-left: 0;
+    border-radius: 0 5px 5px 0;
+}
+
+.calendar-open-btn--double, .date-input-field {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: calc(100% - 40px);
+    padding: 0 10px;
+}
+
+.cross {
+    display: none;
+    width: 40px;
+    height: 40px;
+    background-color: #fcf8df;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--normal);
+    position: relative;
+    margin-left: 5px;
+}
+
+.cross:hover {
+    background-color: #fede31;
+}
+
+.hint__text {
+    font-family: 'ZabraProRegular', serif;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -10;
+    visibility: hidden;
+    opacity: 0;
+    color: #665800;
+    font-size: 20px;
+    white-space: nowrap;
+    background-color: #fff9e0;
+    padding: 10px 25px 14px 25px;
+    border: 2px solid #ffe856;
+    transition: var(--normal);
+}
+
+.cross:hover .hint__text {
+    z-index: 100;
+    opacity: 1;
+    visibility: visible;
+}
+
+.hint__text:before {
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    position: absolute;
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    top: 0;
+    background-color: #fff9e0;
+    border: 2px solid #ffe856;
+    border-right: none;
+    border-bottom: none;
+}
+
+.day, .month {
+    width: 30px;
+}
+
+.placeholder {
+    padding-bottom: 2px;
+    color: #665800;
+}
+
+.date-input-field input {
+    text-align: center;
+    color: #7a7a7a;
+    font: 400 19px ZabraProTest3-Regular, sans-serif;
+    margin: 0 3px;
+}
+
+.date-input-field input::placeholder {
+    font: 400 18px ZabraProTest3-Regular, sans-serif;
+}
+
+.year {
+    width: 40px;
+}
+
+.calendar-wrapper {
+    z-index: 60;
+    position: absolute;
+    top: 80px;
+    right: 0;
+    border: 1px solid #d3c68c;
+    border-bottom: none;
+}
+
+.calendar-container .row {
+    display: flex;
+}
+
+.calendar {
+    color: #665800;
+    font-size: 18px;
+    background-color: var(--clr-semi-white);
+    width: 340px;
+}
+
+.calendar + .calendar {
+    border-left: 1px solid #d3c68c;
+}
+
+.calendar select {
+    color: inherit;
+    background-color: transparent;
+}
+
+.calendar .icon {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calendar__year, .calendar__month {
+    padding-block: 5px;
+    font-size: 19px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendar__weekdays, .calendar__days {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+}
+
+.calendar__year, .calendar__month, .calendar__weekdays {
+    border-bottom: 1px solid #d3c68c;
+}
+
+.calendar__weekdays > *, .calendar__days > * {
+    display: grid;
+    place-content: center;
+    padding-block: 5px;
+}
+
+.calendar__days > * {
+    border-right: 1px solid #d3c68c;
+    border-bottom: 1px solid #d3c68c;
+}
+
+.calendar__days > *:nth-child(7n) {
+    border-right: none;
+}
+
+.calendar__days > .available {
+    background-color: var(--clr-light);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.calendar__days > .selected {
+    background-color: var(--clr-yellow);
+}
+
+@media (hover: hover) {
+    .calendar__days > .available:hover {
+        background-color: #cfcfcf;
+    }
+    .calendar__days > .selected:hover {
+        background-color: var(--clr-yellow);
+    }
+}
+
+.calendar__submit-btn {
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    padding-block: 5px;
+    background-color: red;
+    color: #fff !important;
+}
+
+.wrapper[data-empty='false'] .cross, .wrapper[data-empty='false'] .date-value {
+    display: flex;
+}
+
+.wrapper[data-empty='false'] .calendar-open-btn--double, .wrapper[data-empty='false'] .date-input-field input {
+    background-color: #fcf8df;
+}
+
+.wrapper[data-empty='false'] .date-input-field {
+    display: none;
+}
+
+.icon-cross-svgrepo-com:before {
+    content: "\e962";
+    color: red;
+}
+
+.calendar-expanded .date-value, .date-input-field, .advertisement-title-top, .advertisement-title-mark {
+    display: none;
+}
+
+.date-value {
+    display: flex;
+    margin-left: 10px;
+    font-size: 19px;
+}
+
+.calendar-expanded .date-input-field {
+    display: flex;
+}
+
+.calendar__year-next, .calendar__month-next, .calendar__year-prev, .calendar__month-prev {
+    font-size: 10px;
+    width: 18px;
+}

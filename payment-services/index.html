@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+  <meta charset="UTF-8"/>
+
+  <title>Кошелек</title>
+
+  <!-- seo -->
+  <meta name="keywords" content=""/>
+  <meta name="description" content=""/>
+
+  <!-- document Favicon in browser tabs -->
+  <link rel="shortcut icon" href="#" type="image/x-icon">
+
+  <!-- additional approach to add favicon -->
+  <link rel="apple-touch-icon" href="#">
+  <link rel="apple-touch-icon" sizes="16x16" href="#">
+  <link rel="apple-touch-icon" sizes="32x32" href="#">
+  <link rel="apple-touch-icon" sizes="180x180" href="#">
+
+  <!-- for mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- use latest version of IE -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- additional styles -->
+
+  <link href="css/icons.css" rel="stylesheet" type="text/css"/>
+  <link href="css/main.css" rel="stylesheet" type="text/css"/>
+  <link href="css/calendar.css" rel="stylesheet" type="text/css"/>
+  <link href="css/style.css" rel="stylesheet" type="text/css"/>
+
+  <script defer src="js/calendar.js"></script>
+  <script defer src="js/main-cal.js"></script>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top"></div>
+  <div class="header-bottom"></div>
+</header>
+
+<main class="content">
+  <h2 class="title-h2">Кошелек, история операций, бонусы</h2>
+
+  <!-- breadcrumbs -->
+  <ul class="breadcrumbs">
+    <li class="breadcrumbs__item">
+      <a href="#" class="breadcrumbs__link">Главная/</a>
+    </li>
+    <li class="breadcrumbs__item">
+      <a class="breadcrumbs__link">Кошелек, история операций, бонусы</a>
+    </li>
+  </ul>
+  <!-- breadcrumbs -->
+
+  <div class="content-wrapper">
+    <div class="content-wrap">
+      <!-- panel-nav -->
+      <ul class="panel-nav">
+        <li class="panel-nav__item current">
+          <a>
+            <h5 class="panel-nav__title">Кошелек, история операций, бонусы</h5>
+            <p class="panel-nav__text">Отчет о движении денежных средств и иных финансовых активов в том числе
+              движение подарочных сертификатов</p>
+          </a>
+          <span class="current-page-flag">активная вкладка</span>
+        </li>
+        <li class="panel-nav__item">
+          <a href="payment-services.html">
+            <h5 class="panel-nav__title">Платные услуги по продвижению</h5>
+            <p class="panel-nav__text">C услугами продвижения ваши объявления всегда будут на виду у потенциальных
+              соискателей и работодателей</p>
+          </a>
+        </li>
+        <li class="panel-nav__item">
+          <a href="contacts.html">
+            <h5 class="panel-nav__title">Доступ к контактам резюме</h5>
+            <p class="panel-nav__text">Платное предоставление доступа к контактам соискателей в базе резюме</p>
+          </a>
+        </li>
+      </ul>
+      <!-- panel-nav -->
+
+      <p class="content-text">Банковский перевод может прийти быстрее - за день вместо трех, если вы заполнит все
+        поля правильно. <br/><a href="#">Как это сделать</a></p>
+      <h3 class="content__title">Наличие бонусов и денежных средств на лицевом счете</h3>
+
+      <div class="wallet-info">
+
+        <div class="wallet-info-wrap">
+          <div class="wallet-info-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" xml:space="preserve">
+            <path d="M110,0C49.346,0,0,49.346,0,110s49.346,110,110,110s110-49.346,110-110S170.654,0,110,0z M110,210	c-55.141,0-100-44.86-100-100S54.859,10,110,10s100,44.86,100,100S165.141,210,110,210z"/>
+              <path d="M110,19.5c-49.902,0-90.5,40.598-90.5,90.5s40.598,90.5,90.5,90.5s90.5-40.598,90.5-90.5S159.902,19.5,110,19.5z M110,197.5c-48.248,0-87.5-39.252-87.5-87.5S61.752,22.5,110,22.5s87.5,39.252,87.5,87.5S158.248,197.5,110,197.5z"/>
+              <polygon points="103.382,133.87 93.382,133.87 93.382,144.887 84.632,144.887 84.632,154.887 112.132,154.887 112.132,144.887 103.382,144.887"/>
+              <path d="M123.062,57.773H83.077v12h10.305v33.876H83.077v12h10.305v2.22h10v-2.22h19.68c15.957,0,28.938-12.981,28.938-28.938S139.019,57.773,123.062,57.773z M123.062,103.65h-19.68V69.773h19.68c9.34,0,16.938,7.599,16.938,16.938	S132.401,103.65,123.062,103.65z"/>
+              <rect x="83.077" y="119.87" width="53.989" height="12"/>
+          </svg>
+            <span class="wallet-info-box__value">0 ₽</span>
+            <span class="popup-message">На Вашем бонусном счете есть 0р</span>
+          </div>
+          <div class="wallet-info-box">
+            <svg xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M23.880,11.179 L22.728,11.179 L22.728,5.883 C22.728,4.613 21.695,3.580 20.425,3.580 L18.865,3.580 L17.269,0.710 C17.026,0.272 16.563,-0.001 16.061,-0.001 C15.827,-0.001 15.595,0.060 15.390,0.173 L9.265,3.580 L2.423,3.580 C1.153,3.580 0.120,4.613 0.120,5.882 L0.120,21.696 C0.120,22.966 1.153,23.999 2.423,23.999 L20.425,23.999 C21.695,23.999 22.728,22.966 22.728,21.696 L22.728,17.052 L23.880,17.052 L23.880,11.179 L23.880,11.179 ZM20.425,4.501 C21.134,4.501 21.714,5.040 21.792,5.729 L20.061,5.729 L19.378,4.501 L20.425,4.501 ZM15.838,0.979 C16.054,0.858 16.345,0.942 16.464,1.157 L19.007,5.729 L7.295,5.729 L15.838,0.979 ZM21.807,21.696 C21.807,22.458 21.187,23.078 20.425,23.078 L2.423,23.078 C1.661,23.078 1.041,22.458 1.041,21.696 L1.041,5.883 C1.041,5.121 1.661,4.501 2.423,4.501 L7.608,4.501 L5.399,5.729 L2.711,5.729 C2.456,5.729 2.250,5.936 2.250,6.190 C2.250,6.444 2.456,6.650 2.711,6.650 L3.742,6.650 L20.573,6.650 L21.807,6.650 L21.807,11.180 L18.438,11.180 C16.874,11.180 15.601,12.453 15.601,14.017 L15.601,14.215 C15.601,15.780 16.874,17.053 18.438,17.053 L21.807,17.053 L21.807,21.696 L21.807,21.696 ZM22.958,16.131 L22.728,16.131 L18.438,16.131 C17.382,16.131 16.522,15.271 16.522,14.215 L16.522,14.017 C16.522,12.960 17.382,12.101 18.438,12.101 L22.728,12.101 L22.958,12.101 L22.958,16.131 ZM19.849,14.154 C19.849,14.716 19.394,15.171 18.832,15.171 C18.270,15.171 17.815,14.716 17.815,14.154 C17.815,13.592 18.270,13.137 18.832,13.137 C19.394,13.137 19.849,13.592 19.849,14.154 Z"></path>
+            </svg>
+            <span class="wallet-info-box__value">12573 ₽</span>
+            <span class="popup-message">На Вашем кошельке есть 12573 ₽</span>
+          </div>
+          <a href="#" class="wallet-info__link">Пополнить кошелек</a>
+        </div>
+
+        <div class="wallet-info-text">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 217.997 217.997" xml:space="preserve">
+          <path d="M199.399,0H35.514c-4.143,0-7.5,3.358-7.5,7.5v43.249h-9.416c-4.143,0-7.5,3.358-7.5,7.5s3.357,7.5,7.5,7.5h9.416v35.75 h-9.416c-4.143,0-7.5,3.358-7.5,7.5c0,4.142,3.357,7.5,7.5,7.5h9.416v35.749h-9.416c-4.143,0-7.5,3.358-7.5,7.5 c0,4.142,3.357,7.5,7.5,7.5h9.416v43.249c0,4.142,3.357,7.5,7.5,7.5h163.886c4.143,0,7.5-3.358,7.5-7.5V7.5	C206.899,3.358,203.542,0,199.399,0z M191.899,202.997H43.014v-35.749h9.416c4.143,0,7.5-3.358,7.5-7.5c0-4.142-3.357-7.5-7.5-7.5	h-9.416v-35.749h9.416c4.143,0,7.5-3.358,7.5-7.5c0-4.142-3.357-7.5-7.5-7.5h-9.416v-35.75h9.416c4.143,0,7.5-3.358,7.5-7.5	s-3.357-7.5-7.5-7.5h-9.416V15h148.886V202.997z"/>
+            <path d="M122.822,112.447c17.004,0,30.838-13.839,30.838-30.849c0-17.011-13.834-30.85-30.838-30.85	c-17.009,0-30.847,13.839-30.847,30.85C91.975,98.608,105.813,112.447,122.822,112.447z M122.822,65.749 c8.733,0,15.838,7.11,15.838,15.85c0,8.739-7.104,15.849-15.838,15.849c-8.738,0-15.847-7.11-15.847-15.849	C106.975,72.859,114.084,65.749,122.822,65.749z"/>
+            <path d="M88.484,168.54c4.143,0,7.5-3.358,7.5-7.5v-12.961c0-8.319,6.77-15.088,15.09-15.088h23.682	c8.32,0,15.09,6.768,15.09,15.088v12.961c0,4.142,3.357,7.5,7.5,7.5c4.142,0,7.5-3.358,7.5-7.5v-12.961	c0-16.59-13.498-30.088-30.09-30.088h-23.682c-16.592,0-30.09,13.497-30.09,30.088v12.961 C80.984,165.182,84.342,168.54,88.484,168.54z"/>
+        </svg>
+          <p>Оплаченные запросы на автоматическое отображение контактов в резюме <span>0</span> раз <br/>
+            <a href="#">Купить доступ к контактам соискателей</a></p>
+        </div>
+
+        <div class="wallet-info-text">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 485 485" xml:space="preserve">
+	       <rect y="424.999" width="485" height="30"/>
+            <polygon points="385.147,30.001 385.147,60.001 433.787,60.001 275,218.788 210,153.788 4.394,359.393 25.606,380.605 210,196.214 275,261.215 455,81.214 455,129.854 485,129.854 485,30.001 	"/>
+      </svg>
+          <p>Услуга "Поднять объявление в поиске" <span>0</span> раз <br/>
+            <a href="#">Купить услугу «Поднять объявление в поиске»</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="deposit">
+      <h3 class="deposit__title">Пополнить кошелек</h3>
+
+      <form action="" class="deposit-form">
+        <div class="deposit-form__input">
+          <input type="number" placeholder="15 000" class="wallet_input" id="wallet_input" title=""/>
+          <span class="deposit-form__input-text">₽</span>
+        </div>
+
+        <label class="btn-radio">
+          <input type="radio" name="radio-grp" value="физ лицо" class="wallet_btn" />
+          <svg width="27px" height="27px" viewbox="0 0 20 20">
+            <circle cx="10" cy="10" r="9"></circle>
+            <path d="M10,7 C8.34314575,7 7,8.34314575 7,10 C7,11.6568542 8.34314575,13 10,13 C11.6568542,13 13,11.6568542 13,10 C13,8.34314575 11.6568542,7 10,7 Z" class="inner"></path>
+            <path d="M10,1 L10,1 L10,1 C14.9705627,1 19,5.02943725 19,10 L19,10 L19,10 C19,14.9705627 14.9705627,19 10,19 L10,19 L10,19 C5.02943725,19 1,14.9705627 1,10 L1,10 L1,10 C1,5.02943725 5.02943725,1 10,1 L10,1 Z" class="outer"></path>
+          </svg>
+          <span class="btn-radio__desc">Я хочу внести оплату как физ.лицо</span>
+        </label>
+
+        <label class="btn-radio">
+          <input type="radio" name="radio-grp" value="юр лицо" class="wallet_btn" />
+          <svg width="27px" height="27px" viewbox="0 0 20 20">
+            <circle cx="10" cy="10" r="9"></circle>
+            <path d="M10,7 C8.34314575,7 7,8.34314575 7,10 C7,11.6568542 8.34314575,13 10,13 C11.6568542,13 13,11.6568542 13,10 C13,8.34314575 11.6568542,7 10,7 Z" class="inner"></path>
+            <path d="M10,1 L10,1 L10,1 C14.9705627,1 19,5.02943725 19,10 L19,10 L19,10 C19,14.9705627 14.9705627,19 10,19 L10,19 L10,19 C5.02943725,19 1,14.9705627 1,10 L1,10 L1,10 C1,5.02943725 5.02943725,1 10,1 L10,1 Z" class="outer"></path>
+          </svg>
+          <span class="btn-radio__desc">Я хочу внести оплату как юридическое лицо</span>
+        </label>
+
+        <div class="wallet-radio-bottom hide">
+          <h5 class="wallet-radio-bottom__title">Выберите способ оплаты:</h5>
+          <div class="payment__form">
+            <div class="my__wallet">
+              <div class="radiobtn">
+                <input type="radio" class="radio custom-radio main__payment-radio" id="radio-1" name="group">
+                <label for="radio-1" class="label_radio"></label>
+                <p>Списать с Моего Кошелька</p>
+                <span class="icon-wallet-with-card-sticking-out my__wallet-icon"></span>
+                <span>0 ₽</span>
+              </div>
+            </div>
+            <div class="my__card">
+              <div class="radiobtn">
+                <input type="radio" class="radio custom-radio main__payment-radio" id="radio-2" name="group" />
+                <label for="radio-2" class="label_radio"></label>
+                <p>Банковской картой</p>
+              </div>
+            </div>
+            <div class="yandex">
+              <div class="radiobtn">
+                <input type="radio" class="radio custom-radio main__payment-radio" id="radio-3" name="group" />
+                <label for="radio-3" class="label_radio"></label>
+                <p>ЮMoney (Яндекс деньги)</p>
+              </div>
+            </div>
+            <div class="webmoney">
+              <div class="radiobtn">
+                <input type="radio" class="radio custom-radio main__payment-radio" id="radio-4" name="group" />
+                <label for="radio-4" class="label_radio"></label>
+                <p>СберБанк Онлайн</p>
+              </div>
+            </div>
+          </div>
+          <div class="payment-block">
+            <div class="dissabled"></div>
+            <a href="#" class="payment__btn">Продолжить</a>
+          </div>
+        </div>
+
+        <div class="enter-link-wrap hide">
+          <a href="#" class="enter-link">Заполните реквизиты своей компании</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="code-word">
+      <h3 class="code-word__title">Введите кодовое слово или сертификат</h3>
+      <form class="code-word-form">
+        <input type="text" placeholder="Кодовое слово или сертификат" name="code-word" class="code-word-form__input" title=""/>
+        <button type="submit" class="code-word-form__submit">Активировать</button>
+      </form>
+      <span class="code-word-form__valid"></span>
+      <p class="code-word__text">Наминал подарочного подарка сертификата зачисляется на Ваш счет в течени 10-15 минут
+        после активации. При оплате нужно будет выбрать способ оплаты «Пользовательский счет Озона» или «Частичная
+        оплата с Пользовательского счета»</p>
+    </div>
+
+    <div class="table-history">
+      <h3 class="operation-history__title">История операций как юридического лица
+        <a href="#" class="open-new-window" target="_blank">Открыть в отдельном окне</a></h3>
+
+      <!-- calendar -->
+      <div class="adv-filter-date calendar-container calendar-container--left flex">
+        <div class="wrapper">
+          <label class="calendar-open-btn--double">
+            <span class="placeholder">От</span>
+            <div class="date-input-field date-from">
+              <input placeholder="ДД" type="tel" class="day">
+              <span>.</span>
+              <input placeholder="ММ" type="tel" class="month">
+              <span>.</span>
+              <input placeholder="ГГГГ" type="tel" class="year">
+            </div>
+            <span class="date-value filter-date-from"></span>
+          </label>
+          <span aria-controls="adv-filter-date-from" class="hint icon cross icon-cross-svgrepo-com">
+            <span class="hint__text hint__text--center">Очистить поле?</span>
+          </span>
+        </div>
+        <div class="wrapper">
+          <label class="calendar-open-btn--double">
+            <span class="placeholder">До</span>
+            <div class="date-input-field date-to">
+              <input placeholder="ДД" type="tel" class="day">
+              <span>.</span>
+              <input placeholder="ММ" type="tel" class="month">
+              <span>.</span>
+              <input placeholder="ГГГГ" type="tel" class="year">
+            </div>
+            <span class="date-value filter-date-to"></span>
+          </label>
+          <span aria-controls="adv-filter-date-to" class="hint icon cross icon-cross-svgrepo-com">
+                                <span class="hint__text hint__text--center">Очистить поле?</span>
+                            </span>
+        </div>
+      </div>
+      <!-- calendar -->
+
+
+      <ul class="operation-sort">
+        <li class="operation-sort__item">
+          <label class="operation-sort-label">
+            <input type="radio" class="radio-sort" name="sort-legal" value="all" checked title=""/>
+            <span class="operation-sort__text">Все операции 4</span>
+          </label>
+        </li>
+        <li class="operation-sort__item">
+          <label class="operation-sort__">
+            <input type="radio" class="radio-sort" name="sort-legal" value="add" title=""/>
+            <span class="operation-sort__text">Пополнение</span>
+          </label>
+        </li>
+        <li class="operation-sort__item">
+          <label class="operation-sort__">
+            <input type="radio" class="radio-sort" name="sort-legal" value="refund" title=""/>
+            <span class="operation-sort__text">Возврат 1</span>
+          </label>
+        </li>
+        <li class="operation-sort__item">
+          <label class="operation-sort__">
+            <input type="radio" class="radio-sort" name="sort-legal" value="not" title=""/>
+            <span class="operation-sort__text">Не оплачен 1</span>
+          </label>
+        </li>
+      </ul>
+      <label class="btn-radio">
+        <input type="checkbox" name="" class="wallet_btn input-sort"/>
+        <svg width="27px" height="27px" viewbox="0 0 20 20">
+          <circle cx="10" cy="10" r="9"></circle>
+          <path d="M10,7 C8.34314575,7 7,8.34314575 7,10 C7,11.6568542 8.34314575,13 10,13 C11.6568542,13 13,11.6568542 13,10 C13,8.34314575 11.6568542,7 10,7 Z" class="inner"></path>
+          <path d="M10,1 L10,1 L10,1 C14.9705627,1 19,5.02943725 19,10 L19,10 L19,10 C19,14.9705627 14.9705627,19 10,19 L10,19 L10,19 C5.02943725,19 1,14.9705627 1,10 L1,10 L1,10 C1,5.02943725 5.02943725,1 10,1 L10,1 Z" class="outer"></path>
+        </svg>
+        <span class="btn-radio__desc">Только активные платежи</span>
+      </label>
+      <div class="legal-operation table-operation">
+        <div class="legal-operation__title">
+          <div>Дата и время счета</div>
+          <div>Номер счета</div>
+          <div>Сумма счета</div>
+          <div>Статус</div>
+        </div>
+        <div class="legal-operation__tr">
+          <div>06.03.2022 09:05:00</div>
+          <div>№САЙТ000001932</div>
+          <div>500.00</div>
+          <div data-status="false" data-type="not">Не оплачен</div>
+        </div>
+        <div class="legal-operation__tr">
+          <div>06.03.2022 09:05:00</div>
+          <div>№САЙТ000001734</div>
+          <div>500.00</div>
+          <div data-status="true" data-type="add">Оплачен</div>
+        </div>
+        <div class="legal-operation__tr">
+          <div>06.03.2022 09:05:00</div>
+          <div>№САЙТ000001932</div>
+          <div>500.00</div>
+          <div data-status="false" data-type="refund">Возврат</div>
+        </div>
+      </div>
+
+      <a class="button-more">Показать еще</a>
+
+      <div class="pagination-wrap">
+        <ul class="history-pagination">
+          <li class="history-pagination__item">
+            <a href="#" class="history-pagination__link">
+              <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.92893 7.15685C5.53841 7.54738 5.53841 8.18054 5.92893 8.57107L12.2929 14.9351C12.6834 15.3256 13.3166 15.3256 13.7071 14.9351C14.0976 14.5445 14.0976 13.9114 13.7071 13.5209L8.05025 7.86396L13.7071 2.20711C14.0976 1.81658 14.0976 1.18342 13.7071 0.792894C13.3166 0.402369 12.6834 0.402369 12.2929 0.792894L5.92893 7.15685ZM7.63604 6.86396L6.63604 6.86396L6.63604 8.86396L7.63604 8.86396L7.63604 6.86396Z" fill="#fff"/>
+                <g clip-path="url(#clip0_3_19)">
+                  <path d="M0.292942 7.2929C-0.097578 7.68343 -0.0975779 8.31659 0.292942 8.70712L6.6569 15.0711C7.04743 15.4616 7.68059 15.4616 8.07112 15.0711C8.46165 14.6805 8.46165 14.0474 8.07112 13.6569L2.41426 8.00001L8.07112 2.34316C8.46165 1.95263 8.46165 1.31947 8.07112 0.928941C7.68059 0.538416 7.04743 0.538416 6.6569 0.928941L0.292942 7.2929ZM2.00005 7.00001L1.00005 7.00001L1.00005 9.00001L2.00005 9.00001L2.00005 7.00001Z" fill="#fff"/>
+                </g>
+              </svg>
+            </a>
+          </li>
+          <li class="history-pagination__item">
+            <a href="#" class="history-pagination__link">
+              <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.792893 6.79289C0.402369 7.18342 0.402369 7.81658 0.792893 8.20711L7.15685 14.5711C7.54738 14.9616 8.18054 14.9616 8.57107 14.5711C8.96159 14.1805 8.96159 13.5474 8.57107 13.1569L2.91421 7.5L8.57107 1.84315C8.96159 1.45262 8.96159 0.819456 8.57107 0.428932C8.18054 0.0384079 7.54738 0.0384079 7.15685 0.428932L0.792893 6.79289ZM2.5 6.5H1.5V8.5H2.5V6.5Z" fill="#fff"/>
+              </svg>
+            </a>
+          </li>
+          <li class="history-pagination__item">1 из 2</li>
+          <li class="history-pagination__item">
+            <a href="#" class="history-pagination__link">
+              <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.20711 8.20711C8.59763 7.81658 8.59763 7.18342 8.20711 6.79289L1.84315 0.428932C1.45262 0.0384079 0.819456 0.0384079 0.428932 0.428932C0.0384079 0.819456 0.0384079 1.45262 0.428932 1.84315L6.08579 7.5L0.428932 13.1569C0.0384079 13.5474 0.0384079 14.1805 0.428932 14.5711C0.819456 14.9616 1.45262 14.9616 1.84315 14.5711L8.20711 8.20711ZM6.5 8.5H7.5V6.5H6.5V8.5Z" fill="#fff"/>
+              </svg>
+            </a>
+          </li>
+          <li class="history-pagination__item">
+            <a href="#" class="history-pagination__link">
+              <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.07107 8.84315C8.46159 8.45262 8.46159 7.81946 8.07107 7.42893L1.70711 1.06494C1.31658 0.674439 0.683421 0.674439 0.292894 1.06494C-0.0976308 1.45554 -0.0976308 2.08864 0.292894 2.47914L5.94975 8.13604L0.292894 13.7929C-0.0976313 14.1834 -0.0976313 14.8166 0.292894 15.2071C0.683422 15.5976 1.31658 15.5976 1.70711 15.2071L8.07107 8.84315ZM6.36396 9.13604L7.36396 9.13604L7.36396 7.13604L6.36396 7.13604L6.36396 9.13604Z" fill="#fff"/>
+                <g clip-path="url(#clip0_0_1)">
+                  <path d="M13.7071 8.7071C14.0976 8.31657 14.0976 7.68341 13.7071 7.29288L7.3431 0.928892C6.95257 0.538392 6.31941 0.538392 5.92888 0.928892C5.53836 1.31949 5.53836 1.95259 5.92888 2.34309L11.5857 7.99999L5.92888 13.6568C5.53836 14.0474 5.53836 14.6805 5.92888 15.0711C6.31941 15.4616 6.95257 15.4616 7.3431 15.0711L13.7071 8.7071ZM11.9999 8.99999L12.9999 8.99999L12.9999 6.99999L11.9999 6.99999L11.9999 8.99999Z" fill="#fff"/>
+                </g>
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <div class="pagination-page-value">
+          <span>Перейти на страницу</span>
+          <input type="text" value="1"/>
+          <button type="button">ок</button>
+        </div>
+      </div>
+      <a href="#" class="link-export" download><span class="icon-export_upload_icon_176175"></span>Экспорт</a>
+    </div>
+
+    <div class="operation-history table-history">
+      <h3 class="operation-history__title">История операций как физического лица</h3>
+
+      <!-- calendar -->
+      <div class="adv-filter-date calendar-container calendar-container--left flex">
+        <div class="wrapper">
+          <label class="calendar-open-btn--double">
+            <span class="placeholder">От</span>
+            <div class="date-input-field date-from">
+              <input placeholder="ДД" type="tel" class="day">
+              <span>.</span>
+              <input placeholder="ММ" type="tel" class="month">
+              <span>.</span>
+              <input placeholder="ГГГГ" type="tel" class="year">
+            </div>
+            <span class="date-value filter-date-from"></span>
+          </label>
+          <span aria-controls="adv-filter-date-from" class="hint icon cross icon-cross-svgrepo-com">
+            <span class="hint__text hint__text--center">Очистить поле?</span>
+          </span>
+        </div>
+        <div class="wrapper">
+          <label class="calendar-open-btn--double">
+            <span class="placeholder">До</span>
+            <div class="date-input-field date-to">
+              <input placeholder="ДД" type="tel" class="day">
+              <span>.</span>
+              <input placeholder="ММ" type="tel" class="month">
+              <span>.</span>
+              <input placeholder="ГГГГ" type="tel" class="year">
+            </div>
+            <span class="date-value filter-date-to"></span>
+          </label>
+          <span aria-controls="adv-filter-date-to" class="hint icon cross icon-cross-svgrepo-com">
+                                <span class="hint__text hint__text--center">Очистить поле?</span>
+                            </span>
+        </div>
+      </div>
+      <!-- calendar -->
+
+      <ul class="operation-sort">
+        <li class="operation-sort__item">
+          <label class="operation-sort-label">
+            <input type="radio" class="radio-sort" name="sort-individual" value="all" checked title=""/>
+            <span class="operation-sort__text">Все операции 4</span>
+          </label>
+        </li>
+        <li class="operation-sort__item">
+          <label class="operation-sort__">
+            <input type="radio" class="radio-sort" name="sort-individual" value="add" title=""/>
+            <span class="operation-sort__text">Пополнение</span>
+          </label>
+        </li>
+        <li class="operation-sort__item">
+          <label class="operation-sort__">
+            <input type="radio" class="radio-sort" name="sort-individual" value="refund" title=""/>
+            <span class="operation-sort__text">Возврат 1</span>
+          </label>
+        </li>
+        <li class="operation-sort__item">
+          <label class="operation-sort__">
+            <input type="radio" class="radio-sort" name="sort-individual" value="not" title=""/>
+            <span class="operation-sort__text">Не оплачен 1</span>
+          </label>
+        </li>
+      </ul>
+
+      <label class="btn-radio">
+        <input type="checkbox" name="" class="wallet_btn input-sort"/>
+        <svg width="27px" height="27px" viewbox="0 0 20 20">
+          <circle cx="10" cy="10" r="9"></circle>
+          <path d="M10,7 C8.34314575,7 7,8.34314575 7,10 C7,11.6568542 8.34314575,13 10,13 C11.6568542,13 13,11.6568542 13,10 C13,8.34314575 11.6568542,7 10,7 Z" class="inner"></path>
+          <path d="M10,1 L10,1 L10,1 C14.9705627,1 19,5.02943725 19,10 L19,10 L19,10 C19,14.9705627 14.9705627,19 10,19 L10,19 L10,19 C5.02943725,19 1,14.9705627 1,10 L1,10 L1,10 C1,5.02943725 5.02943725,1 10,1 L10,1 Z" class="outer"></path>
+        </svg>
+        <span class="btn-radio__desc">Только активные платежи</span>
+      </label>
+
+      <div class="history-table table-operation">
+        <div class="tr table-title">
+          <div>Дата</div>
+          <div>Операция</div>
+          <div>Способ оплаты</div>
+          <div>Рубли</div>
+          <div>Статус</div>
+        </div>
+        <div class="tr">
+          <div>18.10.2019 16:00:00</div>
+          <div><span>Услуга ”Разовое размещение”</span> <a href="#">Для объявления №534534543</a></div>
+          <div>Банковская Карта</div>
+          <div data-price="false">-350</div>
+          <div data-status="true" data-type="add">Исполнено</div>
+        </div>
+        <div class="tr">
+          <div>18.10.2019 16:00:00</div>
+          <div><span>Услуга ”Разовое размещение”</span> <a href="#">Для объявления №534534543</a></div>
+          <div>Банковская Карта</div>
+          <div data-price="false">-350</div>
+          <div data-status="false" data-type="refund">Возврат</div>
+        </div>
+        <div class="tr">
+          <div>18.10.2019 16:00:00</div>
+          <div>Пополнение Vsevn.ru Кошелька</div>
+          <div>Банковская Карта</div>
+          <div data-price="false">-350</div>
+          <div data-status="false" data-type="not">Отклонено</div>
+        </div>
+        <div class="tr">
+          <div>18.10.2019 16:00:00</div>
+          <div>Возврат денежных средств</div>
+          <div>Банковская Карта</div>
+          <div data-price="true">+350</div>
+          <div data-status="true" data-type="add">Исполнено</div>
+        </div>
+      </div>
+
+      <a class="button-more">Показать еще</a>
+
+      <div class="pagination-wrap">
+        <ul class="history-pagination">
+          <li class="history-pagination__item">
+            <a href="#" class="history-pagination__link">
+              <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.92893 7.15685C5.53841 7.54738 5.53841 8.18054 5.92893 8.57107L12.2929 14.9351C12.6834 15.3256 13.3166 15.3256 13.7071 14.9351C14.0976 14.5445 14.0976 13.9114 13.7071 13.5209L8.05025 7.86396L13.7071 2.20711C14.0976 1.81658 14.0976 1.18342 13.7071 0.792894C13.3166 0.402369 12.6834 0.402369 12.2929 0.792894L5.92893 7.15685ZM7.63604 6.86396L6.63604 6.86396L6.63604 8.86396L7.63604 8.86396L7.63604 6.86396Z" fill="#fff"/>
+                <g clip-path="url(#clip0_3_19)">
+                  <path d="M0.292942 7.2929C-0.097578 7.68343 -0.0975779 8.31659 0.292942 8.70712L6.6569 15.0711C7.04743 15.4616 7.68059 15.4616 8.07112 15.0711C8.46165 14.6805 8.46165 14.0474 8.07112 13.6569L2.41426 8.00001L8.07112 2.34316C8.46165 1.95263 8.46165 1.31947 8.07112 0.928941C7.68059 0.538416 7.04743 0.538416 6.6569 0.928941L0.292942 7.2929ZM2.00005 7.00001L1.00005 7.00001L1.00005 9.00001L2.00005 9.00001L2.00005 7.00001Z" fill="#fff"/>
+                </g>
+              </svg>
+            </a>
+          </li>
+          <li class="history-pagination__item">
+            <a href="#" class="history-pagination__link">
+              <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.792893 6.79289C0.402369 7.18342 0.402369 7.81658 0.792893 8.20711L7.15685 14.5711C7.54738 14.9616 8.18054 14.9616 8.57107 14.5711C8.96159 14.1805 8.96159 13.5474 8.57107 13.1569L2.91421 7.5L8.57107 1.84315C8.96159 1.45262 8.96159 0.819456 8.57107 0.428932C8.18054 0.0384079 7.54738 0.0384079 7.15685 0.428932L0.792893 6.79289ZM2.5 6.5H1.5V8.5H2.5V6.5Z" fill="#fff"/>
+              </svg>
+            </a>
+          </li>
+          <li class="history-pagination__item">1 из 2</li>
+          <li class="history-pagination__item">
+            <a href="#" class="history-pagination__link">
+              <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.20711 8.20711C8.59763 7.81658 8.59763 7.18342 8.20711 6.79289L1.84315 0.428932C1.45262 0.0384079 0.819456 0.0384079 0.428932 0.428932C0.0384079 0.819456 0.0384079 1.45262 0.428932 1.84315L6.08579 7.5L0.428932 13.1569C0.0384079 13.5474 0.0384079 14.1805 0.428932 14.5711C0.819456 14.9616 1.45262 14.9616 1.84315 14.5711L8.20711 8.20711ZM6.5 8.5H7.5V6.5H6.5V8.5Z" fill="#fff"/>
+              </svg>
+            </a>
+          </li>
+          <li class="history-pagination__item">
+            <a href="#" class="history-pagination__link">
+              <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.07107 8.84315C8.46159 8.45262 8.46159 7.81946 8.07107 7.42893L1.70711 1.06494C1.31658 0.674439 0.683421 0.674439 0.292894 1.06494C-0.0976308 1.45554 -0.0976308 2.08864 0.292894 2.47914L5.94975 8.13604L0.292894 13.7929C-0.0976313 14.1834 -0.0976313 14.8166 0.292894 15.2071C0.683422 15.5976 1.31658 15.5976 1.70711 15.2071L8.07107 8.84315ZM6.36396 9.13604L7.36396 9.13604L7.36396 7.13604L6.36396 7.13604L6.36396 9.13604Z" fill="#fff"/>
+                <g clip-path="url(#clip0_0_1)">
+                  <path d="M13.7071 8.7071C14.0976 8.31657 14.0976 7.68341 13.7071 7.29288L7.3431 0.928892C6.95257 0.538392 6.31941 0.538392 5.92888 0.928892C5.53836 1.31949 5.53836 1.95259 5.92888 2.34309L11.5857 7.99999L5.92888 13.6568C5.53836 14.0474 5.53836 14.6805 5.92888 15.0711C6.31941 15.4616 6.95257 15.4616 7.3431 15.0711L13.7071 8.7071ZM11.9999 8.99999L12.9999 8.99999L12.9999 6.99999L11.9999 6.99999L11.9999 8.99999Z" fill="#fff"/>
+                </g>
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <div class="pagination-page-value">
+          <span>Перейти на страницу</span>
+          <input type="text" value="1" />
+          <button type="button">ок</button>
+        </div>
+      </div>
+      <a href="#" class="link-export" download><span class="icon-export_upload_icon_176175"></span>Экспорт</a>
+
+    </div>
+
+    <div class="history-bonus table-history">
+      <h3 class="operation-history__title">История операций по бонусам</h3>
+
+      <!-- calendar -->
+      <div class="adv-filter-date calendar-container calendar-container--left flex">
+        <div class="wrapper">
+          <label class="calendar-open-btn--double">
+            <span class="placeholder">От</span>
+            <div class="date-input-field date-from">
+              <input placeholder="ДД" type="tel" class="day">
+              <span>.</span>
+              <input placeholder="ММ" type="tel" class="month">
+              <span>.</span>
+              <input placeholder="ГГГГ" type="tel" class="year">
+            </div>
+            <span class="date-value filter-date-from"></span>
+          </label>
+          <span aria-controls="adv-filter-date-from" class="hint icon cross icon-cross-svgrepo-com">
+            <span class="hint__text hint__text--center">Очистить поле?</span>
+          </span>
+        </div>
+        <div class="wrapper">
+          <label class="calendar-open-btn--double">
+            <span class="placeholder">До</span>
+            <div class="date-input-field date-to">
+              <input placeholder="ДД" type="tel" class="day">
+              <span>.</span>
+              <input placeholder="ММ" type="tel" class="month">
+              <span>.</span>
+              <input placeholder="ГГГГ" type="tel" class="year">
+            </div>
+            <span class="date-value filter-date-to"></span>
+          </label>
+          <span aria-controls="adv-filter-date-to" class="hint icon cross icon-cross-svgrepo-com">
+                                <span class="hint__text hint__text--center">Очистить поле?</span>
+                            </span>
+        </div>
+      </div>
+      <!-- calendar -->
+
+
+      <div class="history-bonus-wrap">
+        <div class="history-bonus__title">
+          <div>Наименование</div>
+          <div></div>
+          <div>Тип операции</div>
+          <div>ON-бонусов</div>
+          <div>Итого</div>
+        </div>
+        <div class="history-bonus__tr">
+          <div>Акция: Улицы Н.Новгорода 04.2019 (кодовое слово KUPON2020202)</div>
+          <div>07.10.2022 17:36</div>
+          <div data-operation="true">Начисление</div>
+          <div>50</div>
+          <div>758</div>
+        </div>
+        <div class="history-bonus__tr">
+          <div>Промокод</div>
+          <div>07.10.2022 17:36</div>
+          <div data-operation="false">Списание</div>
+          <div>-550</div>
+          <div>758</div>
+        </div>
+        <div class="history-bonus__tr">
+          <div>Акция: Жара 07.2019 (кодовое слово FDSOP432FDSDS)</div>
+          <div>07.10.2022 17:36</div>
+          <div data-operation="true">Начисление</div>
+          <div>50</div>
+          <div>758</div>
+        </div>
+        <div class="history-bonus__tr">
+          <div>Отзыв №946893</div>
+          <div>07.10.2022 17:36</div>
+          <div data-operation="true">Начисление</div>
+          <div>50</div>
+          <div>758</div>
+        </div>
+        <div class="history-bonus__tr">
+          <div>Отзыв №946893</div>
+          <div>07.10.2022 17:36</div>
+          <div data-operation="false">Списание</div>
+          <div>-50</div>
+          <div>758</div>
+        </div>
+      </div>
+
+      <a class="button-more">Показать еще</a>
+
+      <div class="pagination-wrap">
+        <ul class="history-pagination">
+          <li class="history-pagination__item">
+            <a href="#" class="history-pagination__link">
+              <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.92893 7.15685C5.53841 7.54738 5.53841 8.18054 5.92893 8.57107L12.2929 14.9351C12.6834 15.3256 13.3166 15.3256 13.7071 14.9351C14.0976 14.5445 14.0976 13.9114 13.7071 13.5209L8.05025 7.86396L13.7071 2.20711C14.0976 1.81658 14.0976 1.18342 13.7071 0.792894C13.3166 0.402369 12.6834 0.402369 12.2929 0.792894L5.92893 7.15685ZM7.63604 6.86396L6.63604 6.86396L6.63604 8.86396L7.63604 8.86396L7.63604 6.86396Z" fill="#fff"/>
+                <g clip-path="url(#clip0_3_19)">
+                  <path d="M0.292942 7.2929C-0.097578 7.68343 -0.0975779 8.31659 0.292942 8.70712L6.6569 15.0711C7.04743 15.4616 7.68059 15.4616 8.07112 15.0711C8.46165 14.6805 8.46165 14.0474 8.07112 13.6569L2.41426 8.00001L8.07112 2.34316C8.46165 1.95263 8.46165 1.31947 8.07112 0.928941C7.68059 0.538416 7.04743 0.538416 6.6569 0.928941L0.292942 7.2929ZM2.00005 7.00001L1.00005 7.00001L1.00005 9.00001L2.00005 9.00001L2.00005 7.00001Z" fill="#fff"/>
+                </g>
+              </svg>
+            </a>
+          </li>
+          <li class="history-pagination__item">
+            <a href="#" class="history-pagination__link">
+              <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.792893 6.79289C0.402369 7.18342 0.402369 7.81658 0.792893 8.20711L7.15685 14.5711C7.54738 14.9616 8.18054 14.9616 8.57107 14.5711C8.96159 14.1805 8.96159 13.5474 8.57107 13.1569L2.91421 7.5L8.57107 1.84315C8.96159 1.45262 8.96159 0.819456 8.57107 0.428932C8.18054 0.0384079 7.54738 0.0384079 7.15685 0.428932L0.792893 6.79289ZM2.5 6.5H1.5V8.5H2.5V6.5Z" fill="#fff"/>
+              </svg>
+            </a>
+          </li>
+          <li class="history-pagination__item">1 из 2</li>
+          <li class="history-pagination__item">
+            <a href="#" class="history-pagination__link">
+              <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.20711 8.20711C8.59763 7.81658 8.59763 7.18342 8.20711 6.79289L1.84315 0.428932C1.45262 0.0384079 0.819456 0.0384079 0.428932 0.428932C0.0384079 0.819456 0.0384079 1.45262 0.428932 1.84315L6.08579 7.5L0.428932 13.1569C0.0384079 13.5474 0.0384079 14.1805 0.428932 14.5711C0.819456 14.9616 1.45262 14.9616 1.84315 14.5711L8.20711 8.20711ZM6.5 8.5H7.5V6.5H6.5V8.5Z" fill="#fff"/>
+              </svg>
+            </a>
+          </li>
+          <li class="history-pagination__item">
+            <a href="#" class="history-pagination__link">
+              <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.07107 8.84315C8.46159 8.45262 8.46159 7.81946 8.07107 7.42893L1.70711 1.06494C1.31658 0.674439 0.683421 0.674439 0.292894 1.06494C-0.0976308 1.45554 -0.0976308 2.08864 0.292894 2.47914L5.94975 8.13604L0.292894 13.7929C-0.0976313 14.1834 -0.0976313 14.8166 0.292894 15.2071C0.683422 15.5976 1.31658 15.5976 1.70711 15.2071L8.07107 8.84315ZM6.36396 9.13604L7.36396 9.13604L7.36396 7.13604L6.36396 7.13604L6.36396 9.13604Z" fill="#fff"/>
+                <g clip-path="url(#clip0_0_1)">
+                  <path d="M13.7071 8.7071C14.0976 8.31657 14.0976 7.68341 13.7071 7.29288L7.3431 0.928892C6.95257 0.538392 6.31941 0.538392 5.92888 0.928892C5.53836 1.31949 5.53836 1.95259 5.92888 2.34309L11.5857 7.99999L5.92888 13.6568C5.53836 14.0474 5.53836 14.6805 5.92888 15.0711C6.31941 15.4616 6.95257 15.4616 7.3431 15.0711L13.7071 8.7071ZM11.9999 8.99999L12.9999 8.99999L12.9999 6.99999L11.9999 6.99999L11.9999 8.99999Z" fill="#fff"/>
+                </g>
+              </svg>
+            </a>
+          </li>
+        </ul>
+        <div class="pagination-page-value">
+          <span>Перейти на страницу</span>
+          <input type="text" value="1"/>
+          <button type="button">ок</button>
+        </div>
+      </div>
+      <a href="#" class="link-export" download title=""><span class="icon-export_upload_icon_176175"></span>Экспорт</a>
+    </div>
+
+  </div>
+  <div class="popup hide" id="popup">
+    <div class="popup-wrap">
+      <button type="button" class="close-popup">
+        <svg viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg">
+          <line x1="17.5" x2="54.5" y1="17.5" y2="54.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+          <line x1="54.5" x2="17.5" y1="17.5" y2="54.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="cookie">
+    <div class="cookie__wrapper">
+      <p>Файлы cookie помогают нам предоставлять наши услуги. Наша политика использования файлов cookie объясняет,
+        как мы используем файлы cookie и как их отключить.</p>
+     <div>
+       <button class="cookie__button">ok</button>
+       <button class="cookie__link" id="cookie-link">Узнать больше</button>
+     </div>
+    </div>
+  </div>
+
+  <!--  COVER  -->
+  <div class="cover hidden"></div>
+  <!--  /COVER  -->
+
+</main>
+
+
+<script src="js/script.js"></script>
+</body>
+</html>

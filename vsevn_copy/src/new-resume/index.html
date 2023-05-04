@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta property="og:image" content="https://kotbarsik96.github.io/vsevn/img/favicon/268x268.jpg">
+    <meta name="twitter:image" content="https://kotbarsik96.github.io/vsevn/img/favicon/268x268.jpg">
+    <meta name="description" content="Соискатели (резюме) с открытыми контактами">
+    <meta property="og:title" content="Добавить новое резюме (соискателя) в базу соискателей">
+    <meta property="og:description" content="Соискатели (резюме) с открытыми контактами">
+    <meta name="twitter:title" content="Добавить новое резюме (соискателя) в базу соискателей">
+    <meta name="twitter:description" content="Соискатели (резюме) с открытыми контактами">
+
+    <link rel="icon" href="/vsevn/img/favicon/favicon.svg">
+    <meta charset='UTF-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5">
+    <title>Добавить новое резюме (соискателя) в базу соискателей</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#ffe53b">
+    <meta property="og:type" content="website">
+    <link rel='stylesheet' href='/vsevn/css/style.css' type="text/css">
+    <link rel='stylesheet' href='/vsevn/css/new-resume.css' type="text/css">
+    <link rel='stylesheet' href='/vsevn/css/fonts.css' type="text/css">
+</head>
+
+<body>
+    <div class="wrapper">
+        @@include("../snippets/header.html")
+        <main class="main">
+            <div class="container">
+                <h1 class="page-title">
+                    Добавить новое резюме (добавить соискателя) в базу соискателей
+                </h1>
+
+                <form class="forms" method="post" enctype="multipart/form-data" id="form"
+                    data-forms-href="/vsevn/new-resume/send/">
+                    <section class="forms__container">
+                        <h2 class="forms__title">Личные данные</h2>
+                        <div class="forms__fields-group forms__fields-group--triple">
+                            <div class="text-field text-field--standard forms__fields-item">
+                                <label for="name" class="field-label">Имя</label>
+                                <div class="text-field__input-wrapper">
+                                    <input type="text" class="text-field__input" id="name" name="name" placeholder="Имя"
+                                        data-complete-length="1, 25" aria-label="Имя">
+                                    <div class="selctexit_btn text-field__input-close">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-field text-field--standard forms__fields-item">
+                                <label for="patronymic" class="field-label">Отчество</label>
+                                <div class="text-field__input-wrapper">
+                                    <input type="text" class="text-field__input" id="patronymic" name="patronymic"
+                                        placeholder="Отчество" data-complete-length="1, 25" aria-label="Отчество">
+                                    <div class="selctexit_btn text-field__input-close">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-field text-field--standard forms__fields-item">
+                                <label for="surname" class="field-label">Фамилия</label>
+                                <div class="text-field__input-wrapper">
+                                    <input type="text" class="text-field__input" id="surname" name="surname"
+                                        placeholder="Фамилия" data-complete-length="1, 25" aria-label="Фамилия">
+                                    <div class="selctexit_btn text-field__input-close">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="forms__fields-group">
+                            <div class="text-field text-field--phone forms__fields-item">
+                                <label for="phone-number" class="field-label">Телефон</label>
+                                <div class="text-field__input-wrapper text-field__input-wrapper--multi">
+                                    <input type="text" class="text-field__input-trap text-field__input"
+                                        placeholder="Телефон">
+                                </div>
+                                <p class="field__uncompleted">Номер телефона - 10 цифр</p>
+                            </div>
+                            <div class="text-field text-field--standard forms__fields-item">
+                                <label for="email" class="field-label">Email</label>
+                                <div class="text-field__input-wrapper">
+                                    <input type="text" class="text-field__input" id="email" name="email"
+                                        placeholder="Email" aria-label="Email" data-complete-length="4, 25"
+                                        data-regexp=".+@([\S])+\.([\S])+">
+                                    <div class="selctexit_btn text-field__input-close">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="field__uncompleted">Неверно указан email</p>
+                            </div>
+                        </div>
+                        <div class="forms__fields-group">
+                            <p class="field__name">Пол</p>
+                            <div class="field__selection">
+                                <div class="field__wrapper field__selection-option">
+                                    <input class="field__selection-input" name="gender" type="radio" id="gender-male">
+                                    <label class="field__selection-label" for="gender-male">
+                                        <span class="field__selection-icon icon-man"></span>
+                                        <span class="field__selection-text">Мужской</span>
+                                    </label>
+                                </div>
+                                <div class="field__wrapper field__selection-option">
+                                    <input class="field__selection-input" name="gender" type="radio" id="gender-female">
+                                    <label class="field__selection-label" for="gender-female">
+                                        <span class="field__selection-icon icon-woman"></span>
+                                        <span class="field__selection-text">Женский</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <p class="field__uncompleted">Пожалуйста, укажите пол.</p>
+                        </div>
+                        <div class="forms__fields-group forms__fields-group--birthdate">
+                            <div class="text-field text-field--birthdate forms__fields-item">
+                                <label for="birthday" class="field-label">Дата рождения</label>
+                                <div class="text-field__input-wrapper text-field__input-wrapper--multi">
+                                    <div class="text-field__input-multi">
+                                        <input class="text-field__input-subfield" maxlength="2" type="text"
+                                            name="birthday" id="birthday" placeholder="дд">
+                                        <span class="text-field__input-multi-delimiter">.</span>
+                                        <input class="text-field__input-subfield" maxlength="2" type="text"
+                                            name="birthmonth" id="birthmonth" placeholder="мм">
+                                        <span class="text-field__input-multi-delimiter">.</span>
+                                        <input class="text-field__input-subfield" maxlength="4" type="text"
+                                            name="birthyear" id="birthyear" placeholder="гггг">
+                                    </div>
+                                </div>
+                                <input type="hidden" class="text-field__input" id="birthdate" name="birthdate"
+                                    data-complete-length="1, 25">
+                            </div>
+                            <p class="field__uncompleted">
+                                Пожалуйста, укажите корректную дату рождения. Минимальный год:
+                                <span class="birthdate-min-year"></span>,
+                                максимальный год:
+                                <span class="birthdate-max-year"></span>.
+                            </p>
+                            <div class="text-field text-field--standard text-field--zodiac forms__fields-item">
+                                <label for="zodiac" class="field-label">Знак зодиака</label>
+                                <div class="text-field__input-wrapper">
+                                    <input type="text" disabled class="text-field__input" id="zodiac" name="zodiac"
+                                        placeholder="Знак зодиака" aria-label="Знак зодиака"
+                                        data-complete-length="1, 25">
+                                </div>
+                            </div>
+                            <div class="text-field text-field--standard text-field--age forms__fields-item">
+                                <label for="age" class="field-label">Возраст</label>
+                                <div class="text-field__input-wrapper">
+                                    <input type="text" disabled class="text-field__input" id="age" name="age"
+                                        placeholder="__" data-complete-length="1, 25" aria-label="Возраст">
+                                </div>
+                                лет
+                            </div>
+                        </div>
+                        <div class="forms__fields-group checkboxes-group" data-completion-required>
+                            <div class="checkboxes-group__item checkbox checkbox--inline">
+                                <input class="checkboxes-group__checkbox" type="radio" name="workstatus" id="workstatus_work">
+                                <label class="checkbox__value" for="workstatus_work">
+                                    <span class="checkbox__icon"></span>
+                                    Работаю, но активно ищу работу
+                                </label>
+                            </div>
+                            <div class="checkboxes-group__item checkbox checkbox--inline">
+                                <input class="checkboxes-group__checkbox" type="radio" name="workstatus"
+                                    id="workstatus_no-work">
+                                <label class="checkbox__value" for="workstatus_no-work">
+                                    <span class="checkbox__icon"></span>
+                                    Безработный(ая)
+                                </label>
+                            </div>
+                            <p class="field__uncompleted">
+                                Пожалуйста, укажите статус
+                            </p>
+                        </div>
+                        <div class="forms__fields-group">
+                            <div class="multiselect multiselect--standard forms__fields-item forms__fields-item--full">
+                                <label class="field-label">
+                                    Семейное положение
+                                </label>
+                                <div class="selectBox">
+                                    <div class="selectBox_wrapper">
+                                        <div class="selectBox_value-text">Семейное положение</div>
+                                        <div class="overSelect"></div>
+                                    </div>
+                                    <div class="selctexit_btn">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="checkboxes">
+                                    <label class="multiselect__label">
+                                        <input class="checrkradio_hidden" type="radio" name="marital" value="married"
+                                            data-mselect-value="Женат/замужем">
+                                        Женат/замужем
+                                    </label>
+                                    <label class="multiselect__label">
+                                        <input class="checrkradio_hidden" type="radio" name="marital"
+                                            value="civil-marriage" data-mselect-value="Живу в гражданском браке">
+                                        Живу в гражданском браке
+                                    </label>
+                                    <label class="multiselect__label">
+                                        <input class="checrkradio_hidden" type="radio" name="marital" value="divorced"
+                                            data-mselect-value="В разводе">
+                                        В разводе
+                                    </label>
+                                    <label class="multiselect__label">
+                                        <input class="checrkradio_hidden" type="radio" name="marital" value="single"
+                                            data-mselect-value="Холост/не замужем">
+                                        Холост/не замужем
+                                    </label>
+                                    <label class="multiselect__label">
+                                        <input class="checrkradio_hidden" type="radio" name="marital" value="widow"
+                                            data-mselect-value="Вдовец/вдова">
+                                        Вдовец/вдова
+                                    </label>
+                                </div>
+                            </div>
+                            <p class="field__uncompleted">Пожалуйста, укажите семейное положение.</p>
+                        </div>
+                        <div class="forms__fields-group">
+                            <div class="multiselect multiselect--children forms__fields-item forms__fields-item--full">
+                                <label class="field-label">
+                                    Наличие детей
+                                </label>
+                                <div class="selectBox">
+                                    <div class="selectBox_wrapper">
+                                        <div class="selectBox_value-text">Наличие детей</div>
+                                        <div class="overSelect"></div>
+                                    </div>
+                                    <div class="selctexit_btn">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="checkboxes">
+                                    <label class="multiselect__label">
+                                        <input class="checrkradio_hidden" type="radio" name="has-children" value="yes"
+                                            data-mselect-value="Есть">
+                                        Есть
+                                    </label>
+                                    <label class="multiselect__label">
+                                        <input class="checrkradio_hidden" type="radio" name="has-children" value="no"
+                                            data-mselect-value="Нет">
+                                        Нет
+                                    </label>
+                                </div>
+                            </div>
+                            <p class="field__uncompleted">Пожалуйста, укажите наличие детей.</p>
+                        </div>
+                    </section>
+                    <section class="forms__container">
+                        <h3 class="forms__title">Образование</h3>
+                        <div class="forms__container forms__container--mt">
+                            <div class="add-field add-field--education" data-add-field="school"
+                                data-add-fields-range="1, 2">
+                                <div class="add-field__icon icon-plus"></div>
+                                <p class="add-field__text">Добавить образование в школе, гимназии</p>
+                            </div>
+                            <h4 class="forms__title" data-add-field-title="school">Образование в школе, гимназии</h4>
+                        </div>
+                        <div class="forms__container">
+                            <div class="add-field add-field--education" data-add-field="education-sec"
+                                data-add-fields-range="0, 2">
+                                <div class="add-field__icon icon-plus"></div>
+                                <p class="add-field__text">Добавить средне-специальное образование (техникум, училище,
+                                    колледж)
+                                </p>
+                            </div>
+                            <h4 class="forms__title" data-add-field-title="education-sec">
+                                Средне-специальное образование (техникум, училище, колледж)
+                            </h4>
+                        </div>
+                        <div class="forms__container">
+                            <div class="add-field add-field--education" data-add-field="education-higher"
+                                data-add-fields-range="0, 2">
+                                <div class="add-field__icon icon-plus"></div>
+                                <p class="add-field__text">
+                                    Добавить высшее-профессиональное образование (институт, университет, академия)
+                                </p>
+                            </div>
+                            <h4 class="forms__title" data-add-field-title="education-higher">
+                                Высшее-профессиональное образование (институт, университет, академия)
+                            </h4>
+                        </div>
+                    </section>
+                    <section class="forms__container">
+                        <h3 class="forms__title">Место жительства и гражданство</h3>
+                        <div class="forms__fields-group">
+                            <div class="text-field text-field--standard forms__fields-item">
+                                <label for="region" class="field-label">Регион проживания</label>
+                                <div class="text-field__input-wrapper">
+                                    <input type="text" class="text-field__input" id="region" name="region"
+                                        placeholder="Регион проживания" data-complete-length="1, 25"
+                                        aria-label="Регион проживания">
+                                    <div class="selctexit_btn text-field__input-close">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="field__uncompleted">
+                                    Пожалуйста, укажите регион проживания
+                                </p>
+                            </div>
+                            <div class="text-field text-field--standard forms__fields-item">
+                                <label for="locality" class="field-label">Населенный пункт проживания</label>
+                                <div class="text-field__input-wrapper">
+                                    <input type="text" class="text-field__input" id="locality" name="locality"
+                                        placeholder="Населенный пункт" data-complete-length="1, 25"
+                                        aria-label="Населенный пункт проживания">
+                                    <div class="selctexit_btn text-field__input-close">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="field__uncompleted">
+                                    Пожалуйста, укажите населенный пункт проживания
+                                </p>
+                            </div>
+                        </div>
+                        <div class="forms__fields-group">
+                            <div class="text-field text-field--standard forms__fields-item">
+                                <label for="district" class="field-label">Район</label>
+                                <div class="text-field__input-wrapper">
+                                    <input type="text" class="text-field__input" id="district" name="district"
+                                        placeholder="Район" data-complete-length="1, 25" aria-label="Район">
+                                    <div class="selctexit_btn text-field__input-close">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="field__uncompleted">
+                                    Пожалуйста, укажите район проживания.
+                                </p>
+                            </div>
+                            <div class="text-field text-field--standard forms__fields-item">
+                                <label for="street" class="field-label">Улица</label>
+                                <div class="text-field__input-wrapper">
+                                    <input type="text" class="text-field__input" id="street" name="street"
+                                        placeholder="Улица" data-complete-length="1, 25" aria-label="Улица">
+                                    <div class="selctexit_btn text-field__input-close">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="field__uncompleted">
+                                    Пожалуйста, укажите улицу.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="forms__fields-group">
+                            <div class="text-field text-field--standard forms__fields-item">
+                                <label for="house" class="field-label">Дом</label>
+                                <div class="text-field__input-wrapper">
+                                    <input type="text" class="text-field__input" id="house" name="house"
+                                        placeholder="Дом" data-complete-length="1, 25" aria-label="Дом">
+                                    <div class="selctexit_btn text-field__input-close">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="field__uncompleted">
+                                    Пожалуйста, укажите дом.
+                                </p>
+                            </div>
+                            <div class="multiselect multiselect--standard forms__fields-item">
+                                <label class="field-label">
+                                    Гражданство
+                                </label>
+                                <div class="selectBox">
+                                    <div class="selectBox_wrapper">
+                                        <div class="selectBox_value-text">Гражданство</div>
+                                        <div class="overSelect"></div>
+                                    </div>
+                                    <div class="selctexit_btn">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="checkboxes">
+                                    <label class="multiselect__label">
+                                        <input class="checrkradio_hidden" type="radio" name="citizenship"
+                                            value="russian_federation" data-mselect-value="РФ">
+                                        РФ
+                                    </label>
+                                    <label class="multiselect__label">
+                                        <input class="checrkradio_hidden" type="radio" name="citizenship" value="works"
+                                            data-mselect-value="Не РФ">
+                                        Не РФ
+                                    </label>
+                                </div>
+                            </div>
+                            <p class="field__uncompleted">Пожалуйста, укажите гражданство.</p>
+                        </div>
+                        <div class="forms__fields-group">
+                            <p class="field__name">Готовность к командировкам</p>
+                            <div class="field__selection">
+                                <div class="field__wrapper field__selection-option">
+                                    <input class="field__selection-input" name="assignment" type="radio"
+                                        id="assignment_not-ready">
+                                    <label class="field__selection-label" for="assignment_not-ready">
+                                        <span class="field__selection-text">Не готов</span>
+                                    </label>
+                                </div>
+                                <div class="field__wrapper field__selection-option">
+                                    <input class="field__selection-input" name="assignment" type="radio"
+                                        id="assignment_ready">
+                                    <label class="field__selection-label" for="assignment_ready">
+                                        <span class="field__selection-text">Готов</span>
+                                    </label>
+                                </div>
+                                <div class="field__wrapper field__selection-option">
+                                    <input class="field__selection-input" name="assignment" type="radio" id="sometimes">
+                                    <label class="field__selection-label" for="sometimes">
+                                        <span class="field__selection-text">Иногда</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <p class="field__uncompleted">
+                                Пожалуйста, укажите готовность к командировкам.
+                            </p>
+                        </div>
+                        <div class="forms__fields-group">
+                            <p class="field__name">Переезд</p>
+                            <div class="field__selection">
+                                <div class="field__wrapper field__selection-option">
+                                    <input class="field__selection-input" name="relocation" type="radio"
+                                        id="relocation_yes">
+                                    <label class="field__selection-label" for="relocation_yes">
+                                        <span class="field__selection-text">Возможен</span>
+                                    </label>
+                                </div>
+                                <div class="field__wrapper field__selection-option">
+                                    <input class="field__selection-input" name="relocation" type="radio"
+                                        id="relocation_no">
+                                    <label class="field__selection-label" for="relocation_no">
+                                        <span class="field__selection-text">Невозможен</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <p class="field__uncompleted">
+                                Пожалуйста, укажите готовность к переезду.
+                            </p>
+                        </div>
+                    </section>
+                    <section class="forms__container">
+                        <h3 class="forms__title add-field__title">Последнее место работы</h3>
+                        <h4 class="forms__subtitle">Сначала добавьте сведения о последнем месте (местах) работы.</h4>
+                        <div class="add-field__container bordered-field">
+                            <div class="forms__fields-group">
+                                <div class="text-field text-field--standard forms__fields-item">
+                                    <label for="company-title" class="field-label">Название компании</label>
+                                    <div class="text-field__input-wrapper">
+                                        <input type="text" class="text-field__input" id="company-title"
+                                            name="company-title" placeholder="Название компании"
+                                            data-complete-length="1, 25" aria-label="Название компании">
+                                        <div class="selctexit_btn text-field__input-close">
+                                            <div class="exitlin_wrapper">
+                                                <div class="exit_line"></div>
+                                                <div class="exit_line"></div>
+                                            </div>
+                                            <div class="selctexit_btn_hint">
+                                                Очистить поле?
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="field__uncompleted">
+                                        Пожалуйста, укажите название компании.
+                                    </p>
+                                </div>
+                                <div class="text-field text-field--standard forms__fields-item">
+                                    <label for="company-post" class="field-label">Должность</label>
+                                    <div class="text-field__input-wrapper">
+                                        <input type="text" class="text-field__input" id="company-post"
+                                            name="company-post" placeholder="Должность" data-complete-length="1, 25"
+                                            aria-label="Должность">
+                                        <div class="selctexit_btn text-field__input-close">
+                                            <div class="exitlin_wrapper">
+                                                <div class="exit_line"></div>
+                                                <div class="exit_line"></div>
+                                            </div>
+                                            <div class="selctexit_btn_hint">
+                                                Очистить поле?
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="field__uncompleted">
+                                        Пожалуйста, укажите должность.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="forms__fields-group forms__fields-group--flex">
+                                <p class="field__name">Начало работы</p>
+                                <div class="multiselect multiselect--standard forms__fields-item">
+                                    <div class="selectBox">
+                                        <div class="selectBox_wrapper">
+                                            <div class="selectBox_value-text">Месяц</div>
+                                            <div class="overSelect"></div>
+                                        </div>
+                                        <div class="selctexit_btn">
+                                            <div class="exitlin_wrapper">
+                                                <div class="exit_line"></div>
+                                                <div class="exit_line"></div>
+                                            </div>
+                                            <div class="selctexit_btn_hint">
+                                                Очистить поле?
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="checkboxes">
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-start-month"
+                                                value="january" data-mselect-value="Январь">
+                                            Январь
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-start-month"
+                                                value="february" data-mselect-value="Февраль">
+                                            Февраль
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-start-month"
+                                                value="march" data-mselect-value="Март">
+                                            Март
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-start-month"
+                                                value="april" data-mselect-value="Апрель">
+                                            Апрель
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-start-month"
+                                                value="may" data-mselect-value="Май">
+                                            Май
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-start-month"
+                                                value="june" data-mselect-value="Июнь">
+                                            Июнь
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-start-month"
+                                                value="july" data-mselect-value="Июль">
+                                            Июль
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-start-month"
+                                                value="august" data-mselect-value="Август">
+                                            Август
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-start-month"
+                                                value="september" data-mselect-value="Сентябрь">
+                                            Сентябрь
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-start-month"
+                                                value="october" data-mselect-value="Октябрь">
+                                            Октябрь
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-start-month"
+                                                value="november" data-mselect-value="Ноябрь">
+                                            Ноябрь
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-start-month"
+                                                value="december" data-mselect-value="Декабрь">
+                                            Декабрь
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="text-field text-field--select forms__fields-item">
+                                    <div class="text-field__input-wrapper">
+                                        <input type="text" class="text-field__input" id="work-start-year"
+                                            name="work-start-year" placeholder="Год" data-complete-length="1, 25"
+                                            aria-label="Год начала работы" data-text-select-range="1990, currentYear">
+                                        <div class="selctexit_btn text-field__input-close">
+                                            <div class="exitlin_wrapper">
+                                                <div class="exit_line"></div>
+                                                <div class="exit_line"></div>
+                                            </div>
+                                            <div class="selctexit_btn_hint">
+                                                Очистить поле?
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="checkboxes">
+
+                                    </div>
+                                </div>
+                                <p class="field__uncompleted">Пожалуйста, укажите начало работы.</p>
+                            </div>
+                            <div class="forms__fields-group forms__fields-group--flex">
+                                <p class="field__name">Конец работы</p>
+                                <div class="checkbox">
+                                    <input type="checkbox" name="work-end-period_now" id="work-end-period_now"
+                                        data-optional-checkbox="hide, work-end-period">
+                                    <label for="work-end-period_now" class="checkbox__value">
+                                        <span class="checkbox__icon"></span>
+                                        По настоящее время
+                                    </label>
+                                </div>
+                                <div class="multiselect multiselect--standard forms__fields-item"
+                                    data-optional="work-end-period">
+                                    <div class="selectBox">
+                                        <div class="selectBox_wrapper">
+                                            <div class="selectBox_value-text">Месяц</div>
+                                            <div class="overSelect"></div>
+                                        </div>
+                                        <div class="selctexit_btn">
+                                            <div class="exitlin_wrapper">
+                                                <div class="exit_line"></div>
+                                                <div class="exit_line"></div>
+                                            </div>
+                                            <div class="selctexit_btn_hint">
+                                                Очистить поле?
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="checkboxes">
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-end-month"
+                                                value="january" data-mselect-value="Январь">
+                                            Январь
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-end-month"
+                                                value="february" data-mselect-value="Февраль">
+                                            Февраль
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-end-month"
+                                                value="march" data-mselect-value="Март">
+                                            Март
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-end-month"
+                                                value="april" data-mselect-value="Апрель">
+                                            Апрель
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-end-month"
+                                                value="may" data-mselect-value="Май">
+                                            Май
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-end-month"
+                                                value="june" data-mselect-value="Июнь">
+                                            Июнь
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-end-month"
+                                                value="july" data-mselect-value="Июль">
+                                            Июль
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-end-month"
+                                                value="august" data-mselect-value="Август">
+                                            Август
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-end-month"
+                                                value="september" data-mselect-value="Сентябрь">
+                                            Сентябрь
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-end-month"
+                                                value="october" data-mselect-value="Октябрь">
+                                            Октябрь
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-end-month"
+                                                value="november" data-mselect-value="Ноябрь">
+                                            Ноябрь
+                                        </label>
+                                        <label class="multiselect__label">
+                                            <input class="checrkradio_hidden" type="radio" name="work-end-month"
+                                                value="december" data-mselect-value="Декабрь">
+                                            Декабрь
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="text-field text-field--select forms__fields-item"
+                                    data-optional="work-end-period">
+                                    <div class="text-field__input-wrapper">
+                                        <input type="text" class="text-field__input" id="work-end-year"
+                                            name="work-end-year" placeholder="Год" data-complete-length="1, 25"
+                                            aria-label="Год начала работы" data-text-select-range="1990, currentYear">
+                                        <div class="selctexit_btn text-field__input-close">
+                                            <div class="exitlin_wrapper">
+                                                <div class="exit_line"></div>
+                                                <div class="exit_line"></div>
+                                            </div>
+                                            <div class="selctexit_btn_hint">
+                                                Очистить поле?
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="checkboxes">
+
+                                    </div>
+                                </div>
+                                <p class="field__uncompleted">Пожалуйста, укажите конец работы.</p>
+                            </div>
+                            <div class="forms__fields-group">
+                                <div class="text-field text-field--tags forms__fields-item forms__fields-item--full">
+                                    <label for="responsibilities" class="field-label">Обязанности</label>
+                                    <div class="text-field__input-wrapper">
+                                        <input type="text" class="text-field__input" id="responsibilities"
+                                            name="responsibilities" placeholder="Введите обязанности"
+                                            data-complete-length="1, 25" aria-label="Обязанности">
+                                        <div class="selctexit_btn text-field__input-close">
+                                            <div class="exitlin_wrapper">
+                                                <div class="exit_line"></div>
+                                                <div class="exit_line"></div>
+                                            </div>
+                                            <div class="selctexit_btn_hint">
+                                                Очистить поле?
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="text-field__add-button icon-plus"></button>
+                                    <p class="field__uncompleted">Пожалуйста, укажите обязанности</p>
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="forms__title" data-add-field-title="workplace">
+                            Последующее место работы
+                        </h4>
+                        <div class="add-field" data-add-field="workplace">
+                            <div class="add-field__icon icon-plus"></div>
+                            <p class="add-field__text">
+                                Добавить место работы
+                            </p>
+                        </div>
+                    </section>
+                    <section class="forms__container">
+                        <h3 class="forms__title">Зарплата</h3>
+                        <div class="forms__range-block range-block">
+                            <!-- <div class="icon-pencil icon"></div> -->
+                            <div class="range-block__content">
+                                <h5 class="range-block__title">Желаемая сумма зарплаты в месяц от:</h5>
+                                <input class="range-block__value" aria-label="Сумма зарплаты" type="text" value="32133"
+                                    name="salary">
+                            </div>
+                            <div class="range">
+                                <div class="range__subscale" data-range-limits="20000, 30000" data-range-step="2500">
+                                </div>
+                                <div class="range__subscale" data-range-limits="30000, 120000" data-range-step="5000">
+                                </div>
+                                <div class="range__scale"></div>
+                                <div class="range__toggler"></div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="forms__container">
+                        <h3 class="forms__title add-field__title">Способ связи</h3>
+                        <div class="forms__fields-group checkboxes-group">
+                            <div class="checkboxes-group__item checkbox checkbox--inline">
+                                <input class="checkboxes-group__checkbox" type="checkbox" name="contact-method"
+                                    id="phone">
+                                <label class="checkbox__value" for="phone">
+                                    <span class="checkbox__icon"></span>
+                                    Телефон
+                                </label>
+                            </div>
+                            <div class="checkboxes-group__item checkbox checkbox--inline">
+                                <input class="checkboxes-group__checkbox" type="checkbox" name="contact-method"
+                                    id="whatsapp">
+                                <label class="checkbox__value" for="whatsapp">
+                                    <span class="checkbox__icon"></span>
+                                    WhatsApp
+                                </label>
+                            </div>
+                            <div class="checkboxes-group__item checkbox checkbox--inline">
+                                <input class="checkboxes-group__checkbox" type="checkbox" name="contact-method"
+                                    id="viber">
+                                <label class="checkbox__value" for="viber">
+                                    <span class="checkbox__icon"></span>
+                                    Viber
+                                </label>
+                            </div>
+                            <div class="checkboxes-group__item checkbox field-init--add-group checkbox--inline">
+                                <input class="checkboxes-group__checkbox" type="checkbox" name="contact-method"
+                                    id="telegram" data-optional-checkbox="show, telegram-link">
+                                <label class="checkbox__value" for="telegram">
+                                    <span class="checkbox__icon"></span>
+                                    Telegram
+                                </label>
+                            </div>
+                            <div class="text-field text-field--standard forms__fields-item forms__fields-item--full text-field--optional"
+                                data-optional="telegram-link">
+                                <label for="telegram-link" class="field-label">Ссылка на аккаунт Telegram</label>
+                                <div class="text-field__input-wrapper">
+                                    <input type="text" class="text-field__input" id="telegram-link" name="telegram-link"
+                                        placeholder="Ссылка на аккаунт Telegram" data-complete-length="1, 25"
+                                        aria-label="Ссылка на аккаунт Telegram">
+                                    <div class="selctexit_btn text-field__input-close">
+                                        <div class="exitlin_wrapper">
+                                            <div class="exit_line"></div>
+                                            <div class="exit_line"></div>
+                                        </div>
+                                        <div class="selctexit_btn_hint">
+                                            Очистить поле?
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="field__uncompleted">
+                                    Пожалуйста, укажите название ссылку на аккаунт Telegram.
+                                </p>
+                            </div>
+                            <p class="field__uncompleted">Пожалуйста, укажите минимум один из удобных способов
+                                связи.
+                            </p>
+                        </div>
+                    </section>
+                    <section class="forms__load-image load-image">
+                        <h3>
+                            <label class="load-image__button button" for="load-image">Добавить фото</label>
+                        </h3>
+                        <input class="load-image__input" type="file" name="image" id="load-image" accept="image/*">
+                        <div class="load-image__content">
+                            <div class="load-image__image-block">
+                                <button class="load-image__close icon-close" title="Удалить фото"
+                                    onclick="event.preventDefault()"></button>
+                                <img class="load-image__img" src="#" alt="Загруженное фото" id="load-image__preview"
+                                    data-popup-fullimage>
+                                <p class="load-image__data-text">
+                                    <span class="load-image__data-title">Формат:</span>
+                                    <input class="load-image__data-value" id="load-image__format" disabled type="text">
+                                </p>
+                                <p class="load-image__data-text">
+                                    <span class="load-image__data-title">Размер:</span>
+                                    <input class="load-image__data-value" id="load-image__size" disabled type="text">
+                                </p>
+                                <p class="load-image__data-text">
+                                    <span class="load-image__data-title">Разрешение:</span>
+                                    <input class="load-image__data-value" type="text" disabled
+                                        id="load-image__resolution">
+                                </p>
+                            </div>
+                            <div class="load-image__data">
+                                <div class="load-image__cut-block cut-circle">
+                                    <div class="load-image__circle-container load-image__small-container">
+                                        <div class="load-image__scale-buttons">
+                                            <span class="icon-minus-circle scale-minus"></span>
+                                            <span class="icon-plus-circle scale-plus"></span>
+                                        </div>
+                                        <div class="load-image__move-y-buttons">
+                                            <span class="icon-arrow-circle move-y-top"></span>
+                                            <span class="icon-arrow-circle move-y-bottom"></span>
+                                        </div>
+                                        <div class="load-image__move-x-buttons">
+                                            <span class="icon-arrow-circle move-x-left"></span>
+                                            <span class="icon-arrow-circle move-x-right"></span>
+                                        </div>
+                                        <div class="load-image__circle-wrapper load-image__small-wrapper">
+                                            <div class="load-image__circle">
+                                                <img src="#" alt="Загруженное изображение" class="load-image__small-img"
+                                                    id="load-image__preview-circle">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="load-image__edit-buttons">
+                                        <button class="load-image__apply-edit">Обрезать</button>
+                                        <button class="load-image__refresh-edit">Вернуть оригинал</button>
+                                        <button class="load-image__download-edit">Скачать</button>
+                                    </div>
+                                    <div class="load-image__small-data">
+                                        <p class="load-image__small-data-text">
+                                            <span
+                                                class="load-image__data-title load-image__small-data-title">Формат:</span>
+                                            <span
+                                                class="load-image__data-value load-image__small-data-value load-image__small-data-format"></span>
+                                        </p>
+                                        <p class="load-image__small-data-text">
+                                            <span
+                                                class="load-image__data-title load-image__small-data-title">Размер:</span>
+                                            <span
+                                                class="load-image__data-value load-image__small-data-value load-image__small-data-size"></span>
+                                        </p>
+                                        <p class="load-image__small-data-text">
+                                            <span
+                                                class="load-image__data-title load-image__small-data-title">Разрешение:</span>
+                                            <span
+                                                class="load-image__data-value load-image__small-data-value load-image__small-data-resolution"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="load-image__cut-block cut-square">
+                                    <div class="load-image__square-container load-image__small-container">
+                                        <div class="load-image__scale-buttons">
+                                            <span class="icon-minus-circle scale-minus"></span>
+                                            <span class="icon-plus-circle scale-plus"></span>
+                                        </div>
+                                        <div class="load-image__move-y-buttons">
+                                            <span class="icon-arrow-circle move-y-top"></span>
+                                            <span class="icon-arrow-circle move-y-bottom"></span>
+                                        </div>
+                                        <div class="load-image__move-x-buttons">
+                                            <span class="icon-arrow-circle move-x-left"></span>
+                                            <span class="icon-arrow-circle move-x-right"></span>
+                                        </div>
+                                        <div class="load-image__square-wrapper load-image__small-wrapper">
+                                            <div class="load-image__square">
+                                                <img src="#" alt="Загруженное изображение" class="load-image__small-img"
+                                                    id="load-image__preview-square">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="load-image__edit-buttons">
+                                        <button class="load-image__apply-edit">Обрезать</button>
+                                        <button class="load-image__refresh-edit">Вернуть оригинал</button>
+                                        <button class="load-image__download-edit">Скачать</button>
+                                    </div>
+                                    <div class="load-image__small-data">
+                                        <p class="load-image__small-data-text">
+                                            <span
+                                                class="load-image__data-title load-image__small-data-title">Формат:</span>
+                                            <span
+                                                class="load-image__data-value load-image__small-data-value load-image__small-data-format"></span>
+                                        </p>
+                                        <p class="load-image__small-data-text">
+                                            <span
+                                                class="load-image__data-title load-image__small-data-title">Размер:</span>
+                                            <span
+                                                class="load-image__data-value load-image__small-data-value load-image__small-data-size"></span>
+                                        </p>
+                                        <p class="load-image__small-data-text">
+                                            <span
+                                                class="load-image__data-title load-image__small-data-title">Разрешение:</span>
+                                            <span
+                                                class="load-image__data-value load-image__small-data-value load-image__small-data-resolution"></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="load-image__info __removed">
+                            Обратите внимание, что помощью мышки вы можете изменять положение фото. После того когда вы
+                            выберите нужный фрагмент, вы можете обрезать фото, чтобы зафиксировать то, что будет видеть
+                            работодатель в первую очередь
+                        </p>
+                        <p class="field__uncompleted">
+                            Пожалуйста, загрузите фото.
+                        </p>
+                    </section>
+                    <input class="forms__submit button" id="submit-button" type="submit" value="Добавить резюме">
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <svg display='none'>
+        <symbol id='login' viewBox="0 0 15 13">
+            <path
+                d="M7.5 0C3.36 0 0 3.5 0 7.82C0 9.7 0.64 11.42 1.7 12.77C1.87 11.41 3.18 10.25 5.01 9.7C5.68 10.35 6.55 10.75 7.5 10.75C8.43 10.75 9.28 10.37 9.94 9.75C11.79 10.34 13.07 11.57 13.12 12.99C14.29 11.61 15 9.8 15 7.82C15 3.5 11.64 0 7.5 0ZM7.5 9.82C7.02 9.82 6.57 9.69 6.17 9.45C5.2 8.88 4.54 7.7 4.54 6.35C4.54 4.44 5.87 2.88 7.5 2.88C9.13 2.88 10.46 4.44 10.46 6.35C10.46 7.73 9.77 8.91 8.78 9.47C8.4 9.7 7.96 9.82 7.5 9.82Z">
+            </path>
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='register' viewBox="0 0 15 13">
+            <path
+                d="M12.497,6a3.5,3.5,0,0,1-3.5-3.5c0-.1138.0229-.2213.0335-.3323a7.23,7.23,0,0,0-1.5338-.1649A7.6622,7.6622,0,0,0,0,9.82,8.0141,8.0141,0,0,0,1.1683,14h.7684a4.7816,4.7816,0,0,1,3.0741-2.2955,3.4743,3.4743,0,0,0,4.926.0474A4.7173,4.7173,0,0,1,12.87,14h.9557A8.0573,8.0573,0,0,0,13.87,5.719,3.4861,3.4861,0,0,1,12.497,6ZM8.7819,11.4773a2.5421,2.5421,0,0,1-2.6151-.0255A3.5743,3.5743,0,0,1,4.5375,8.3544,3.25,3.25,0,0,1,7.4968,4.8825a3.2505,3.2505,0,0,1,2.9594,3.4719A3.5615,3.5615,0,0,1,8.7819,11.4773Zm3.9659-9.2281V0h-.7516V2.2492H9.7415v.7516h2.2548V5.2556h.7516V3.0008H14.997V2.2492Z">
+            </path>
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='search' viewBox="0 0 30 30">
+            <path fill="none" stroke="#000000" stroke-miterlimit="10" stroke-width="2"
+                d="M13 4A9 9 0 1 0 13 22A9 9 0 1 0 13 4Z" />
+            <path fill="none" stroke="#000000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"
+                d="M26 26L19.437 19.437" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='facebook' viewBox="0 0 24 24">
+            <path
+                d="M15.12,5.32H17V2.14A26.11,26.11,0,0,0,14.26,2C11.54,2,9.68,3.66,9.68,6.7V9.32H6.61v3.56H9.68V22h3.68V12.88h3.06l.46-3.56H13.36V7.05C13.36,6,13.64,5.32,15.12,5.32Z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='google_plus' viewBox="0 0 16 16">
+            <path
+                d="M16 7h-2V5h-1v2h-2v1h2v2h1V8h2zM5 9h2.829A3.006 3.006 0 015 11c-1.654 0-3-1.346-3-3s1.346-3 3-3c.717 0 1.407.257 1.943.724l1.314-1.508A4.955 4.955 0 005 3C2.243 3 0 5.243 0 8s2.243 5 5 5 5-2.243 5-5V7H5v2z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='odnoklassniki' viewBox="0 0 14 24">
+            <path
+                d="m9.456 17.441c1.363-.316 2.566-.83 3.647-1.518l-.047.028c.498-.329.822-.887.822-1.52 0-1.003-.813-1.816-1.816-1.816-.348 0-.673.098-.949.267l.008-.005c-1.184.751-2.625 1.196-4.17 1.196s-2.987-.446-4.202-1.215l.032.019c-.274-.175-.608-.279-.967-.279-.642 0-1.206.334-1.529.837l-.004.007s0 0 0 .005c-.175.274-.279.608-.279.967 0 .643.335 1.207.839 1.529l.007.004c1.034.661 2.237 1.174 3.522 1.473l.078.015-3.469 3.465c-.332.327-.538.781-.538 1.284 0 .489.195.932.51 1.256l.03.03c.326.327.777.529 1.275.529s.949-.202 1.275-.529l3.421-3.404 3.4 3.406c.328.328.782.532 1.283.532 1.002 0 1.814-.812 1.814-1.814 0-.501-.203-.954-.531-1.283l-3.461-3.466zm-2.505-5.052c3.418-.003 6.188-2.775 6.188-6.194 0-3.421-2.773-6.194-6.194-6.194s-6.194 2.773-6.194 6.194v.006c.007 3.419 2.78 6.188 6.2 6.188zm0-8.758c1.417 0 2.565 1.148 2.565 2.565s-1.148 2.565-2.565 2.565c-1.415 0-2.563-1.146-2.565-2.561 0-.001 0-.001 0-.002 0-1.417 1.148-2.566 2.565-2.567z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='play' viewBox="0 0 24 24">
+            <path
+                d="M7 17.259V6.74104C7 5.96925 7.83721 5.48838 8.50387 5.87726L17.5192 11.1362C18.1807 11.5221 18.1807 12.4779 17.5192 12.8638L8.50387 18.1227C7.83721 18.5116 7 18.0308 7 17.259Z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='telegramm' viewBox="0 0 50 50">
+            <path
+                d="M46.137,6.552c-0.75-0.636-1.928-0.727-3.146-0.238l-0.002,0C41.708,6.828,6.728,21.832,5.304,22.445	c-0.259,0.09-2.521,0.934-2.288,2.814c0.208,1.695,2.026,2.397,2.248,2.478l8.893,3.045c0.59,1.964,2.765,9.21,3.246,10.758	c0.3,0.965,0.789,2.233,1.646,2.494c0.752,0.29,1.5,0.025,1.984-0.355l5.437-5.043l8.777,6.845l0.209,0.125	c0.596,0.264,1.167,0.396,1.712,0.396c0.421,0,0.825-0.079,1.211-0.237c1.315-0.54,1.841-1.793,1.896-1.935l6.556-34.077	C47.231,7.933,46.675,7.007,46.137,6.552z M22,32l-3,8l-3-10l23-17L22,32z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='twitter' viewBox="0 0 24 24">
+            <path
+                d="M22,5.8a8.49,8.49,0,0,1-2.36.64,4.13,4.13,0,0,0,1.81-2.27,8.21,8.21,0,0,1-2.61,1,4.1,4.1,0,0,0-7,3.74A11.64,11.64,0,0,1,3.39,4.62a4.16,4.16,0,0,0-.55,2.07A4.09,4.09,0,0,0,4.66,10.1,4.05,4.05,0,0,1,2.8,9.59v.05a4.1,4.1,0,0,0,3.3,4A3.93,3.93,0,0,1,5,13.81a4.9,4.9,0,0,1-.77-.07,4.11,4.11,0,0,0,3.83,2.84A8.22,8.22,0,0,1,3,18.34a7.93,7.93,0,0,1-1-.06,11.57,11.57,0,0,0,6.29,1.85A11.59,11.59,0,0,0,20,8.45c0-.17,0-.35,0-.53A8.43,8.43,0,0,0,22,5.8Z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='vk' viewBox="0 0 24 24">
+            <path
+                d="m23.456 5.784c-.27.849-.634 1.588-1.09 2.259l.019-.03q-.672 1.12-1.605 2.588-.8 1.159-.847 1.2c-.138.173-.234.385-.267.618l-.001.007c.027.212.125.397.268.535l.4.446q3.21 3.299 3.611 4.548c.035.092.055.198.055.309 0 .194-.062.373-.167.52l.002-.003c-.176.181-.422.293-.694.293-.03 0-.061-.001-.09-.004h.004-2.631c-.001 0-.003 0-.005 0-.337 0-.647-.118-.89-.314l.003.002c-.354-.291-.669-.606-.951-.948l-.009-.012q-.691-.781-1.226-1.315-1.782-1.694-2.63-1.694c-.021-.002-.045-.003-.07-.003-.165 0-.319.051-.446.138l.003-.002c-.104.13-.167.298-.167.479 0 .036.002.07.007.105v-.004c-.027.314-.043.679-.043 1.048 0 .119.002.237.005.355v-.017 1.159c.01.047.016.101.016.156 0 .242-.11.458-.282.601l-.001.001c-.387.177-.839.281-1.316.281-.102 0-.202-.005-.301-.014l.013.001c-1.574-.03-3.034-.491-4.275-1.268l.035.02c-1.511-.918-2.763-2.113-3.717-3.525l-.027-.042c-.906-1.202-1.751-2.56-2.471-3.992l-.07-.154c-.421-.802-.857-1.788-1.233-2.802l-.06-.185c-.153-.456-.264-.986-.31-1.535l-.002-.025q0-.758.892-.758h2.63c.024-.002.052-.003.081-.003.248 0 .477.085.658.228l-.002-.002c.2.219.348.488.421.788l.003.012c.484 1.367.997 2.515 1.587 3.615l-.067-.137c.482.97 1.015 1.805 1.623 2.576l-.023-.031q.8.982 1.248.982c.009.001.02.001.032.001.148 0 .277-.08.347-.2l.001-.002c.074-.19.117-.411.117-.641 0-.049-.002-.098-.006-.146v.006-3.879c-.021-.457-.133-.884-.32-1.267l.008.019c-.124-.264-.273-.492-.45-.695l.003.004c-.164-.164-.276-.379-.311-.619l-.001-.006c0-.17.078-.323.2-.423l.001-.001c.121-.111.283-.178.46-.178h.008 4.146c.022-.003.047-.004.073-.004.195 0 .37.088.486.226l.001.001c.103.188.164.413.164.651 0 .038-.002.075-.005.112v-.005 5.173c-.002.024-.003.052-.003.08 0 .184.051.357.139.504l-.002-.004c.073.108.195.178.333.178h.001c.176-.012.336-.07.471-.162l-.003.002c.272-.187.506-.4.709-.641l.004-.005c.607-.686 1.167-1.444 1.655-2.25l.039-.07c.344-.57.716-1.272 1.053-1.993l.062-.147.446-.892c.155-.446.571-.76 1.06-.76.019 0 .038 0 .057.001h-.003 2.631q1.066 0 .8.981z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='pencil' viewBox="0 0 512 512">
+            <path
+                d="M64 368v80h80l235.727-235.729-79.999-79.998L64 368zm377.602-217.602c8.531-8.531 8.531-21.334 0-29.865l-50.135-50.135c-8.531-8.531-21.334-8.531-29.865 0l-39.468 39.469 79.999 79.998 39.469-39.467z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='trash' viewBox="0 0 512 512">
+            <path fill="#ff0000"
+                d="M413.7 133.4c-2.4-9-4-14-4-14-2.6-9.3-9.2-9.3-19-10.9l-53.1-6.7c-6.6-1.1-6.6-1.1-9.2-6.8-8.7-19.6-11.4-31-20.9-31h-103c-9.5 0-12.1 11.4-20.8 31.1-2.6 5.6-2.6 5.6-9.2 6.8l-53.2 6.7c-9.7 1.6-16.7 2.5-19.3 11.8 0 0-1.2 4.1-3.7 13-3.2 11.9-4.5 10.6 6.5 10.6h302.4c11 .1 9.8 1.3 6.5-10.6zM379.4 176H132.6c-16.6 0-17.4 2.2-16.4 14.7l18.7 242.6c1.6 12.3 2.8 14.8 17.5 14.8h207.2c14.7 0 15.9-2.5 17.5-14.8l18.7-242.6c1-12.6.2-14.7-16.4-14.7z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='arrow' viewBox="0 0 11 20">
+            <path fill-rule="evenodd"
+                d="M249.366 6538.708c.405.39 1.06.39 1.464 0l8.563-8.264a1.95 1.95 0 0 0 0-2.827l-8.625-8.325a1.063 1.063 0 0 0-1.454-.01.976.976 0 0 0-.011 1.425l7.894 7.617a.975.975 0 0 1 0 1.414l-7.831 7.557a.974.974 0 0 0 0 1.413"
+                transform="translate(-249 -6519)" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='question' viewBox="0 0 24 24">
+            <g data-name="Layer 2">
+                <g data-name="menu-arrow-circle">
+                    <rect opacity="0" transform="rotate(180 12 12)" width="20" height="20" />
+                    <path
+                        d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 16a1 1 0 1 1 1-1 1 1 0 0 1-1 1zm1-5.16V14a1 1 0 0 1-2 0v-2a1 1 0 0 1 1-1 1.5 1.5 0 1 0-1.5-1.5 1 1 0 0 1-2 0 3.5 3.5 0 1 1 4.5 3.34z" />
+                </g>
+            </g>
+        </symbol>
+    </svg>
+
+    <svg display='none'>
+        <symbol id='bell' viewBox="0 0 512 512">
+            <path
+                d="M381.7 225.9c0-97.6-52.5-130.8-101.6-138.2 0-.5.1-1 .1-1.6 0-12.3-10.9-22.1-24.2-22.1-13.3 0-23.8 9.8-23.8 22.1 0 .6 0 1.1.1 1.6-49.2 7.5-102 40.8-102 138.4 0 113.8-28.3 126-66.3 158h384c-37.8-32.1-66.3-44.4-66.3-158.2zM256.2 448c26.8 0 48.8-19.9 51.7-43H204.5c2.8 23.1 24.9 43 51.7 43z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='mail' viewBox="0 0 24 24">
+            <path fill='none' d="M0 0h24v24H0V0z" />
+            <path
+                d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-.4 4.25l-6.54 4.09c-.65.41-1.47.41-2.12 0L4.4 8.25c-.25-.16-.4-.43-.4-.72 0-.67.73-1.07 1.3-.72L12 11l6.7-4.19c.57-.35 1.3.05 1.3.72 0 .29-.15.56-.4.72z" />
+        </symbol>
+    </svg>
+
+
+    <svg display='none'>
+        <symbol id='heart' viewBox="0 0 29 29">
+            <path
+                d="M14.854 6.083l-.354.353-.354-.354a6.5 6.5 0 0 0-9.192 9.192l.354.354L14.5 24.82l9.192-9.192.354-.354a6.5 6.5 0 0 0-9.192-9.191z" />
+            <path
+                d="M14.854 6.083l-.354.353-.354-.354a6.5 6.5 0 0 0-9.192 9.192l.354.354L14.5 24.82l9.192-9.192.354-.354a6.5 6.5 0 0 0-9.192-9.191z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='user-del' viewBox="0 0 24 24">
+            <path
+                d="M13.3,12.22A4.92,4.92,0,0,0,15,8.5a5,5,0,0,0-10,0,4.92,4.92,0,0,0,1.7,3.72A8,8,0,0,0,2,19.5a1,1,0,0,0,2,0,6,6,0,0,1,12,0,1,1,0,0,0,2,0A8,8,0,0,0,13.3,12.22ZM10,11.5a3,3,0,1,1,3-3A3,3,0,0,1,10,11.5Zm10.91.5.8-.79a1,1,0,0,0-1.42-1.42l-.79.8-.79-.8a1,1,0,0,0-1.42,1.42l.8.79-.8.79a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l.79-.8.79.8a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='logout' viewBox="0 0 24 24">
+            <path d="M20.9,11.6c-0.1-0.1-0.1-0.2-0.2-0.3l-3-3c-0.4-0.4-1-0.4-1.4,0s-0.4,1,0,1.4l1.3,1.3H13c-0.6,0-1,0.4-1,1s0.4,1,1,1h4.6
+        l-1.3,1.3c-0.4,0.4-0.4,1,0,1.4c0.2,0.2,0.5,0.3,0.7,0.3s0.5-0.1,0.7-0.3l3-3c0.1-0.1,0.2-0.2,0.2-0.3C21,12.1,21,11.9,20.9,11.6z
+        " />
+            <path d="M15.5,18.1C14.4,18.7,13.2,19,12,19c-3.9,0-7-3.1-7-7s3.1-7,7-7c1.2,0,2.4,0.3,3.5,0.9c0.5,0.3,1.1,0.1,1.4-0.4
+        c0.3-0.5,0.1-1.1-0.4-1.4C15.1,3.4,13.6,3,12,3c-5,0-9,4-9,9s4,9,9,9c1.6,0,3.1-0.4,4.5-1.2c0.5-0.3,0.6-0.9,0.4-1.4
+        C16.6,18,16,17.8,15.5,18.1z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='clip' viewBox="0 0 101 101">
+            <path
+                d="M40.1 84.4c5.4 0 10.5-2.1 14.4-5.9l12.6-12.6c.9-.9.9-2.5 0-3.4s-2.5-.9-3.4 0L51.1 75c-2.9 2.9-6.8 4.5-11 4.5s-8-1.6-11-4.5-4.5-6.8-4.5-11 1.6-8 4.5-11l28.5-28.5c2.1-2.1 4.8-3.2 7.8-3.2 2.9 0 5.7 1.1 7.8 3.2 2.1 2.1 3.2 4.8 3.2 7.8 0 2.9-1.1 5.7-3.2 7.8L44.6 68.7c-2.5 2.5-6.7 2.5-9.2 0-1.2-1.2-1.9-2.9-1.9-4.6 0-1.7.7-3.4 1.9-4.6l12.7-12.7c.9-.9.9-2.5 0-3.4s-2.5-.9-3.4 0L32.1 56.1c-2.1 2.1-3.3 5-3.3 8s1.2 5.9 3.3 8c4.4 4.4 11.6 4.4 16 0l28.5-28.5c3-3 4.6-6.9 4.6-11.2s-1.6-8.2-4.6-11.2c-6.1-6.1-16.2-6.1-22.3 0L25.8 49.7c-3.8 3.8-5.9 8.9-5.9 14.4 0 5.4 2.1 10.5 5.9 14.4 3.8 3.8 8.9 5.9 14.3 5.9z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='leaf' viewBox="0 0 20 20">
+            <path
+                d="M19.025 3.587c-4.356 2.556-4.044 7.806-7.096 10.175-2.297 1.783-5.538.88-7.412.113 0 0-1.27 1.603-2.181 3.74-.305.717-1.644-.073-1.409-.68C3.905 9.25 14.037 5.416 14.037 5.416s-7.149-.303-11.927 5.94c-.128-1.426-.34-5.284 3.36-7.65 5.016-3.211 14.572-.715 13.555-.119z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='star' viewBox="0 0 48 48">
+            <path
+                d="M24 34.54 36.36 42l-3.27-14.06L44 18.49l-14.38-1.24L24 4l-5.62 13.25L4 18.49l10.91 9.45L11.64 42z" />
+            <path fill="none" d="M0 0h48v48H0z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='dislike' viewBox="0 0 48 48">
+            <path fill="none" stroke="none" d="M0 0h48v48H0z" />
+            <path
+                d="M30 6H12c-1.66 0-3.08 1.01-3.68 2.44l-6.03 14.1A4 4 0 0 0 2 24v3.83l.02.02L2 28c0 2.21 1.79 4 4 4h12.63l-1.91 9.14c-.04.2-.07.41-.07.63 0 .83.34 1.58.88 2.12L19.66 46l13.17-13.17C33.55 32.1 34 31.1 34 30V10c0-2.21-1.79-4-4-4zm8 0v24h8V6h-8z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='duplicate' viewBox="0 0 16 16">
+            <path
+                style="line-height:normal;text-indent:0;text-align:start;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000;text-transform:none;white-space:normal;isolation:auto;mix-blend-mode:normal;"
+                d="M3.002 2v9L3 11.002l.002.002 2.994 2.99v.004h7.006V2h-10zm1 1h8v9.998H6.996L7 10.004H4.002V3zm.414 8.004H6l-.002 1.578-1.582-1.578z"
+                color="#000" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='apple' viewBox="0 0 24 24">
+            <path
+                d="M14.94,5.19A4.38,4.38,0,0,0,16,2,4.44,4.44,0,0,0,13,3.52,4.17,4.17,0,0,0,12,6.61,3.69,3.69,0,0,0,14.94,5.19Zm2.52,7.44a4.51,4.51,0,0,1,2.16-3.81,4.66,4.66,0,0,0-3.66-2c-1.56-.16-3,.91-3.83.91s-2-.89-3.3-.87A4.92,4.92,0,0,0,4.69,9.39C2.93,12.45,4.24,17,6,19.47,6.8,20.68,7.8,22.05,9.12,22s1.75-.82,3.28-.82,2,.82,3.3.79,2.22-1.24,3.06-2.45a11,11,0,0,0,1.38-2.85A4.41,4.41,0,0,1,17.46,12.63Z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='film' viewBox="0 0 101 101">
+            <path
+                d="M82.2 16.4H18.8c-1.3 0-2.4 1.1-2.4 2.4v63.4c0 1.3 1.1 2.4 2.4 2.4H82.2c1.3 0 2.4-1.1 2.4-2.4V18.8c0-1.3-1.1-2.4-2.4-2.4zm-4.9 31.7h-5.5v-11h8v11h-2.5zm-10.3 0H34V21.2h33v26.9zm-37.8 0h-8v-11h8v11zm-8 4.8h8v11h-8v-11zm12.8 0h33v26.9H34V52.9zm37.8 0h8v11h-8v-11zm8-20.6h-8v-11h8v11zM29.2 21.2v11h-8v-11h8zm-8 47.5h8v11h-8v-11zm50.6 11.1v-11h8v11h-8z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='graph' viewBox="0 0 70 70">
+            <path
+                d="M20.8 34.8h-8.1c-1.5 0-2.7 1.2-2.7 2.7v16.4c0 1.5 1.2 2.7 2.7 2.7h8.1c1.5 0 2.7-1.2 2.7-2.7V37.5C23.5 36 22.3 34.8 20.8 34.8zM39.1 28.5h-8.1c-1.5 0-2.7 1.2-2.7 2.7v22.7c0 1.5 1.2 2.7 2.7 2.7h8.1c1.5 0 2.7-1.2 2.7-2.7V31.2C41.7 29.7 40.5 28.5 39.1 28.5zM57.3 13.5h-8.1c-1.5 0-2.7 1.2-2.7 2.7v37.7c0 1.5 1.2 2.7 2.7 2.7h8.1c1.5 0 2.7-1.2 2.7-2.7V16.1C60 14.7 58.8 13.5 57.3 13.5z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='shopping' viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0V0z" />
+            <path
+                d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 3c0 .55.45 1 1 1h1l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h11c.55 0 1-.45 1-1s-.45-1-1-1H7l1.1-2h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.67-1.43c-.16-.35-.52-.57-.9-.57H2c-.55 0-1 .45-1 1zm16 15c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='home' viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0V0z" />
+            <path
+                d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='eye' viewBox="0 0 48 48">
+            <path fill="none" d="M0 0h48v48H0z" />
+            <path
+                d="M24 9C14 9 5.46 15.22 2 24c3.46 8.78 12 15 22 15 10.01 0 18.54-6.22 22-15-3.46-8.78-11.99-15-22-15zm0 25c-5.52 0-10-4.48-10-10s4.48-10 10-10 10 4.48 10 10-4.48 10-10 10zm0-16c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='case' viewBox="0 0 1792 1792">
+            <path
+                d="M640 256h512V128H640v128zm1152 640v480q0 66-47 113t-113 47H160q-66 0-113-47T0 1376V896h672v160q0 26 19 45t45 19h320q26 0 45-19t19-45V896h672zm-768 0v128H768V896h256zm768-480v384H0V416q0-66 47-113t113-47h352V96q0-40 28-68t68-28h576q40 0 68 28t28 68v160h352q66 0 113 47t47 113z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='location' viewBox="0 0 24 24">
+            <path
+                d="M12,2a8.009,8.009,0,0,0-8,8c0,3.255,2.363,5.958,4.866,8.819,0.792,0.906,1.612,1.843,2.342,2.791a1,1,0,0,0,1.584,0c0.73-.948,1.55-1.885,2.342-2.791C17.637,15.958,20,13.255,20,10A8.009,8.009,0,0,0,12,2Zm0,11a3,3,0,1,1,3-3A3,3,0,0,1,12,13Z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='flag' viewBox="0 0 512 512">
+            <path
+                d="M426.4 182.5c-35.8 5.9-94.2 7.5-133-66.1-41.6-79.1-108.8-81.5-148.1-74.3-19.1 3.5-33.4 19.5-33.4 35v196.6c11.3 4.3 23.4-.2 26.5-.8.8-.2 1.5-.3 2.4-.5 25-5.5 51.4-8.1 116.8 23.3 82 39.3 153.8-33.1 181.6-83.5 2-3.5 8.7-20.2 8.7-36.2-9.7 4-21.5 6.5-21.5 6.5zM88 32H72c-4.4 0-8 3.6-8 8v432c0 4.4 3.6 8 8 8h16c4.4 0 8-3.6 8-8V40c0-4.4-3.6-8-8-8z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='euro' viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0V0z" />
+            <path
+                d="M15 18.5c-2.51 0-4.68-1.42-5.76-3.5H14c.55 0 1-.45 1-1s-.45-1-1-1H8.58c-.05-.33-.08-.66-.08-1s.03-.67.08-1H14c.55 0 1-.45 1-1s-.45-1-1-1H9.24C10.32 6.92 12.5 5.5 15 5.5c1.25 0 2.42.36 3.42.97.5.31 1.15.26 1.57-.16.58-.58.45-1.53-.25-1.96C18.36 3.5 16.73 3 15 3c-3.92 0-7.24 2.51-8.48 6H4c-.55 0-1 .45-1 1s.45 1 1 1h2.06c-.04.33-.06.66-.06 1s.02.67.06 1H4c-.55 0-1 .45-1 1s.45 1 1 1h2.52c1.24 3.49 4.56 6 8.48 6 1.74 0 3.36-.49 4.74-1.35.69-.43.82-1.39.24-1.97-.42-.42-1.07-.47-1.57-.15-.99.62-2.15.97-3.41.97z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='compressed' viewBox="0 0 32 32">
+            <path d="M3 3v26h26V3H3zm2 2h22v18H5V5z" />
+            <path d="M15 9h2v1h-2zm0-2h2v1h-2zm0 4h2v1h-2zm0 2h2v1h-2zm0 2l-1 4v2h4v-2l-1-4z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='random' viewBox="0 0 16 16">
+            <path
+                d="M13 12h-2c-1 0-1.7-1.2-2.4-2.7-.3.7-.6 1.5-1 2.3C8.4 13 9.4 14 11 14h2v2l3-3-3-3v2zM5.4 6.6c.3-.7.6-1.5 1-2.2C5.6 3 4.5 2 3 2H0v2h3c1 0 1.7 1.2 2.4 2.6z" />
+            <path
+                d="M16 3l-3-3v2h-2C8.3 2 7.1 5 6 7.7 5.2 9.8 4.3 12 3 12H0v2h3c2.6 0 3.8-2.8 4.9-5.6C8.8 6.2 9.7 4 11 4h2v2l3-3z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='asterisk' viewBox="0 0 512 512">
+            <path
+                d="M438 187.713l-31.927-55.426L288 200.574V64h-64v136.574l-118.073-68.287-31.938 55.426L192.092 256 73.998 324.287l31.928 55.426L224 311.426V448h64V311.426l118.072 68.287 31.939-55.426L319.908 256 438 187.713z" />
+        </symbol>
+    </svg>
+    <svg display='none'>
+        <symbol id='add-user' viewBox="122.415 153 20470 16710">
+            <g>
+                <metadata id="CorelCorpID_0Corel-Layer" />
+                <path fill="#665800"
+                    d="M11064 15920l-9928 521c-226,12 -419,-162 -431,-387l-2 0 -580 -11077c-12,-227 162,-420 389,-432l9965 -522c226,-12 420,162 432,389l580 11076c12,227 -162,421 -389,432 -12,1 -24,1 -36,0l0 0zm-4373 -12110l171 -3268c12,-225 205,-399 431,-387l0 -2 9964 522c227,12 401,205 389,432l-580 11076c-12,228 -206,401 -432,389 -13,0 -25,-1 -37,-3l-4863 -255 -103 -1965 3324 174 1371 72 477 -9120 -9144 -480 -146 2771 -822 44 0 0zm-5247 10655l9143 -480 -478 -9120 -9143 480 478 9120 0 0z" />
+                <path fill-rule="nonzero"
+                    d="M11602 9793l-155 -2965c423,129 964,16 1069,-413 139,48 274,88 628,155 1111,266 1687,339 1719,1272l73 2126 -3334 -175 0 0zm349 -7769c-832,-43 -1540,572 -1582,1376 -4,66 -3,139 1,217l85 -5c453,-24 840,325 864,779l76 1441c109,59 226,95 351,101 947,50 1595,-1598 1636,-2375 42,-803 -599,-1491 -1431,-1534l0 0zm-6408 3659c-869,46 -1538,764 -1494,1603 43,812 720,2534 1709,2482 989,-51 1482,-1835 1439,-2647 -44,-840 -784,-1484 -1654,-1438l0 0zm643 6238c496,-177 1104,-730 1329,-1635 948,146 1378,200 1690,1125l684 2029 -7856 412 468 -2090c211,-942 643,-1041 1566,-1284 330,888 1008,1373 1531,1483 -45,-856 -623,-394 -1064,-1549 136,-39 277,-80 420,-129 199,646 1556,635 1656,-98 149,34 294,61 434,84 -297,1150 -904,783 -858,1652l0 0z" />
+                <circle fill="#FEFEFE" cx="17042" cy="13312" r="3713" />
+                <path fill="#FC1D00"
+                    d="M18401 16581c-2907,1204 -5836,-1726 -4633,-4632 1199,-2894 5342,-2929 6554,0 755,1821 -127,3889 -1921,4632l0 0zm-1356 -544c2964,0 3794,-4122 1047,-5260 -2749,-1138 -5078,2360 -2979,4460 513,513 1195,800 1932,800l0 0zm482 -4517l0 1302 1302 0 0 964 -1302 0 0 1302 -964 0 0 -1302 -1302 0 0 -964 1302 0 0 -1302 964 0 0 0z" />
+            </g>
+        </symbol>
+    </svg>
+
+    <svg display='none'>
+        <symbol id="icon-close" viewBox="0 0 21 25">
+            <path
+                d="M6.22566 4.81096C5.83514 4.42044 5.20197 4.42044 4.81145 4.81096C4.42092 5.20148 4.42092 5.83465 4.81145 6.22517L10.5862 11.9999L4.81151 17.7746C4.42098 18.1651 4.42098 18.7983 4.81151 19.1888C5.20203 19.5793 5.8352 19.5793 6.22572 19.1888L12.0004 13.4141L17.7751 19.1888C18.1656 19.5793 18.7988 19.5793 19.1893 19.1888C19.5798 18.7983 19.5798 18.1651 19.1893 17.7746L13.4146 11.9999L19.1893 6.22517C19.5799 5.83465 19.5799 5.20148 19.1893 4.81096C18.7988 4.42044 18.1657 4.42044 17.7751 4.81096L12.0004 10.5857L6.22566 4.81096Z"
+                fill="black" />
+        </symbol>
+    </svg>
+
+    <script src="/vsevn/js/script.js"></script>
+    <script src="/vsevn/js/new-resume.js"></script>
+</body>
+
+</html>
