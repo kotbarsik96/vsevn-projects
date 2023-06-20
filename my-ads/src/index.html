@@ -1,14 +1,886 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="refresh" content="0; url=ads.html" />
-    <title>Dummy Redirect</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" as="font" onload="this.rel='stylesheet'" href="/vsevn-my_ads/css/nullstyles.css">
+    <link rel="stylesheet" href="/vsevn-my_ads/css/header.css">
+    <link rel="stylesheet" href="/vsevn-my_ads/css/styles.css">
+    <link rel="stylesheet" href="/vsevn-my_ads/css/svg.css">
+    <link rel="preload" as="font" onload="this.rel='stylesheet'" href="/vsevn-my_ads/css/fonts.css">
+    <meta property="og:image" content="https://kotbarsik96.github.io/vsevn_ad/img/favicon/268x268.jpg">
+    <meta name="twitter:image" content="https://kotbarsik96.github.io/vsevn_ad/img/favicon/268x268.jpg">
+    <meta name="description" content="">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+
+    <link rel="icon" href="/vsevn-my_ads/img/favicon/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#ffe53b">
+    <meta property="og:type" content="website">
+
+    <title>Мои объявления</title>
 </head>
+
 <body>
-    <!--  This page is made to redirect requests to other page (ads.html) while working with github pages  -->
+    <div class="modals-list"></div>
+    <div class="wrapper">
+        <header class="header">
+            <div class="header__mobile">
+                <button class="header__mobile-button menu-button" type="button" aria-label="меню">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 18">
+                        <rect width="28" height="3" rx="0.6" />
+                        <rect y="7" width="28" height="3" rx="0.6" />
+                        <rect y="15" width="28" height="3" rx="0.6" />
+                    </svg>
+                </button>
+                <div id="header-menu-mobile"></div>
+                <a href="#" class="header__mobile-logo">
+                    <img src="/vsevn-my_ads/img/icons/vsevn-logo.svg" alt="vsevn.ru">
+                </a>
+                <div class="header__mobile-auth">
+                    <button class="header__mobile-signup header-button header-button--transparent" type="button">
+                        Регистрация
+                    </button>
+                    <button class="header__mobile-signup header-button header-button--transparent" type="button">
+                        Войти
+                    </button>
+                </div>
+            </div>
+            <div class="header__top">
+                <div class="header__container">
+                    <nav class="header__nav">
+                        <ul class="header-nav header-nav--main">
+                            <li class="header-nav__item" data-dynamic-adaptive="720, #header-nav__item-1">
+                                <a href="#" class="header-nav__link header-link">
+                                    <span class="header-nav__icon icon-folder"></span>
+                                    Архив
+                                </a>
+                            </li>
+                            <li class="header-nav__item" data-dynamic-adaptive="720, #header-nav__item-2">
+                                <a href="#" class="header-nav__link header-link">
+                                    <span class="header-nav__icon icon-bookmark __ic-fix"></span>
+                                    Контакты
+                                </a>
+                            </li>
+                            <li class="header-nav__item" data-dynamic-adaptive="829, #header-nav__item-5">
+                                <a href="#" class="header-nav__link header-link">
+                                    <span class="header-nav__icon icon-heart-fill __ic-fix"></span>
+                                    Лучший работодатель
+                                </a>
+                            </li>
+                            <li class="header-nav__item" data-dynamic-adaptive="979, #header-nav__item-4">
+                                <a href="#" class="header-nav__link header-link">
+                                    <span class="header-nav__icon icon-paperplane __ic-fix"></span>
+                                    Подписаться
+                                </a>
+                            </li>
+                            <li class="header-nav__item" data-dynamic-adaptive="720, #header-nav__item-3">
+                                <a href="#" class="header-nav__link header-link">
+                                    <span class="header-nav__icon icon-ruble __ic-fix"></span>
+                                    Прайс лист
+                                </a>
+                            </li>
+                            <li class="header-nav__item" data-dynamic-adaptive="720, #header-nav__item-6">
+                                <a href="#" class="header-nav__link header-link">
+                                    <span class="header-nav__icon icon-location __ic-fix"></span>
+                                    Места распространения
+                                </a>
+                            </li>
+                            <li class="header-nav__item" data-dynamic-adaptive="1139, #header-nav__item-7">
+                                <a href="#" class="header-nav__link header-link">
+                                    <span class="header-nav__icon glyphicon icon-star-2 __ic-fix"></span>
+                                    Свежий номер
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="header-nav header-nav--auth">
+                            <li class="header-nav__item" data-dynamic-adaptive="1299, #header-nav__sign-up">
+                                <a href="#" class="header-nav__link header-link">
+                                    <span class="header-nav__icon icon-sign-up"></span>
+                                    Регистрация
+                                </a>
+                            </li>
+                            <li class="header-nav__item" data-dynamic-adaptive="1389, #header-nav__sign-in">
+                                <a href="#" class="header-nav__link header-link">
+                                    <span class="header-nav__icon icon-sign-in"></span>
+                                    Войти
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="header__bottom">
+                <div class="header__container">
+                    <div class="header__logo">
+                        <img src="/vsevn-my_ads/img/icons/logo.svg" data-fullsize-image alt="Все Вакансии Нижнего">
+                    </div>
+                    <ul class="header__buttons">
+                        <li class="header__button-item" data-dynamic-adaptive="1219, #header-nav__item-extra-2">
+                            <a href="#" class="header__button header-button header-button--transparent">
+                                <span class="header-nav__icon icon-layout"></span>
+                                Создать макет
+                            </a>
+                        </li>
+                        <li class="header__button-item">
+                            <a href="#" class="header__button header-link">
+                                <span class="header-nav__icon icon-search"></span>
+                                Вакансии и резюме
+                            </a>
+                        </li>
+                        <li class="header__button-item" data-dynamic-adaptive="839, #header-nav__item-extra-4">
+                            <a href="#" class="header__button header-button">
+                                <span class="header-nav__icon icon-advantages"
+                                    style="font-size: 20px; left: 12px;"></span>
+                                Наши преимущества
+                            </a>
+                        </li>
+                        <li class="header__button-item" data-dynamic-adaptive="1049, #header-nav__item-extra-3">
+                            <a href="#" class="header__button header-link">
+                                <span class="header-nav__icon icon-megaphone"></span>
+                                Подать объявление
+                            </a>
+                        </li>
+                        <li class="header__button-item" data-dynamic-adaptive="1319, #header-nav__item-extra-1">
+                            <a href="#" class="header__button header-link">
+                                <span class="header-nav__icon icon-articles"></span>
+                                Статьи
+                            </a>
+                        </li>
+                        <li class="header__button-item">
+                            <a href="#" class="header__button header-link">
+                                <span class="header-nav__icon icon-applicant"></span>
+                                Соискатель с открытыми контактами
+                            </a>
+                        </li>
+                    </ul>
+                    <button class="header__menu-button menu-button" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 18">
+                            <rect width="28" height="3" rx="0.6" />
+                            <rect y="7" width="28" height="3" rx="0.6" />
+                            <rect y="15" width="28" height="3" rx="0.6" />
+                        </svg>
+                    </button>
+                    <div class="header-menu" data-dynamic-adaptive="720, #header-menu-mobile">
+                        <div class="header-menu__wrapper">
+                            <div class="header-menu__block header-menu__profile">
+                                <div class="header-menu__profile-logo">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" fill-rule="evenodd">
+                                        <path
+                                            d="M83 33l-4.4 9.2H103l5.7-9.2zM0 40.3h5.5V59h4.8V40.3H16v-4.8H0zM21 36l-2 23H24l.6-5.4 5.6.1.5 5.2h5l-2.3-21.5-4.4-1.6c-1.2-.5-1.2-.5-4.4-.5-3.2 0-3.2 0-3.3.4zm31 13l-6.4-12.6a14 14 0 0 0-1.5.5c-.8.3-2 .6-2.6.7l-1 .2V59h5l.1-13.3L52 59H57V35.5h-4.6zM63.5 59h4.8v-9.3l3 .1 4 9h5l-5.3-11.7 5.5-11.8-5 .1-4 9-3 .1v-9.3h-4.8zM28.7 40.4l.7 8.4c-.1.2-4.5.2-4.6 0l.6-8c0-.4.7-.3 3.2-.3zm53 18.8l10.7.1 6.3-9.4-21.4-.1z"
+                                            fill="#2f2e2e"></path>
+                                        <path
+                                            d="M24 5.4c-4.3 4.3-6.4 10-5.2 16C20 28 24.7 33 31 35.2c5 1.6 10 1.4 14.7-.6 9.8-4.2 14-15.3 9.6-24-3-6.7-10.8-11-18-10.6a20 20 0 0 0-13.6 5.4zm24.6 16c-1 3-3.2 5-6.6 6-1.8.6-5.2.7-7.2.3-4.2-1-7-3.6-8-7.3-1.7-7 3.7-13.6 11-19.7 6 4.5 13.2 13 10.7 20.6zM0 33.3h13v-9.6l4-.1c-.6-2.7-.6-5.4-.6-8H13V12l4.5-.1c1.7-4.2 3.7-6.4 6.3-8.8H0zm57.2-23c1.8 3.8 2.2 8 1.3 12-1.4 5.4-3.6 8-7 11h10.6l.2-.6 2.6-8 3 8.6 13-.1-7.8-16L81 3H68.3l-3.5 7.5L62.2 3H51.6c2.4 2.2 4.6 5 5.6 7.3zm20.4 1.5l46.8.1 6-9h-48zM75 18.3l4.2 9h35l6-8.8z"
+                                            fill="#fd521f"></path>
+                                    </svg>
+                                </div>
+                                <div class="header-menu__profile-name">
+                                    <div class="header-menu__profile-name-text">ООО ФОКСТАНК МОТОРЗ</div>
+                                    <button class="header-menu__profile-name-link header-link" type="button">
+                                        Редактировать профиль
+                                    </button>
+                                </div>
+                            </div>
+                            <nav class="header-menu__block header-menu__nav">
+                                <ul class="header-nav">
+                                    <li id="header-nav__sign-up"></li>
+                                    <li id="header-nav__sign-in"></li>
+                                    <li id="header-nav__item-1"></li>
+                                    <li id="header-nav__item-2"></li>
+                                    <li id="header-nav__item-3"></li>
+                                    <li id="header-nav__item-4"></li>
+                                    <li id="header-nav__item-5"></li>
+                                    <li id="header-nav__item-6"></li>
+                                    <li id="header-nav__item-7"></li>
+                                </ul>
+                            </nav>
+                            <div class="header-menu__block">
+                                <ul class="header-nav">
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon header-nav__icon--lock icon-star"></span>
+                                            Избранное
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon header-nav__icon--lock icon-flag"></span>
+                                            Черный список
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon header-nav__icon--lock  icon-heart"></span>
+                                            Мои объявления
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon header-nav__icon--lock icon-graph"></span>
+                                            Отклики
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon header-nav__icon--lock icon-calendar"></span>
+                                            История заказов
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon header-nav__icon--lock icon-cup"></span>
+                                            Отзывы
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon header-nav__icon--lock icon-bell"></span>
+                                            Подписаться
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="header-menu__block header-menu__extra">
+                                <div class="header-menu__block-title">Дополнительные возможности</div>
+                                <ul class="header-nav">
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon icon-house"></span>
+                                            Главная
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon icon-thumb-up"></span>
+                                            Вакансии и Резюме
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon header-nav__icon--lock icon-lamp"></span>
+                                            История операций, бонусы
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon icon-cash"></span>
+                                            Платные услуги продвижения
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon icon-banknote"></span>
+                                            Доступ к контактам резюме
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon icon-user-search"></span>
+                                            Поиск по компании
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon icon-eye"
+                                                style="font-size: 14px;display: flex; align-items: center;"></span>
+                                            Соискатели по рубрикам
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon icon-case"></span>
+                                            Вакансии по рубрикам
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon icon-user-building"></span>
+                                            Соискатели по городам
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon icon-building"></span>
+                                            Вакансии по городам
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon icon-euro"></span>
+                                            Зарплата по профессии
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon icon-hand-heart"></span>
+                                            Конструктор резюме
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span
+                                                class="header-nav__icon header-nav__icon--lock icon-desktop-mobile"></span>
+                                            CRM-система
+                                        </a>
+                                    </li>
+                                    <li class="header-nav__item">
+                                        <a class="header-nav__link" href="#">
+                                            <span class="header-nav__icon icon-gear"></span>
+                                            Помощь
+                                        </a>
+                                    </li>
+                                    <li id="header-nav__item-extra-1"></li>
+                                    <li id="header-nav__item-extra-2"></li>
+                                    <li id="header-nav__item-extra-3"></li>
+                                    <li id="header-nav__item-extra-4"></li>
+                                    <li id="header-nav__item-extra-5"></li>
+                                    <li id="header-nav__item-extra-6"></li>
+                                </ul>
+                            </div>
+                            <div class="header-menu__block header-menu__exit">
+                                <button class="header-menu__exit-link header-link" type="button">
+                                    <svg width="15" height="15" aria-hidden="true" focusable="false"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <path fill="currentColor"
+                                            d="M400 54.1c63 45 104 118.6 104 201.9 0 136.8-110.8 247.7-247.5 248C120 504.3 8.2 393 8 256.4 7.9 173.1 48.9 99.3 111.8 54.2c11.7-8.3 28-4.8 35 7.7L162.6 90c5.9 10.5 3.1 23.8-6.6 31-41.5 30.8-68 79.6-68 134.9-.1 92.3 74.5 168.1 168 168.1 91.6 0 168.6-74.2 168-169.1-.3-51.8-24.7-101.8-68.1-134-9.7-7.2-12.4-20.5-6.5-30.9l15.8-28.1c7-12.4 23.2-16.1 34.8-7.8zM296 264V24c0-13.3-10.7-24-24-24h-32c-13.3 0-24 10.7-24 24v240c0 13.3 10.7 24 24 24h32c13.3 0 24-10.7 24-24z"
+                                            class="">
+                                        </path>
+                                    </svg>
+                                    Выйти из аккаунта
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <section class="my-ads">
+                <div class="page-head">
+                    <h1 class="title">
+                        Мои объявления
+                    </h1>
+                    <ul class="breadcrumbs">
+                        <li class="breadcrumbs__item">
+                            <a class="breadcrumbs__link __active" href="#">
+                                Главная
+                            </a>
+                        </li>
+                        <li class="breadcrumbs__item">
+                            <a class="breadcrumbs__link __active" href="#">
+                                Мои объявления
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="ads-board">
+                    <div class="ads-board__tabs">
+                        <ul class="ads-board__tabs-list">
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button __active" type="button">
+                                    Активные 6
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Завершенные 4
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Блокированные 1
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Отклоненные 1
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Ждут активации 1
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Черновики 2
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Удаленные 2
+                                </button>
+                            </li>
+                        </ul>
+                        <ul class="ads-board__tabs-list ads-board__tabs-list--filter">
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button __active" type="button">
+                                    Все
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Резюме
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Вакансии
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="ads-board__filters">
+                        <div class="ads-board__filters-calendar">
+                            <div class="calendar-double double-input">
+                                <div class="double-input__wrapper">
+                                    <div class="calendar double-input__item">
+                                        <div class="text-input--standard text-input">
+                                            <div class="text-input__wrapper">
+                                                <div class="text-input__block-prefix">От</div>
+                                                <div class="text-input__input calendar__preview">
+                                                    <div class="date-inputs calendar__preview-inputs">
+                                                        <input type="text"
+                                                            class="date-inputs__input date-inputs__input--date"
+                                                            placeholder="ДД">
+                                                        <div class="date-inputs__delimeter">.</div>
+                                                        <input type="text"
+                                                            class="date-inputs__input date-inputs__input--month"
+                                                            placeholder="ММ">
+                                                        <div class="date-inputs__delimeter">.</div>
+                                                        <input type="text"
+                                                            class="date-inputs__input date-inputs__input--year"
+                                                            placeholder="ГГГГ">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="calendar double-input__item">
+                                        <div class="text-input--standard text-input">
+                                            <div class="text-input__wrapper">
+                                                <div class="text-input__block-prefix">До</div>
+                                                <div class="text-input__input calendar__preview">
+                                                    <div class="date-inputs calendar__preview-inputs">
+                                                        <input type="text"
+                                                            class="date-inputs__input date-inputs__input--date"
+                                                            placeholder="ДД">
+                                                        <div class="date-inputs__delimeter">.</div>
+                                                        <input type="text"
+                                                            class="date-inputs__input date-inputs__input--month"
+                                                            placeholder="ММ">
+                                                        <div class="date-inputs__delimeter">.</div>
+                                                        <input type="text"
+                                                            class="date-inputs__input date-inputs__input--year"
+                                                            placeholder="ГГГГ">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ads-board__filters-range">
+                            <div class="inputs-range double-input">
+                                <div class="inputs-range__wrapper double-input__wrapper">
+                                    <div class="double-input__item text-input text-input--standard"
+                                        data-params="prefix::Цена от; typeNumbersOnly::true">
+                                        <div class="text-input__wrapper">
+                                            <input class="text-input__input" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="double-input__item text-input text-input--standard"
+                                        data-params="prefix::до; typeNumbersOnly::true">
+                                        <div class="text-input__wrapper">
+                                            <input class="text-input__input" type="text">
+                                            <span class="text-input__icon icon-ruble-2"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ads-board__filters-input">
+                            <div class="text-input input-like" data-create-modal="checkboxesModalDouble" data-params="modalWindowClassname::checkboxes-modal checkboxes-modal--regions; search::Быстрый поиск по городам; firstTitle::Регион:; secondTitle::Населенный пункт:" data-checkboxes-modal-params="name::regions-cities; requiredListForApply::1">
+                                <div class="text-input__wrapper input-like__wrapper">
+                                    <div class="text-input__input input-like__input">
+                                        <span class="input-like__text">
+                                            Регион / Населенный пункт
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ads-board__filters-input">
+                            <div class="text-input text-input--standard">
+                                <div class="text-input__wrapper">
+                                    <input class="text-input__input" type="text">
+                                    <span class="text-input__icon icon-search"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ads-board__tabs">
+                        <ul class="ads-board__tabs-list">
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button __active" type="button">
+                                    За все время
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Сегодня
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Неделя
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Месяц
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Полгода
+                                </button>
+                            </li>
+                            <li class="ads-board__tabs-item">
+                                <button class="ads-board__tabs-button" type="button">
+                                    Год
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="ads-board__controls"></div>
+                    <div class="ads-board__table ads-table">
+                        <div class="ads-table__header">
+                            <div class="ads-table__header-item ads-table__checkbox"></div>
+                            <div class="ads-table__header-item ads-table__avatar"></div>
+                            <div class="ads-table__header-item ads-table__title--salary">
+                                Название объявления / Зарплата
+                            </div>
+                            <div class="ads-table__header-item ads-table__title--views">
+                                Просмотр
+                            </div>
+                            <div class="ads-table__header-item ads-table__title--favorites">
+                                В избранном
+                            </div>
+                            <div class="ads-table__header-item ads-table__title--comments">
+                                Диалоги
+                            </div>
+                            <div class="ads-table__header-item ads-table__title--responses">
+                                Отклики
+                            </div>
+                            <div class="ads-table__header-item ads-table__title--match-vacancies">
+                                Подходящие вакансии
+                            </div>
+                            <div class="ads-table__header-item ads-table__title--days">
+                                Размещалось дней
+                            </div>
+                            <div class="ads-table__header-item ads-table__title--locations">
+                                Объявление опубликовано в регионе / населенном пункте
+                            </div>
+                            <div class="ads-table__header-item ads-table__title--services">
+                                Наличие услуг по продвижению
+                            </div>
+                        </div>
+                        <div class="ads-table__body">
+                            <div class="ads-table-item ads-table-item--applicant">
+                                <div class="ads-table-item__body">
+                                    <div class="ads-table-item__status-publication">
+                                        <div class="ads-table-item__ad-status">
+                                            <svg>
+                                                <use xlink:href="#svg-warn_sign"></use>
+                                            </svg>
+                                            Активное объявление
+                                        </div>
+                                        <div class="ads-table-item__publication publication">
+                                            <div class="publication__expires">
+                                                Осталось
+                                                <span class="publication__expires-days">95 дней</span>
+                                                до депубликации. Изменить дату депубликации:
+                                            </div>
+                                            <div class="publication__fieldset-container text-input--standard"
+                                                data-params="noCross::true">
+                                                <fieldset
+                                                    class="publication__change-date fieldset text-input--standard__wrapper">
+                                                    <legend class="fieldset__legend">Дата депубликации</legend>
+                                                    <div class="fieldset__body calendar"
+                                                        data-params="defaultDate::05.12.2023">
+                                                        <div class="calendar__preview">
+                                                            <div class="text-input--standard__input">
+                                                                <div class="calendar__preview-inputs date-inputs">
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--date"
+                                                                        placeholder="ДД">
+                                                                    <div class="date-inputs__delimeter">.</div>
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--month"
+                                                                        placeholder="ММ">
+                                                                    <div class="date-inputs__delimeter">.</div>
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--year"
+                                                                        placeholder="ГГГГ">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="publication__dates">
+                                                <div class="publication__dates-item">Дата публикации: 12.12.2022
+                                                </div>
+                                                <div class="publication__dates-item">
+                                                    Обновлена:
+                                                    <span class="publication__refreshed-date">
+                                                        07.06.2023, 16:46
+                                                    </span>
+                                                    <a class="publication__refresh-link link link--pink" href="#">
+                                                        Обновить
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__checkbox">
+                                        <div class="ads-table-item__cell-container">
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="ads_table_item">
+                                                <span class="checkbox__box"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__avatar-container">
+                                        <div class="ads-table-item__avatar">
+                                            <img class="ads-table-item__avatar-img"
+                                                src="/vsevn-my_ads/img/ads-table/worker-1.jpg" alt="Аватар соискателя">
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-title-salary">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="ads-table-item__ad-title">
+                                                Продавец-грузчик в магазин хозтоваров
+                                            </div>
+                                            <div class="ads-table-item__ad-salary">
+                                                111500 руб.
+                                            </div>
+                                            <button class="link link--dark" type="button">
+                                                Редактировать
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-views">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Просмотры
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Просмотры">
+                                                <span class="icon-eye-2"></span>
+                                                15000
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__ad-renewal">
+                                        <div class="bubble-radios">
+                                            <label class="bubble-radio">
+                                                <input type="radio" name="ad_renewal-1" value="on" checked>
+                                                <span class="bubble-radio__body">
+                                                    <span class="bubble-radio__circle-background"></span>
+                                                    <span class="bubble-radio__text">
+                                                        Автопродление включено
+                                                    </span>
+                                                </span>
+                                            </label>
+                                            <label class="bubble-radio">
+                                                <input type="radio" name="ad_renewal-1" value="off">
+                                                <span class="bubble-radio__body">
+                                                    <span class="bubble-radio__circle-background"></span>
+                                                    <span class="bubble-radio__text">
+                                                        Автопродление не включено
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-favorites">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                В избранном
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="В избранном">
+                                                <span class="icon-heart-fill"></span>
+                                                100
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-comments">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Диалоги
+                                            </div>
+                                            <div class="hover-title-target"
+                                                data-hover-title="Всего диалогов по данной вакансии">
+                                                <span class="icon-bubble">
+                                                    <span class="icon-amounts">11</span>
+                                                </span>
+                                                30
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-responses">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Отклики
+                                            </div>
+                                            <div>
+                                                <span class="hover-title-target" data-hover-title="Всего откликов">
+                                                    20
+                                                </span>
+                                                <span class="hover-title-target" data-hover-title="Есть новые отклики">
+                                                    +3
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-match-vacancies">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Подходящие вакансии
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Подходящие вакансии">
+                                                42
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-days">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Размещалось дней
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Размещалось дней">
+                                                1
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-links">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="ads-table-item__ad-links-position">
+                                                Объявление на 133 месте в поиске.
+                                            </div>
+                                            <div>
+                                                <button class="link link--red" type="button">
+                                                    Поднять на первое место в поиске?
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button class="link link--green" type="button">
+                                                    Платные услуги продвижения
+                                                </button>
+                                            </div>
+                                            <div class="spoiler">
+                                                <div
+                                                    class="ads-table-item__copy-link-container copy-link-modal-container">
+                                                    <button class="link link--purple icon-link" type="button"
+                                                        data-copy-link="https://google.com">
+                                                        Своя ссылка Своя ссылка Своя ссылка
+                                                    </button>
+                                                    <button class="link link--purple spoiler__button" type="button">
+                                                        Ещё
+                                                    </button>
+                                                </div>
+                                                <div class="spoiler__body">
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://vk.com">
+                                                            Своя ссылка 2Своя ссылка 2Своя ссылка 2Своя ссылка 2Своя
+                                                            ссылка 2Своя ссылка 2
+                                                        </button>
+                                                    </div>
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://ya.ru">
+                                                            Своя ссылка 3
+                                                        </button>
+                                                    </div>
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://yandex.ru">
+                                                            Своя ссылка 4
+                                                        </button>
+                                                    </div>
+                                                    <button class="link link--purple spoiler__button--back"
+                                                        type="button">
+                                                        Свернуть
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-locations">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="editable-list"
+                                                data-params="title::Регионы/Населенные пункты; maxShown::3">
+                                                <ul class="editable-list__items-list">
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Самара</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Волгоград</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">
+                                                            Верхненовокутлумбетьево
+                                                        </div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Ростов</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Таганрог</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-services">
+                                        <div class="ads-table-item__cell-container">
+                                            <div>Активно: 2</div>
+                                            <a class="link link--magenta" href="#" data-create-modal="servicesList1"
+                                                data-params="modalWindowClassname::modal__window--services">
+                                                Показать
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <svg display="none">
+        <symbol id="svg-warn_sign" viewBox="0 0 1024 1024">
+            <path
+                d="M928.99 755.83 574.6 203.25c-12.89-20.16-36.76-32.58-62.6-32.58s-49.71 12.43-62.6 32.58L95.01 755.83c-12.91 20.12-12.9 44.91.01 65.03 12.92 20.12 36.78 32.51 62.59 32.49h708.78c25.82.01 49.68-12.37 62.59-32.49 12.91-20.12 12.92-44.91.01-65.03zM554.67 768h-85.33v-85.33h85.33V768zm0-426.67v298.66h-85.33V341.32l85.33.01z"
+                fill="currentColor" />
+        </symbol>
+    </svg>
+
+    <script src="/vsevn-my_ads/js/utils.js"></script>
+    <script src="/vsevn-my_ads/js/htmls.js"></script>
+    <script src="/vsevn-my_ads/js/main.js"></script>
+    <script src="/vsevn-my_ads/js/scripts.js"></script>
 </body>
+
 </html>

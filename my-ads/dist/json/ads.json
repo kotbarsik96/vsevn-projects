@@ -1,0 +1,31 @@
+[
+    {
+        "type": "resume",
+        "title": "Продавец-грузчик в магазин хозтоваров",
+        "price": "111500",
+        "priceCurrency": "руб.",
+        "views": 15000,
+        "in_favorites": 100,
+        "dialogs": {
+            "total": 30,
+            "new": 11
+        },
+        "responses": {
+            "total": 20,
+            "new": 3
+        },
+        "match_vacancies": 42,
+        "been_active_days": 1,
+        "locations": [
+            "Самара",
+            "Волгоград",
+            "Смоленск",
+            "Ростов",
+            "Таганрог"
+        ],
+        "services": [
+            "paid",
+            "vip"
+        ]
+    }
+]
