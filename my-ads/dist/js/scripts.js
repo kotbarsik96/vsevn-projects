@@ -1,3 +1,126 @@
+class PublicationsTable {
+    constructor(node) {
+        this.rootElem = node;
+        this.stateTabs = this.initStateTabs();
+        this.typeTabs = this.initTypeTabs();
+        this.timeTabs = this.initTimeTabs();
+    }
+    initStateTabs() {
+        const data = bindMethods(this, {
+            container: this.rootElem.querySelector(".ads-board__tabs-list--states"),
+        });
+
+        return data;
+    }
+    initTypeTabs() {
+        const data = bindMethods(this, {
+            container: this.rootElem.querySelector(".ads-board__tabs-list--types"),
+        });
+
+        return data;
+    }
+    initTimeTabs() {
+        const data = bindMethods(this, {
+            container: this.rootElem.querySelector(".ads-board__tabs-list--times"),
+        });
+
+        return data;
+    }
+}
+
+class Publication {
+    constructor(node) {
+        this.rootElem = node;
+        if (this.rootElem.classList.contains("ads-table-item--applicant"))
+            this.type = "applicant";
+        else this.type = "employer";
+
+        this.publicationStatus = this.initPublicationStatus();
+        this.editableList = this.initEditableList();
+        this.title = this.initTitle();
+    }
+    initPublicationStatus() {
+        const data = bindMethods(this, {
+            node: null,
+            refreshLink: null,
+            refreshedDate: null,
+            init() {
+                data.node = this.rootElem.querySelector(".ads-table-item__status-publication");
+                data.refreshLink = data.node.querySelector(".publication__refresh-link");
+                data.refreshedDate = data.node.querySelector(".publication__refreshed-date");
+
+                data.refreshLink.addEventListener("click", data.refresh);
+            },
+            // возможно на бэкенд
+            refresh(event) {
+                event.preventDefault();
+                const currentDate = new Date();
+                const day = getValue(currentDate.getDate());
+                const month = getValue(currentDate.getMonth());
+                const year = currentDate.getFullYear();
+                const hours = getValue(currentDate.getHours());
+                const minutes = getValue(currentDate.getMinutes());
+                data.refreshedDate.innerHTML =
+                    `${day}.${month}.${year}, ${hours}:${minutes}`;
+                data.refreshLink.remove();
+
+                function getValue(val) {
+                    val = val.toString();
+                    return val.length === 1 ? `0${val}` : val;
+                }
+            }
+        });
+        data.init();
+
+        return data;
+    }
+    initEditableList() {
+        const data = bindMethods(this, {
+            node: null,
+            params: null,
+            symbolsMaxlength: 10,
+            init() {
+                data.node = this.rootElem.querySelector(".editable-list");
+                nextInitTick(() => {
+                    data.params = findInittedInput(data.node);
+                    data.initNewNodes();
+                    const observer = new MutationObserver(data.initNewNodes);
+                    observer.observe(data.node, { childList: true, subtree: true });
+                });
+            },
+            initNewNodes() {
+                data.params.items.forEach(obj => {
+                    if (obj.isHoverTitle || obj.valueText.length <= data.symbolsMaxlength) return;
+
+                    obj.node.setAttribute("data-hover-title", obj.valueText);
+                    obj.node.append(createElement("div", "fog"));
+                    obj.isHoverTitle = true;
+                });
+            }
+        });
+        data.init();
+
+        return data;
+    }
+    initTitle() {
+        const data = bindMethods(this, {
+            maxlength: 40,
+            container: this.rootElem.querySelector(".ads-table-item__ad-title"),
+            value: "",
+            init() {
+                data.value = textContentMethods.getContent(data.container).trim();
+                if(data.value.length > data.maxlength) {
+                    data.container.parentNode.setAttribute("data-hover-title", data.value);
+                    data.container.append(createElement("div", "fog"));
+                }
+            }
+        });
+        data.init();
+
+        return data;
+    }
+}
+
 class TextInput {
     constructor(node) {
         this.clear = this.clear.bind(this);
@@ -14,9 +137,9 @@ class TextInput {
         this.init();
     }
     init() {
+        if (this.input.querySelector(".date-inputs")) initDateInput.call(this);
         initInput.call(this);
         initControls.call(this);
-        if (this.input.querySelector(".date-inputs")) initDateInput.call(this);
 
         function initInput() {
             this.inputMethods = this.createInputMethods();
@@ -32,6 +155,8 @@ class TextInput {
             if (!this.params.noCross) this.controls.createCross();
         }
         function initDateInput() {
+            if (!this.input.querySelector(".date-inputs")) return;
+
             this.input = this.input.querySelector(".date-inputs");
             nextInitTick(() => {
                 this.inputFieldParams = findInittedInput(this.input);
@@ -845,81 +970,6 @@ class InputsRange {
                 if (this.warning.closest("body")) this.warning.remove();
             }
         }
-    }
-}
-
-class Publication {
-    constructor(node) {
-        this.rootElem = node;
-        if (this.rootElem.classList.contains("ads-table-item--applicant"))
-            this.type = "applicant";
-        else this.type = "employer";
-
-        this.publicationStatus = this.initPublicationStatus();
-        this.editableList = this.initEditableList();
-    }
-    initPublicationStatus() {
-        const data = bindMethods(this, {
-            node: null,
-            refreshLink: null,
-            refreshedDate: null,
-            init() {
-                data.node = this.rootElem.querySelector(".ads-table-item__status-publication");
-                data.refreshLink = data.node.querySelector(".publication__refresh-link");
-                data.refreshedDate = data.node.querySelector(".publication__refreshed-date");
-
-                data.refreshLink.addEventListener("click", data.refresh);
-            },
-            // возможно на бэкенд
-            refresh(event) {
-                event.preventDefault();
-                const currentDate = new Date();
-                const day = getValue(currentDate.getDate());
-                const month = getValue(currentDate.getMonth());
-                const year = currentDate.getFullYear();
-                const hours = getValue(currentDate.getHours());
-                const minutes = getValue(currentDate.getMinutes());
-                data.refreshedDate.innerHTML =
-                    `${day}.${month}.${year}, ${hours}:${minutes}`;
-                data.refreshLink.remove();
-
-                function getValue(val) {
-                    val = val.toString();
-                    return val.length === 1 ? `0${val}` : val;
-                }
-            }
-        });
-        data.init();
-
-        return data;
-    }
-    initEditableList() {
-        const data = bindMethods(this, {
-            node: null,
-            params: null,
-            symbolsMaxlength: 10,
-            init() {
-                data.node = this.rootElem.querySelector(".editable-list");
-                nextInitTick(() => {
-                    data.params = findInittedInput(data.node);
-                    data.initNewNodes();
-                    const observer = new MutationObserver(data.initNewNodes);
-                    observer.observe(data.node, { childList: true, subtree: true });
-                });
-            },
-            initNewNodes() {
-                data.params.items.forEach(obj => {
-                    if (obj.isHoverTitle || obj.valueText.length <= data.symbolsMaxlength) return;
-
-                    obj.node.setAttribute("data-hover-title", obj.valueText);
-                    obj.node.append(createElement("div", "fog"));
-                    obj.isHoverTitle = true;
-                });
-            }
-        });
-        data.init();
-
-        return data;
     }
 }
 
@@ -2233,12 +2283,13 @@ class CheckboxesModalRegions extends CheckboxesModal {
 }
 
 const inputsSelectors = [
+    { selector: ".ads-board", classInstance: PublicationsTable },
+    { selector: ".ads-table-item", classInstance: Publication },
     { selector: ".text-input--standard", classInstance: TextInput },
     { selector: ".text-input--checkboxes", classInstance: TextInputCheckbox },
     { selector: ".date-inputs", classInstance: DateInputs },
     { selector: ".select", classInstance: Select },
     { selector: ".inputs-range", classInstance: InputsRange },
-    { selector: ".ads-table-item", classInstance: Publication },
     { selector: "[data-create-modal]", classInstance: CreateModal },
     { selector: ".calendar", classInstance: Calendar },
     { selector: ".calendar-double", classInstance: CalendarDouble },

@@ -381,7 +381,7 @@
                 </div>
                 <div class="ads-board">
                     <div class="ads-board__tabs">
-                        <ul class="ads-board__tabs-list">
+                        <ul class="ads-board__tabs-list ads-board__tabs-list--states">
                             <li class="ads-board__tabs-item">
                                 <button class="ads-board__tabs-button __active" type="button">
                                     Активные 6
@@ -418,7 +418,7 @@
                                 </button>
                             </li>
                         </ul>
-                        <ul class="ads-board__tabs-list ads-board__tabs-list--filter">
+                        <ul class="ads-board__tabs-list ads-board__tabs-list--types">
                             <li class="ads-board__tabs-item">
                                 <button class="ads-board__tabs-button __active" type="button">
                                     Все
@@ -507,7 +507,9 @@
                             </div>
                         </div>
                         <div class="ads-board__filters-input">
-                            <div class="text-input input-like" data-create-modal="checkboxesModalDouble" data-params="modalWindowClassname::checkboxes-modal checkboxes-modal--regions; search::Быстрый поиск по городам; firstTitle::Регион:; secondTitle::Населенный пункт:" data-checkboxes-modal-params="name::regions-cities; requiredListForApply::1">
+                            <div class="text-input input-like" data-create-modal="checkboxesModalDouble"
+                                data-params="modalWindowClassname::checkboxes-modal checkboxes-modal--regions; search::Быстрый поиск по городам; firstTitle::Регион:; secondTitle::Населенный пункт:"
+                                data-checkboxes-modal-params="name::regions-cities; requiredListForApply::1">
                                 <div class="text-input__wrapper input-like__wrapper">
                                     <div class="text-input__input input-like__input">
                                         <span class="input-like__text">
@@ -527,7 +529,7 @@
                         </div>
                     </div>
                     <div class="ads-board__tabs">
-                        <ul class="ads-board__tabs-list">
+                        <ul class="ads-board__tabs-list ads-board__tabs-list--times">
                             <li class="ads-board__tabs-item">
                                 <button class="ads-board__tabs-button __active" type="button">
                                     За все время
@@ -834,11 +836,1359 @@
                                                         <div class="editable-list__item-text">Самара</div>
                                                     </li>
                                                     <li class="editable-list__item">
-                                                        <div class="editable-list__item-text">Волгоград</div>
+                                                        <div class="editable-list__item-text">
+                                                            Петропавловск-Камчатский
+                                                        </div>
                                                     </li>
                                                     <li class="editable-list__item">
                                                         <div class="editable-list__item-text">
                                                             Верхненовокутлумбетьево
+                                                        </div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Ростов</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Таганрог</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-services">
+                                        <div class="ads-table-item__cell-container">
+                                            <div>Активно: 2</div>
+                                            <a class="link link--magenta" href="#" data-create-modal="servicesList1"
+                                                data-params="modalWindowClassname::modal__window--services">
+                                                Показать
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ads-table-item ads-table-item--employer">
+                                <div class="ads-table-item__body">
+                                    <div class="ads-table-item__status-publication">
+                                        <div class="ads-table-item__ad-status">
+                                            <svg>
+                                                <use xlink:href="#svg-warn_sign"></use>
+                                            </svg>
+                                            Активное объявление
+                                        </div>
+                                        <div class="ads-table-item__publication publication">
+                                            <div class="publication__expires">
+                                                Осталось
+                                                <span class="publication__expires-days">95 дней</span>
+                                                до депубликации. Изменить дату депубликации:
+                                            </div>
+                                            <div class="publication__fieldset-container text-input--standard"
+                                                data-params="noCross::true">
+                                                <fieldset
+                                                    class="publication__change-date fieldset text-input--standard__wrapper">
+                                                    <legend class="fieldset__legend">Дата депубликации</legend>
+                                                    <div class="fieldset__body calendar"
+                                                        data-params="defaultDate::05.12.2023">
+                                                        <div class="calendar__preview">
+                                                            <div class="text-input--standard__input">
+                                                                <div class="calendar__preview-inputs date-inputs">
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--date"
+                                                                        placeholder="ДД">
+                                                                    <div class="date-inputs__delimeter">.</div>
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--month"
+                                                                        placeholder="ММ">
+                                                                    <div class="date-inputs__delimeter">.</div>
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--year"
+                                                                        placeholder="ГГГГ">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="publication__dates">
+                                                <div class="publication__dates-item">Дата публикации: 12.12.2022
+                                                </div>
+                                                <div class="publication__dates-item">
+                                                    Обновлена:
+                                                    <span class="publication__refreshed-date">
+                                                        07.06.2023, 16:46
+                                                    </span>
+                                                    <a class="publication__refresh-link link link--pink" href="#">
+                                                        Обновить
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__checkbox">
+                                        <div class="ads-table-item__cell-container">
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="ads_table_item">
+                                                <span class="checkbox__box"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__avatar-container">
+                                        <div class="ads-table-item__avatar">
+                                            <div data-svg-placeholder="vash_personal"></div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-title-salary">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="ads-table-item__ad-title">
+                                                Контроллер технического состояния автотранспортных средств
+                                            </div>
+                                            <div class="ads-table-item__ad-salary">
+                                                111500 руб.
+                                            </div>
+                                            <button class="link link--dark" type="button">
+                                                Редактировать
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-views">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Просмотры
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Просмотры">
+                                                <span class="icon-eye-2"></span>
+                                                15000
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__ad-renewal">
+                                        <div class="bubble-radios">
+                                            <label class="bubble-radio">
+                                                <input type="radio" name="ad_renewal-1" value="on" checked>
+                                                <span class="bubble-radio__body">
+                                                    <span class="bubble-radio__circle-background"></span>
+                                                    <span class="bubble-radio__text">
+                                                        Автопродление включено
+                                                    </span>
+                                                </span>
+                                            </label>
+                                            <label class="bubble-radio">
+                                                <input type="radio" name="ad_renewal-1" value="off">
+                                                <span class="bubble-radio__body">
+                                                    <span class="bubble-radio__circle-background"></span>
+                                                    <span class="bubble-radio__text">
+                                                        Автопродление не включено
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-favorites">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                В избранном
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="В избранном">
+                                                <span class="icon-heart-fill"></span>
+                                                100
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-comments">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Диалоги
+                                            </div>
+                                            <div class="hover-title-target"
+                                                data-hover-title="Всего диалогов по данной вакансии">
+                                                <span class="icon-bubble">
+                                                    <span class="icon-amounts">11</span>
+                                                </span>
+                                                30
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-responses">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Отклики
+                                            </div>
+                                            <div>
+                                                <span class="hover-title-target" data-hover-title="Всего откликов">
+                                                    20
+                                                </span>
+                                                <span class="hover-title-target" data-hover-title="Есть новые отклики">
+                                                    +3
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-match-vacancies">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Подходящие вакансии
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Подходящие вакансии">
+                                                42
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-days">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Размещалось дней
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Размещалось дней">
+                                                1
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-links">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="ads-table-item__ad-links-position">
+                                                Объявление на 133 месте в поиске.
+                                            </div>
+                                            <div>
+                                                <button class="link link--red" type="button">
+                                                    Поднять на первое место в поиске?
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button class="link link--green" type="button">
+                                                    Платные услуги продвижения
+                                                </button>
+                                            </div>
+                                            <div class="spoiler">
+                                                <div
+                                                    class="ads-table-item__copy-link-container copy-link-modal-container">
+                                                    <button class="link link--purple icon-link" type="button"
+                                                        data-copy-link="https://google.com">
+                                                        Своя ссылка Своя ссылка Своя ссылка
+                                                    </button>
+                                                    <button class="link link--purple spoiler__button" type="button">
+                                                        Ещё
+                                                    </button>
+                                                </div>
+                                                <div class="spoiler__body">
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://vk.com">
+                                                            Своя ссылка 2Своя ссылка 2Своя ссылка 2Своя ссылка 2Своя
+                                                            ссылка 2Своя ссылка 2
+                                                        </button>
+                                                    </div>
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://ya.ru">
+                                                            Своя ссылка 3
+                                                        </button>
+                                                    </div>
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://yandex.ru">
+                                                            Своя ссылка 4
+                                                        </button>
+                                                    </div>
+                                                    <button class="link link--purple spoiler__button--back"
+                                                        type="button">
+                                                        Свернуть
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-locations">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="editable-list"
+                                                data-params="title::Регионы/Населенные пункты; maxShown::3">
+                                                <ul class="editable-list__items-list">
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Самара</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">
+                                                            Москва
+                                                        </div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">
+                                                            Саратов
+                                                        </div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Ростов</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Таганрог</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-services">
+                                        <div class="ads-table-item__cell-container">
+                                            <div>Активно: 2</div>
+                                            <a class="link link--magenta" href="#" data-create-modal="servicesList1"
+                                                data-params="modalWindowClassname::modal__window--services">
+                                                Показать
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ads-table-item ads-table-item--employer">
+                                <div class="ads-table-item__body">
+                                    <div class="ads-table-item__status-publication">
+                                        <div class="ads-table-item__ad-status">
+                                            <svg>
+                                                <use xlink:href="#svg-warn_sign"></use>
+                                            </svg>
+                                            Активное объявление
+                                        </div>
+                                        <div class="ads-table-item__publication publication">
+                                            <div class="publication__expires">
+                                                Осталось
+                                                <span class="publication__expires-days">95 дней</span>
+                                                до депубликации. Изменить дату депубликации:
+                                            </div>
+                                            <div class="publication__fieldset-container text-input--standard"
+                                                data-params="noCross::true">
+                                                <fieldset
+                                                    class="publication__change-date fieldset text-input--standard__wrapper">
+                                                    <legend class="fieldset__legend">Дата депубликации</legend>
+                                                    <div class="fieldset__body calendar"
+                                                        data-params="defaultDate::05.12.2023">
+                                                        <div class="calendar__preview">
+                                                            <div class="text-input--standard__input">
+                                                                <div class="calendar__preview-inputs date-inputs">
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--date"
+                                                                        placeholder="ДД">
+                                                                    <div class="date-inputs__delimeter">.</div>
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--month"
+                                                                        placeholder="ММ">
+                                                                    <div class="date-inputs__delimeter">.</div>
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--year"
+                                                                        placeholder="ГГГГ">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="publication__dates">
+                                                <div class="publication__dates-item">Дата публикации: 12.12.2022
+                                                </div>
+                                                <div class="publication__dates-item">
+                                                    Обновлена:
+                                                    <span class="publication__refreshed-date">
+                                                        07.06.2023, 16:46
+                                                    </span>
+                                                    <a class="publication__refresh-link link link--pink" href="#">
+                                                        Обновить
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__checkbox">
+                                        <div class="ads-table-item__cell-container">
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="ads_table_item">
+                                                <span class="checkbox__box"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__avatar-container">
+                                        <div class="ads-table-item__avatar">
+                                            <div data-svg-placeholder="sormovskaya_fabrika"></div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-title-salary">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="ads-table-item__ad-title">
+                                                Резчики металла на ленточнопильных станках с числовым программным
+                                                управлением
+                                            </div>
+                                            <div class="ads-table-item__ad-salary">
+                                                111500 руб.
+                                            </div>
+                                            <button class="link link--dark" type="button">
+                                                Редактировать
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-views">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Просмотры
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Просмотры">
+                                                <span class="icon-eye-2"></span>
+                                                15000
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__ad-renewal">
+                                        <div class="bubble-radios">
+                                            <label class="bubble-radio">
+                                                <input type="radio" name="ad_renewal-1" value="on" checked>
+                                                <span class="bubble-radio__body">
+                                                    <span class="bubble-radio__circle-background"></span>
+                                                    <span class="bubble-radio__text">
+                                                        Автопродление включено
+                                                    </span>
+                                                </span>
+                                            </label>
+                                            <label class="bubble-radio">
+                                                <input type="radio" name="ad_renewal-1" value="off">
+                                                <span class="bubble-radio__body">
+                                                    <span class="bubble-radio__circle-background"></span>
+                                                    <span class="bubble-radio__text">
+                                                        Автопродление не включено
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-favorites">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                В избранном
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="В избранном">
+                                                <span class="icon-heart-fill"></span>
+                                                100
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-comments">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Диалоги
+                                            </div>
+                                            <div class="hover-title-target"
+                                                data-hover-title="Всего диалогов по данной вакансии">
+                                                <span class="icon-bubble">
+                                                    <span class="icon-amounts">11</span>
+                                                </span>
+                                                30
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-responses">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Отклики
+                                            </div>
+                                            <div>
+                                                <span class="hover-title-target" data-hover-title="Всего откликов">
+                                                    20
+                                                </span>
+                                                <span class="hover-title-target" data-hover-title="Есть новые отклики">
+                                                    +3
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-match-vacancies">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Подходящие вакансии
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Подходящие вакансии">
+                                                42
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-days">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Размещалось дней
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Размещалось дней">
+                                                1
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-links">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="ads-table-item__ad-links-position">
+                                                Объявление на 133 месте в поиске.
+                                            </div>
+                                            <div>
+                                                <button class="link link--red" type="button">
+                                                    Поднять на первое место в поиске?
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button class="link link--green" type="button">
+                                                    Платные услуги продвижения
+                                                </button>
+                                            </div>
+                                            <div class="spoiler">
+                                                <div
+                                                    class="ads-table-item__copy-link-container copy-link-modal-container">
+                                                    <button class="link link--purple icon-link" type="button"
+                                                        data-copy-link="https://google.com">
+                                                        Своя ссылка Своя ссылка Своя ссылка
+                                                    </button>
+                                                    <button class="link link--purple spoiler__button" type="button">
+                                                        Ещё
+                                                    </button>
+                                                </div>
+                                                <div class="spoiler__body">
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://vk.com">
+                                                            Своя ссылка 2Своя ссылка 2Своя ссылка 2Своя ссылка 2Своя
+                                                            ссылка 2Своя ссылка 2
+                                                        </button>
+                                                    </div>
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://ya.ru">
+                                                            Своя ссылка 3
+                                                        </button>
+                                                    </div>
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://yandex.ru">
+                                                            Своя ссылка 4
+                                                        </button>
+                                                    </div>
+                                                    <button class="link link--purple spoiler__button--back"
+                                                        type="button">
+                                                        Свернуть
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-locations">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="editable-list"
+                                                data-params="title::Регионы/Населенные пункты; maxShown::3">
+                                                <ul class="editable-list__items-list">
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Самара</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">
+                                                            Москва
+                                                        </div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">
+                                                            Саратов
+                                                        </div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Ростов</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Таганрог</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-services">
+                                        <div class="ads-table-item__cell-container">
+                                            <div>Активно: 2</div>
+                                            <a class="link link--magenta" href="#" data-create-modal="servicesList1"
+                                                data-params="modalWindowClassname::modal__window--services">
+                                                Показать
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ads-table-item ads-table-item--employer">
+                                <div class="ads-table-item__body">
+                                    <div class="ads-table-item__status-publication">
+                                        <div class="ads-table-item__ad-status">
+                                            <svg>
+                                                <use xlink:href="#svg-warn_sign"></use>
+                                            </svg>
+                                            Активное объявление
+                                        </div>
+                                        <div class="ads-table-item__publication publication">
+                                            <div class="publication__expires">
+                                                Осталось
+                                                <span class="publication__expires-days">95 дней</span>
+                                                до депубликации. Изменить дату депубликации:
+                                            </div>
+                                            <div class="publication__fieldset-container text-input--standard"
+                                                data-params="noCross::true">
+                                                <fieldset
+                                                    class="publication__change-date fieldset text-input--standard__wrapper">
+                                                    <legend class="fieldset__legend">Дата депубликации</legend>
+                                                    <div class="fieldset__body calendar"
+                                                        data-params="defaultDate::05.12.2023">
+                                                        <div class="calendar__preview">
+                                                            <div class="text-input--standard__input">
+                                                                <div class="calendar__preview-inputs date-inputs">
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--date"
+                                                                        placeholder="ДД">
+                                                                    <div class="date-inputs__delimeter">.</div>
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--month"
+                                                                        placeholder="ММ">
+                                                                    <div class="date-inputs__delimeter">.</div>
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--year"
+                                                                        placeholder="ГГГГ">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="publication__dates">
+                                                <div class="publication__dates-item">Дата публикации: 12.12.2022
+                                                </div>
+                                                <div class="publication__dates-item">
+                                                    Обновлена:
+                                                    <span class="publication__refreshed-date">
+                                                        07.06.2023, 16:46
+                                                    </span>
+                                                    <a class="publication__refresh-link link link--pink" href="#">
+                                                        Обновить
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__checkbox">
+                                        <div class="ads-table-item__cell-container">
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="ads_table_item">
+                                                <span class="checkbox__box"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__avatar-container">
+                                        <div class="ads-table-item__avatar">
+                                            <div data-svg-placeholder="chop_valdai"></div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-title-salary">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="ads-table-item__ad-title">
+                                                Директор
+                                            </div>
+                                            <div class="ads-table-item__ad-salary">
+                                                111500 руб.
+                                            </div>
+                                            <button class="link link--dark" type="button">
+                                                Редактировать
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-views">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Просмотры
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Просмотры">
+                                                <span class="icon-eye-2"></span>
+                                                15000
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__ad-renewal">
+                                        <div class="bubble-radios">
+                                            <label class="bubble-radio">
+                                                <input type="radio" name="ad_renewal-1" value="on" checked>
+                                                <span class="bubble-radio__body">
+                                                    <span class="bubble-radio__circle-background"></span>
+                                                    <span class="bubble-radio__text">
+                                                        Автопродление включено
+                                                    </span>
+                                                </span>
+                                            </label>
+                                            <label class="bubble-radio">
+                                                <input type="radio" name="ad_renewal-1" value="off">
+                                                <span class="bubble-radio__body">
+                                                    <span class="bubble-radio__circle-background"></span>
+                                                    <span class="bubble-radio__text">
+                                                        Автопродление не включено
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-favorites">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                В избранном
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="В избранном">
+                                                <span class="icon-heart-fill"></span>
+                                                100
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-comments">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Диалоги
+                                            </div>
+                                            <div class="hover-title-target"
+                                                data-hover-title="Всего диалогов по данной вакансии">
+                                                <span class="icon-bubble">
+                                                    <span class="icon-amounts">11</span>
+                                                </span>
+                                                30
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-responses">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Отклики
+                                            </div>
+                                            <div>
+                                                <span class="hover-title-target" data-hover-title="Всего откликов">
+                                                    20
+                                                </span>
+                                                <span class="hover-title-target" data-hover-title="Есть новые отклики">
+                                                    +3
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-match-vacancies">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Подходящие вакансии
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Подходящие вакансии">
+                                                42
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-days">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Размещалось дней
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Размещалось дней">
+                                                1
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-links">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="ads-table-item__ad-links-position">
+                                                Объявление на 133 месте в поиске.
+                                            </div>
+                                            <div>
+                                                <button class="link link--red" type="button">
+                                                    Поднять на первое место в поиске?
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button class="link link--green" type="button">
+                                                    Платные услуги продвижения
+                                                </button>
+                                            </div>
+                                            <div class="spoiler">
+                                                <div
+                                                    class="ads-table-item__copy-link-container copy-link-modal-container">
+                                                    <button class="link link--purple icon-link" type="button"
+                                                        data-copy-link="https://google.com">
+                                                        Своя ссылка Своя ссылка Своя ссылка
+                                                    </button>
+                                                    <button class="link link--purple spoiler__button" type="button">
+                                                        Ещё
+                                                    </button>
+                                                </div>
+                                                <div class="spoiler__body">
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://vk.com">
+                                                            Своя ссылка 2Своя ссылка 2Своя ссылка 2Своя ссылка 2Своя
+                                                            ссылка 2Своя ссылка 2
+                                                        </button>
+                                                    </div>
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://ya.ru">
+                                                            Своя ссылка 3
+                                                        </button>
+                                                    </div>
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://yandex.ru">
+                                                            Своя ссылка 4
+                                                        </button>
+                                                    </div>
+                                                    <button class="link link--purple spoiler__button--back"
+                                                        type="button">
+                                                        Свернуть
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-locations">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="editable-list"
+                                                data-params="title::Регионы/Населенные пункты; maxShown::3">
+                                                <ul class="editable-list__items-list">
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Самара</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">
+                                                            Москва
+                                                        </div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">
+                                                            Саратов
+                                                        </div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Ростов</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Таганрог</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-services">
+                                        <div class="ads-table-item__cell-container">
+                                            <div>Активно: 2</div>
+                                            <a class="link link--magenta" href="#" data-create-modal="servicesList1"
+                                                data-params="modalWindowClassname::modal__window--services">
+                                                Показать
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ads-table-item ads-table-item--employer">
+                                <div class="ads-table-item__body">
+                                    <div class="ads-table-item__status-publication">
+                                        <div class="ads-table-item__ad-status">
+                                            <svg>
+                                                <use xlink:href="#svg-warn_sign"></use>
+                                            </svg>
+                                            Активное объявление
+                                        </div>
+                                        <div class="ads-table-item__publication publication">
+                                            <div class="publication__expires">
+                                                Осталось
+                                                <span class="publication__expires-days">95 дней</span>
+                                                до депубликации. Изменить дату депубликации:
+                                            </div>
+                                            <div class="publication__fieldset-container text-input--standard"
+                                                data-params="noCross::true">
+                                                <fieldset
+                                                    class="publication__change-date fieldset text-input--standard__wrapper">
+                                                    <legend class="fieldset__legend">Дата депубликации</legend>
+                                                    <div class="fieldset__body calendar"
+                                                        data-params="defaultDate::05.12.2023">
+                                                        <div class="calendar__preview">
+                                                            <div class="text-input--standard__input">
+                                                                <div class="calendar__preview-inputs date-inputs">
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--date"
+                                                                        placeholder="ДД">
+                                                                    <div class="date-inputs__delimeter">.</div>
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--month"
+                                                                        placeholder="ММ">
+                                                                    <div class="date-inputs__delimeter">.</div>
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--year"
+                                                                        placeholder="ГГГГ">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="publication__dates">
+                                                <div class="publication__dates-item">Дата публикации: 12.12.2022
+                                                </div>
+                                                <div class="publication__dates-item">
+                                                    Обновлена:
+                                                    <span class="publication__refreshed-date">
+                                                        07.06.2023, 16:46
+                                                    </span>
+                                                    <a class="publication__refresh-link link link--pink" href="#">
+                                                        Обновить
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__checkbox">
+                                        <div class="ads-table-item__cell-container">
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="ads_table_item">
+                                                <span class="checkbox__box"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__avatar-container">
+                                        <div class="ads-table-item__avatar">
+                                            <div data-svg-placeholder="nash_dom"></div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-title-salary">
+                                        <div class="ads-table-item__celыl-container">
+                                            <div class="ads-table-item__ad-title">
+                                                Директор
+                                            </div>
+                                            <div class="ads-table-item__ad-salary">
+                                                111500 руб.
+                                            </div>
+                                            <button class="link link--dark" type="button">
+                                                Редактировать
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-views">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Просмотры
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Просмотры">
+                                                <span class="icon-eye-2"></span>
+                                                15000
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__ad-renewal">
+                                        <div class="bubble-radios">
+                                            <label class="bubble-radio">
+                                                <input type="radio" name="ad_renewal-1" value="on" checked>
+                                                <span class="bubble-radio__body">
+                                                    <span class="bubble-radio__circle-background"></span>
+                                                    <span class="bubble-radio__text">
+                                                        Автопродление включено
+                                                    </span>
+                                                </span>
+                                            </label>
+                                            <label class="bubble-radio">
+                                                <input type="radio" name="ad_renewal-1" value="off">
+                                                <span class="bubble-radio__body">
+                                                    <span class="bubble-radio__circle-background"></span>
+                                                    <span class="bubble-radio__text">
+                                                        Автопродление не включено
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-favorites">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                В избранном
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="В избранном">
+                                                <span class="icon-heart-fill"></span>
+                                                100
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-comments">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Диалоги
+                                            </div>
+                                            <div class="hover-title-target"
+                                                data-hover-title="Всего диалогов по данной вакансии">
+                                                <span class="icon-bubble">
+                                                    <span class="icon-amounts">11</span>
+                                                </span>
+                                                30
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-responses">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Отклики
+                                            </div>
+                                            <div>
+                                                <span class="hover-title-target" data-hover-title="Всего откликов">
+                                                    20
+                                                </span>
+                                                <span class="hover-title-target" data-hover-title="Есть новые отклики">
+                                                    +3
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-match-vacancies">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Подходящие вакансии
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Подходящие вакансии">
+                                                42
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-days">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Размещалось дней
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Размещалось дней">
+                                                1
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-links">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="ads-table-item__ad-links-position">
+                                                Объявление на 133 месте в поиске.
+                                            </div>
+                                            <div>
+                                                <button class="link link--red" type="button">
+                                                    Поднять на первое место в поиске?
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button class="link link--green" type="button">
+                                                    Платные услуги продвижения
+                                                </button>
+                                            </div>
+                                            <div class="spoiler">
+                                                <div
+                                                    class="ads-table-item__copy-link-container copy-link-modal-container">
+                                                    <button class="link link--purple icon-link" type="button"
+                                                        data-copy-link="https://google.com">
+                                                        Своя ссылка Своя ссылка Своя ссылка
+                                                    </button>
+                                                    <button class="link link--purple spoiler__button" type="button">
+                                                        Ещё
+                                                    </button>
+                                                </div>
+                                                <div class="spoiler__body">
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://vk.com">
+                                                            Своя ссылка 2Своя ссылка 2Своя ссылка 2Своя ссылка 2Своя
+                                                            ссылка 2Своя ссылка 2
+                                                        </button>
+                                                    </div>
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://ya.ru">
+                                                            Своя ссылка 3
+                                                        </button>
+                                                    </div>
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://yandex.ru">
+                                                            Своя ссылка 4
+                                                        </button>
+                                                    </div>
+                                                    <button class="link link--purple spoiler__button--back"
+                                                        type="button">
+                                                        Свернуть
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-locations">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="editable-list"
+                                                data-params="title::Регионы/Населенные пункты; maxShown::3">
+                                                <ul class="editable-list__items-list">
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Самара</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">
+                                                            Москва
+                                                        </div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">
+                                                            Саратов
+                                                        </div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Ростов</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Таганрог</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-services">
+                                        <div class="ads-table-item__cell-container">
+                                            <div>Активно: 2</div>
+                                            <a class="link link--magenta" href="#" data-create-modal="servicesList1"
+                                                data-params="modalWindowClassname::modal__window--services">
+                                                Показать
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ads-table-item ads-table-item--employer">
+                                <div class="ads-table-item__body">
+                                    <div class="ads-table-item__status-publication">
+                                        <div class="ads-table-item__ad-status">
+                                            <svg>
+                                                <use xlink:href="#svg-warn_sign"></use>
+                                            </svg>
+                                            Активное объявление
+                                        </div>
+                                        <div class="ads-table-item__publication publication">
+                                            <div class="publication__expires">
+                                                Осталось
+                                                <span class="publication__expires-days">95 дней</span>
+                                                до депубликации. Изменить дату депубликации:
+                                            </div>
+                                            <div class="publication__fieldset-container text-input--standard"
+                                                data-params="noCross::true">
+                                                <fieldset
+                                                    class="publication__change-date fieldset text-input--standard__wrapper">
+                                                    <legend class="fieldset__legend">Дата депубликации</legend>
+                                                    <div class="fieldset__body calendar"
+                                                        data-params="defaultDate::05.12.2023">
+                                                        <div class="calendar__preview">
+                                                            <div class="text-input--standard__input">
+                                                                <div class="calendar__preview-inputs date-inputs">
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--date"
+                                                                        placeholder="ДД">
+                                                                    <div class="date-inputs__delimeter">.</div>
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--month"
+                                                                        placeholder="ММ">
+                                                                    <div class="date-inputs__delimeter">.</div>
+                                                                    <input type="text"
+                                                                        class="date-inputs__input date-inputs__input--year"
+                                                                        placeholder="ГГГГ">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                            <div class="publication__dates">
+                                                <div class="publication__dates-item">Дата публикации: 12.12.2022
+                                                </div>
+                                                <div class="publication__dates-item">
+                                                    Обновлена:
+                                                    <span class="publication__refreshed-date">
+                                                        07.06.2023, 16:46
+                                                    </span>
+                                                    <a class="publication__refresh-link link link--pink" href="#">
+                                                        Обновить
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__checkbox">
+                                        <div class="ads-table-item__cell-container">
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="ads_table_item">
+                                                <span class="checkbox__box"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__avatar-container">
+                                        <div class="ads-table-item__avatar">
+                                            <div data-svg-placeholder="bezopasnost"></div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-title-salary">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="ads-table-item__ad-title">
+                                                Директор
+                                            </div>
+                                            <div class="ads-table-item__ad-salary">
+                                                111500 руб.
+                                            </div>
+                                            <button class="link link--dark" type="button">
+                                                Редактировать
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-views">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Просмотры
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Просмотры">
+                                                <span class="icon-eye-2"></span>
+                                                15000
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__ad-renewal">
+                                        <div class="bubble-radios">
+                                            <label class="bubble-radio">
+                                                <input type="radio" name="ad_renewal-1" value="on" checked>
+                                                <span class="bubble-radio__body">
+                                                    <span class="bubble-radio__circle-background"></span>
+                                                    <span class="bubble-radio__text">
+                                                        Автопродление включено
+                                                    </span>
+                                                </span>
+                                            </label>
+                                            <label class="bubble-radio">
+                                                <input type="radio" name="ad_renewal-1" value="off">
+                                                <span class="bubble-radio__body">
+                                                    <span class="bubble-radio__circle-background"></span>
+                                                    <span class="bubble-radio__text">
+                                                        Автопродление не включено
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-favorites">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                В избранном
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="В избранном">
+                                                <span class="icon-heart-fill"></span>
+                                                100
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-comments">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Диалоги
+                                            </div>
+                                            <div class="hover-title-target"
+                                                data-hover-title="Всего диалогов по данной вакансии">
+                                                <span class="icon-bubble">
+                                                    <span class="icon-amounts">11</span>
+                                                </span>
+                                                30
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-responses">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Отклики
+                                            </div>
+                                            <div>
+                                                <span class="hover-title-target" data-hover-title="Всего откликов">
+                                                    20
+                                                </span>
+                                                <span class="hover-title-target" data-hover-title="Есть новые отклики">
+                                                    +3
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-match-vacancies">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Подходящие вакансии
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Подходящие вакансии">
+                                                42
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-days">
+                                        <div class="ads-table-item__cell-container flex">
+                                            <div class="ads-table-item__cell-title">
+                                                Размещалось дней
+                                            </div>
+                                            <div class="hover-title-target" data-hover-title="Размещалось дней">
+                                                1
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-links">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="ads-table-item__ad-links-position">
+                                                Объявление на 133 месте в поиске.
+                                            </div>
+                                            <div>
+                                                <button class="link link--red" type="button">
+                                                    Поднять на первое место в поиске?
+                                                </button>
+                                            </div>
+                                            <div>
+                                                <button class="link link--green" type="button">
+                                                    Платные услуги продвижения
+                                                </button>
+                                            </div>
+                                            <div class="spoiler">
+                                                <div
+                                                    class="ads-table-item__copy-link-container copy-link-modal-container">
+                                                    <button class="link link--purple icon-link" type="button"
+                                                        data-copy-link="https://google.com">
+                                                        Своя ссылка Своя ссылка Своя ссылка
+                                                    </button>
+                                                    <button class="link link--purple spoiler__button" type="button">
+                                                        Ещё
+                                                    </button>
+                                                </div>
+                                                <div class="spoiler__body">
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://vk.com">
+                                                            Своя ссылка 2Своя ссылка 2Своя ссылка 2Своя ссылка 2Своя
+                                                            ссылка 2Своя ссылка 2
+                                                        </button>
+                                                    </div>
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://ya.ru">
+                                                            Своя ссылка 3
+                                                        </button>
+                                                    </div>
+                                                    <div class="copy-link-modal-container">
+                                                        <button class="link link--purple icon-link" type="button"
+                                                            data-copy-link="https://yandex.ru">
+                                                            Своя ссылка 4
+                                                        </button>
+                                                    </div>
+                                                    <button class="link link--purple spoiler__button--back"
+                                                        type="button">
+                                                        Свернуть
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ads-table-item__cell ads-table-item__ad-locations">
+                                        <div class="ads-table-item__cell-container">
+                                            <div class="editable-list"
+                                                data-params="title::Регионы/Населенные пункты; maxShown::3">
+                                                <ul class="editable-list__items-list">
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">Самара</div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">
+                                                            Москва
+                                                        </div>
+                                                    </li>
+                                                    <li class="editable-list__item">
+                                                        <div class="editable-list__item-text">
+                                                            Саратов
                                                         </div>
                                                     </li>
                                                     <li class="editable-list__item">
@@ -869,13 +2219,15 @@
         </div>
     </div>
 
-    <svg display="none">
-        <symbol id="svg-warn_sign" viewBox="0 0 1024 1024">
-            <path
-                d="M928.99 755.83 574.6 203.25c-12.89-20.16-36.76-32.58-62.6-32.58s-49.71 12.43-62.6 32.58L95.01 755.83c-12.91 20.12-12.9 44.91.01 65.03 12.92 20.12 36.78 32.51 62.59 32.49h708.78c25.82.01 49.68-12.37 62.59-32.49 12.91-20.12 12.92-44.91.01-65.03zM554.67 768h-85.33v-85.33h85.33V768zm0-426.67v298.66h-85.33V341.32l85.33.01z"
-                fill="currentColor" />
-        </symbol>
-    </svg>
+    <div class="none">
+        <svg display="none">
+            <symbol id="svg-warn_sign" viewBox="0 0 1024 1024">
+                <path
+                    d="M928.99 755.83 574.6 203.25c-12.89-20.16-36.76-32.58-62.6-32.58s-49.71 12.43-62.6 32.58L95.01 755.83c-12.91 20.12-12.9 44.91.01 65.03 12.92 20.12 36.78 32.51 62.59 32.49h708.78c25.82.01 49.68-12.37 62.59-32.49 12.91-20.12 12.92-44.91.01-65.03zM554.67 768h-85.33v-85.33h85.33V768zm0-426.67v298.66h-85.33V341.32l85.33.01z"
+                    fill="currentColor" />
+            </symbol>
+        </svg>
+    </div>
 
     <script src="/vsevn-projects/my-ads/dist/js/utils.js"></script>
     <script src="/vsevn-projects/my-ads/dist/js/htmls.js"></script>
