@@ -3,11 +3,11 @@
 @font-face {
   font-family: ZabraProTest3;
   font-display: swap;
-  src: url("/vsevn-my_ads/fonts/ZabraProTest3/ZabraProTest3-Regular.eot");
-  src: url("/vsevn-my_ads/fonts/ZabraProTest3/ZabraProTest3-Regular.eot?#iefix") format("embedded-opentype"),
-    url("/vsevn-my_ads/fonts/ZabraProTest3/ZabraProTest3-Regular.woff2") format("woff2"),
-    url("/vsevn-my_ads/fonts/ZabraProTest3/ZabraProTest3-Regular.woff") format("woff"),
-    url("/vsevn-my_ads/fonts/ZabraProTest3/ZabraProTest3-Regular.ttf") format("truetype");
+  src: url("/vsevn-projects/my-ads/dist/fonts/ZabraProTest3/ZabraProTest3-Regular.eot");
+  src: url("/vsevn-projects/my-ads/dist/fonts/ZabraProTest3/ZabraProTest3-Regular.eot?#iefix") format("embedded-opentype"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZabraProTest3/ZabraProTest3-Regular.woff2") format("woff2"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZabraProTest3/ZabraProTest3-Regular.woff") format("woff"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZabraProTest3/ZabraProTest3-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
@@ -15,22 +15,22 @@
 @font-face {
   font-family: ZabraProTest3;
   font-display: swap;
-  src: url("/vsevn-my_ads/fonts/ZabraProTest3/ZabraProTest3-Medium.eot");
-  src: url("/vsevn-my_ads/fonts/ZabraProTest3/ZabraProTest3-Medium.eot?#iefix") format("embedded-opentype"),
-    url("/vsevn-my_ads/fonts/ZabraProTest3/ZabraProTest3-Medium.woff2") format("woff2"),
-    url("/vsevn-my_ads/fonts/ZabraProTest3/ZabraProTest3-Medium.woff") format("woff"),
-    url("/vsevn-my_ads/fonts/ZabraProTest3/ZabraProTest3-Medium.ttf") format("truetype");
+  src: url("/vsevn-projects/my-ads/dist/fonts/ZabraProTest3/ZabraProTest3-Medium.eot");
+  src: url("/vsevn-projects/my-ads/dist/fonts/ZabraProTest3/ZabraProTest3-Medium.eot?#iefix") format("embedded-opentype"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZabraProTest3/ZabraProTest3-Medium.woff2") format("woff2"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZabraProTest3/ZabraProTest3-Medium.woff") format("woff"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZabraProTest3/ZabraProTest3-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: ZaharovAEPro;
-  src: url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Bold.eot");
-  src: url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Bold.eot?#iefix") format("embedded-opentype"),
-    url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Bold.woff2") format("woff2"),
-    url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Bold.woff") format("woff"),
-    url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Bold.ttf") format("truetype");
+  src: url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Bold.eot");
+  src: url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Bold.eot?#iefix") format("embedded-opentype"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Bold.woff2") format("woff2"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Bold.woff") format("woff"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -38,11 +38,11 @@
 
 @font-face {
   font-family: ZaharovAEPro;
-  src: url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Medium.eot");
-  src: url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Medium.eot?#iefix") format("embedded-opentype"),
-    url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Medium.woff2") format("woff2"),
-    url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Medium.woff") format("woff"),
-    url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Medium.ttf") format("truetype");
+  src: url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Medium.eot");
+  src: url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Medium.eot?#iefix") format("embedded-opentype"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Medium.woff2") format("woff2"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Medium.woff") format("woff"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -50,11 +50,11 @@
 
 @font-face {
   font-family: ZaharovAEPro;
-  src: url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Regular.eot");
-  src: url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Regular.eot?#iefix") format("embedded-opentype"),
-    url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Regular.woff2") format("woff2"),
-    url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Regular.woff") format("woff"),
-    url("/vsevn-my_ads/fonts/ZaharovAEPro/ZaharovAEPro-Regular.ttf") format("truetype");
+  src: url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Regular.eot");
+  src: url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Regular.eot?#iefix") format("embedded-opentype"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Regular.woff2") format("woff2"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Regular.woff") format("woff"),
+    url("/vsevn-projects/my-ads/dist/fonts/ZaharovAEPro/ZaharovAEPro-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -62,11 +62,11 @@
 
 @font-face {
   font-family: 'icon-font';
-  src: url('/vsevn-my_ads/fonts/IconFont/icon-font.eot?v5ez7b');
-  src: url('/vsevn-my_ads/fonts/IconFont/icon-font.eot?v5ez7b#iefix') format('embedded-opentype'),
-    url('/vsevn-my_ads/fonts/IconFont/icon-font.ttf?v5ez7b') format('truetype'),
-    url('/vsevn-my_ads/fonts/IconFont/icon-font.woff?v5ez7b') format('woff'),
-    url('/vsevn-my_ads/fonts/IconFont/icon-font.svg?v5ez7b#icon-font') format('svg');
+  src: url('/vsevn-projects/my-ads/dist/fonts/IconFont/icon-font.eot?v5ez7b');
+  src: url('/vsevn-projects/my-ads/dist/fonts/IconFont/icon-font.eot?v5ez7b#iefix') format('embedded-opentype'),
+    url('/vsevn-projects/my-ads/dist/fonts/IconFont/icon-font.ttf?v5ez7b') format('truetype'),
+    url('/vsevn-projects/my-ads/dist/fonts/IconFont/icon-font.woff?v5ez7b') format('woff'),
+    url('/vsevn-projects/my-ads/dist/fonts/IconFont/icon-font.svg?v5ez7b#icon-font') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;

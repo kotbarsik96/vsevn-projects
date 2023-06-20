@@ -785,7 +785,7 @@ h1.title {
 }
 
 .checkmark__box::after {
-    content: url("/vsevn-my_ads/img/icons/checkmark.png");
+    content: url("/vsevn-projects/my-ads/dist/img/icons/checkmark.png");
     position: absolute;
     font-size: 18px;
     z-index: 5;

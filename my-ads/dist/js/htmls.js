@@ -1,4 +1,4 @@
-const rootPath = "/vsevn-my_ads/";
+const rootPath = "/vsevn-projects/my-ads/dist/";
 
 function createElement(tagName, className, insertingHTML) {
     let element = document.createElement(tagName);

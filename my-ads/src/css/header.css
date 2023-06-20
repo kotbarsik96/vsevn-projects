@@ -233,7 +233,7 @@
 }
 
 .header-nav__icon--lock::after {
-    content: url("/vsevn-my_ads/img/icons/lock.svg");
+    content: url("/vsevn-projects/my-ads/dist/img/icons/lock.svg");
     position: absolute;
     bottom: 10px;
     right: -5px;
