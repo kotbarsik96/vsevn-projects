@@ -247,6 +247,7 @@ class EditableList {
         this.showMore.button = this.showMore.container.querySelector("button");
         this.showMore.button.addEventListener("click", this.hintMethods.toggle);
         document.addEventListener("click", onDocumentClick.bind(this));
+        this.hiddenInput = this.rootElem.querySelector("input[type='hidden']");
 
         this.getItems();
 
@@ -272,6 +273,7 @@ class EditableList {
 
         getVisibleAndExtras.call(this);
         renderLists.call(this);
+        setValue.call(this);
 
         function getNewItems() {
             const items = Array.from(this.itemsList.querySelectorAll(".editable-list__item"))
@@ -329,6 +331,11 @@ class EditableList {
                 obj.cloneInHint = listItem;
             });
             textContentMethods.setContent(this.showMore.button, `Ещё ${this.extraItems.length}`);
+        }
+        function setValue() {
+            if (!this.hiddenInput) return;
+
+            this.hiddenInput.value = this.items.map(obj => obj.valueText).join("|");
         }
     }
     createHintMethods() {

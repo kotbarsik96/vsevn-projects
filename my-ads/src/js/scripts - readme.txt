@@ -62,14 +62,20 @@ Select:
             <div class="select__options-list">
                 <label class="select__option">
                     <input type="radio" value="value">
+                    [OPTIONAL:] <span>otherValueString</span>
                 </label>
             </div>
         </div>
     ВАЖНО, что далее создастся блок .select__container, куда поместятся блоки ".select__options" и создаваемый скриптом ".select__value"
     1. data.params: 
-        1. name::name. ОБЯЗАТЕЛЬНЫЙ ПАРАМЕТР! Будет выставлен в каждый inputж
+        1. name::name. ОБЯЗАТЕЛЬНЫЙ ПАРАМЕТР! Будет выставлен в каждый input;
         2. enablePagination::true - будет включена пагинация, т.е. появятся стрелки слева и справа, при нажатии на которые будет выбрано предыдущее/следующее значение селекта соответственно;
-        3. paginationReverse::true - будет перевернут порядок пагинации
+        3. paginationReverse::true - будет перевернут порядок пагинации;
+        4. useSpanAsValue::true - при выборе, в блок .select__value вместо значения, находящегося в <input type="radio" value="value">, будет попадать сам span, находящийся в соседстве с этим input'ом;
+        5. initialIndex::index - где index может принимать любое значение. Если index < 0, то хначение по умолчанию не будет выставлено; если index >= 0, то будет выставлено значение по индексу, но если значения по индексу нет, будет считаться, что был передан index < 0;
+        6. cross::true - при выборе значений появится иконка очистки поля, которой нет по умолчанию
+    2. В значение value у каждого <input type="radio" value="value"> передается то, что будет выставлено в селект при выборе этого значения. По умолчанию, span внутри <label class="select__option"> отсутствует, тогда он создастся автоматически и внутрь него будет помещено значение value. Если создать span, то он не будет перезаписан.
+    3. Элементу .select можно добавить класс select--styled, тогда селект будет стилизован также, как и текстовое поле
 
 Calendar:
     1. Верстка:
@@ -158,6 +164,14 @@ CheckboxesModal:
     2. data-params:
         1. Обязательно передать modalWindowClassname::checkboxes-modal X; , где вместо X может быть:
             1. checkboxes-modal--regions - инициализирует class CheckboxesModalRegions
+        2. search::title - где title будет отображать название поля поиска
+        3. firstTitle::title - название первого окна
+        4. secondTitle::title - название второго окна
+    3. data-checkboxes-modal-params - параметры самого CheckboxesModal:
+        1. name::value - будет выставлено у чекбоксов и в hiddenInput
+        2. requiredListForApply::index - индекс (0, 1) списка, в котором необходимо выбрать хотя бы один чекбокс для того, чтобы кнопка "Выбрать" была активна.
+    
 
 CheckboxesModalRegions:
+    1. Создает под элементом [data-create-modal] два input[type="hidden"], в первый будет записывать регионы в формате Регион1|Регион2|... и в этом же формате запишет города во второй
     

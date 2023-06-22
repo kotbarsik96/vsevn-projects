@@ -1,9 +1,19 @@
 const rootPath = "/vsevn-projects/my-ads/dist/";
 
-function createElement(tagName, className, insertingHTML) {
+function createElement(tagName, className, insertingHTML, attributes = "") {
+    // attributes: "attrName=attrValue; attrName2=attrValue2"
     let element = document.createElement(tagName);
     if (className) element.className = className;
     if (insertingHTML) element.insertAdjacentHTML("afterbegin", insertingHTML);
+
+    if (attributes) {
+        const attributesList = attributes.split("; ");
+        attributesList.forEach(str => {
+            const split = str.split("=");
+            element.setAttribute(split[0], split[1]);
+        });
+    }
+
     return element;
 }
 
@@ -294,16 +304,6 @@ class RenderModal {
         const title = "Услуги продвижения";
         const inner = `
             <ul>
-                <li class="service-item">
-                    <div class="service-item__image">
-                        ${renderSVG.getSVG("free_service")}
-                    </div>
-                    <div class="service-item__info">
-                        <div class="service-item__title">Платное размещение</div>
-                        <div class="service-item__period">Период: 11.05.2022 - 11.06.2022</div>
-                        <div class="service-item__until">Услуга АКТИВНА до 11.06.2022</div>
-                    </div>
-                </li>
                 <li class="service-item">
                     <div class="service-item__image">
                         ${renderSVG.getSVG("paid_service")}

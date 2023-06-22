@@ -1,28 +1,638 @@
 class PublicationsTable {
     constructor(node) {
         this.rootElem = node;
+        this.tableBody = this.rootElem.querySelector(".ads-table__body");
         this.stateTabs = this.initStateTabs();
         this.typeTabs = this.initTypeTabs();
-        this.timeTabs = this.initTimeTabs();
+        this.periodTabs = this.initPeriodTabs();
+        this.shownPublications = [];
+
+        nextInitTick(() => {
+            this.update();
+            this.filter = this.initFilter();
+            this.sort = this.initSort();
+            this.selectionControls = this.initSelectionControls();
+            this.selectionControls.onBoardChange();
+        });
+    }
+    update() {
+        this.stateTabs.setAmounts();
+        this.shownPublications = Array.from(this.tableBody.querySelectorAll(".ads-table-item"));
+        if (this.filter) this.filter.doFilter();
+        this.unfilteredPublications = this.shownPublications
+            .filter(node => !node.classList.contains("__filtered"));
+        if (this.sort) this.sort.doSort();
+        if (this.selectionControls) this.selectionControls.refresh();
+    }
+    initFilter() {
+        const data = bindMethods(this, {
+            datesFilter: findInittedInput(this.rootElem.querySelector(".ads-board__filter-date")),
+            salaryFilter: findInittedInput(this.rootElem.querySelector(".ads-board__filter-salary")),
+            regionFilter: findInittedInput(this.rootElem.querySelector(".ads-board__filter-regions")),
+            searchFilter: findInittedInput(this.rootElem.querySelector(".ads-board__filter-search")),
+            init() {
+                data.datesFilter.rootElem.addEventListener("apply", data.doFilter);
+                data.salaryFilter.rootElem.addEventListener("input", data.doFilter);
+                data.regionFilter.rootElem.addEventListener("apply", data.doFilter);
+                data.searchFilter.input.addEventListener("input", data.doFilter);
+            },
+            doFilter() {
+                if (data.isFiltering) return;
+                data.isFiltering = true;
+                setTimeout(() => data.isFiltering = false, 0);
+
+                const filterData = data.getFilterData();
+                if (!filterData) return;
+                this.shownPublications.forEach(node => {
+                    const nodeData = data.getNodeData(node);
+                    const callbacks = data.getFilterCallbacks(nodeData, filterData);
+
+                    let isUnmatched = false;
+                    // вызывает по очереди все методы из getFilterCallbacks, если хотя бы один метод вернул false, isUnmatched становится true и node считается не подходящим по фильтрам
+                    for (let key in callbacks) {
+                        if (typeof callbacks[key] === "function") {
+                            isUnmatched = !callbacks[key]();
+                            if (isUnmatched) break;
+                        }
+                    }
+
+                    if (isUnmatched) {
+                        node.classList.add("__filtered");
+                        return;
+                    }
+                    node.classList.remove("__filtered");
+                });
+            },
+            getFilterData() {
+                if (!data.datesFilter.calendarStart || !data.datesFilter.calendarEnd) return;
+
+                const dateStart = data.datesFilter.calendarStart.getDateStr();
+                const dateEnd = data.datesFilter.calendarEnd.getDateStr();
+                const salaryStart = parseInt(data.salaryFilter.textInputs[0].input.value.replace(/\D/g, "")) || 0;
+                const salaryEnd = parseInt(data.salaryFilter.textInputs[1].input.value.replace(/\D/g, ""))
+                    || salaryStart;
+                const regions = data.regionFilter.hiddenInput.regionsInput.value.split("|");
+                const cities = data.regionFilter.hiddenInput.citiesInput.value.split("|");
+                const searchString = data.searchFilter.input.value.trim();
+                const searchRegexp = searchString ? new RegExp(searchString, "i") : null;
+
+                return { dateStart, dateEnd, salaryStart, salaryEnd, regions, cities, searchString, searchRegexp };
+            },
+            getNodeData(node) {
+                let type;
+                if (node.classList.contains("ads-table-item--applicant")) type = "applicant";
+                else if (node.classList.contains("ads-table-item--employer")) type = "employer";
+
+                let dateValue, salaryValue, locationValues, titleValue;
+                const dateBlock = node.querySelector(".publication__date-value");
+                const salaryBlock = node.querySelector(".ads-table-item__ad-salary");
+                const locationsInput =
+                    node.querySelector(".ads-table-item__ad-locations input[type='hidden']");
+                const titleBlock = node.querySelector(".ads-table-item__ad-title");
+
+                if (dateBlock) dateValue = textContentMethods.getContent(dateBlock);
+                if (salaryBlock) {
+                    salaryValue = parseInt(textContentMethods.getContent(salaryBlock)
+                        .replace(/\D/g, ""));
+                }
+                if (locationsInput) locationValues = locationsInput.value.split("|");
+                if (titleBlock) titleValue = textContentMethods.getContent(titleBlock);
+
+                return { type, dateValue, salaryValue, locationValues, titleValue }
+            },
+            getFilterCallbacks(nodeData, filterData) {
+                const methods = bindMethods(this, {
+                    byType() {
+                        return this.typeTabs.currentType === "all" || nodeData.type === this.typeTabs.currentType;
+                    },
+                    byDate() {
+                        const dateRangeData = dateMethods.isInDateRange(
+                            filterData.dateStart,
+                            filterData.dateEnd,
+                            nodeData.dateValue
+                        );
+                        return dateRangeData.hasIncorrectDate || dateRangeData.isInDateRange;
+                    },
+                    bySalary() {
+                        if (filterData.salaryStart && filterData.salaryEnd) {
+                            return filterData.salaryStart <= nodeData.salaryValue
+                                && nodeData.salaryValue >= filterData.salaryEnd;
+                        }
+                        else if (filterData.salaryStart) return filterData.salaryStart <= nodeData.salaryValue;
+                        else if (filterData.salaryEnd) return filterData.salaryEnd >= nodeData.salaryValue;
+
+                        return true;
+                    },
+                    byLocationsMatch() {
+                        const regions = filterData.regions.filter(v => v);
+                        const cities = filterData.cities.filter(v => v);
+
+                        if (!regions || !cities) return true;
+                        if (regions.length < 0 && cities.length < 0) return true;
+
+                        const hasAllRegionsMatch = regions.length > 0
+                            && regions.length ===
+                            nodeData.locationValues.filter(str => regions.includes(str)).length;
+                        const hasAllCitiesMatch =
+                            cities.length === nodeData.locationValues.filter(str => cities.includes(str)).length;
+
+                        return hasAllRegionsMatch || hasAllCitiesMatch;
+                    },
+                    bySearchString() {
+                        if (!filterData.searchRegexp) return true;
+                        return nodeData.titleValue.match(filterData.searchRegexp);
+                    }
+                });
+
+                return methods;
+            },
+        });
+        data.init();
+
+        return data;
+    }
+    initSort() {
+        const data = bindMethods(this, {
+            selectBlock: this.rootElem.querySelector(".ads-board__controls-sort .select"),
+            selectParams: null,
+            init() {
+                data.selectParams = findInittedInput(data.selectBlock);
+                data.selectParams.rootElem.addEventListener("change", data.onChange);
+                data.onChange();
+            },
+            onChange() {
+                data.startSort();
+            },
+            startSort() {
+                const value = data.selectParams.value;
+                if (!value) return;
+
+                switch (value) {
+                    case "date_up": data.doSort("sortByDate", false);
+                        break;
+                    case "date_down": data.doSort("sortByDate", true);
+                        break;
+                    case "title_up": data.doSort("sortByTitle", false);
+                        break;
+                    case "title_down": data.doSort("sortByTitle", true);
+                        break;
+                    case "salary_up": data.doSort("sortBySalary", false);
+                        break;
+                    case "salary_down": data.doSort("sortBySalary", true);
+                        break;
+                    default: data.doSort("sortByTitle", true);
+                        break;
+                }
+            },
+            doSort(callbackTitle = "sortByTitle", biggestToLowest = true) {
+                const methods = bindMethods(this, {
+                    sortByDate(node1, node2) {
+                        const dateBlock1 = node1.querySelector(".publication__date-value");
+                        const dateBlock2 = node2.querySelector(".publication__date-value");
+                        if (!dateBlock1 || !dateBlock1) return 0;
+
+                        const dateStr1 = textContentMethods.getContent(dateBlock1);
+                        const dateStr2 = textContentMethods.getContent(dateBlock2);
+                        const compareData = dateMethods.compare(dateStr1, dateStr2);
+                        if (compareData.isCorrectRange && !compareData.isEquals) return -1;
+                        if (compareData.isEquals) return 0;
+                        return 1;
+                    },
+                    sortByTitle(node1, node2) {
+                        const titleBlock1 = node1.querySelector(".ads-table-item__ad-title");
+                        const titleBlock2 = node2.querySelector(".ads-table-item__ad-title");
+                        if (!titleBlock1 || !titleBlock2) return 0;
+
+                        const title1 = textContentMethods.getContent(titleBlock1);
+                        const title2 = textContentMethods.getContent(titleBlock2);
+                        if (title1 < title2) return -1;
+                        if (title1 > title2) return 1;
+                        return 0;
+                    },
+                    sortBySalary(node1, node2) {
+                        const salaryBlock1 = node1.querySelector(".ads-table-item__ad-salary");
+                        const salaryBlock2 = node2.querySelector(".ads-table-item__ad-salary");
+                        if (!salaryBlock1 || !salaryBlock2) return 0;
+
+                        const salary1 = parseInt(textContentMethods.getContent(salaryBlock1).replace(/\D/g, ""));
+                        const salary2 = parseInt(textContentMethods.getContent(salaryBlock2).replace(/\D/g, ""));
+                        if (salary1 < salary2) return -1;
+                        if (salary1 > salary2) return 1;
+                        return 0;
+                    }
+                });
+
+                let callback = methods[callbackTitle];
+                if (!callback) callback = methods.sortByDate;
+                let sorted = this.unfilteredPublications.sort(callback);
+                if (biggestToLowest) sorted = sorted.reverse();
+                sorted.forEach(node => node.parentNode.append(node));
+            },
+        });
+        data.init();
+
+        return data;
+    }
+    initSelectionControls() {
+        const data = bindMethods(this, {
+            container: null,
+            placeAdButton: null,
+            selectAllCheckboxContainer: null,
+            selectAllCheckbox: null,
+            nodeCheckboxSelector: ".ads-table-item__checkbox input[type='checkbox']",
+            controlButtons: {},
+            currentButtonsState: "",
+            init() {
+                data.container = this.rootElem.querySelector(".ads-board__publications-controls");
+                data.selectAllCheckboxContainer =
+                    data.container.querySelector(".ads-board__publication-checkbox");
+                data.selectAllCheckbox = data.selectAllCheckboxContainer.querySelector("input[type='checkbox']");
+                data.placeAdButton = data.container.querySelector(".ads-board__place-ad-button");
+
+                data.selectAllCheckboxContainer.addEventListener("change", data.onCheckboxChange);
+                this.rootElem.addEventListener("change", data.onBoardChange);
+
+                data.controlButtons.active = [{ action: "withdraw", button: createButton("Снять с публикации") }];
+                data.controlButtons.done = [
+                    { action: "activate", button: createButton("Активировать") },
+                    { action: "remove", button: createButton("Удалить") }
+                ];
+                data.controlButtons.draft = [{ action: "remove", button: createButton("Удалить") }];
+                data.controlButtons.removed = [{ action: "clear", button: createButton("Очистить корзину") }];
+
+                for (let key in data.controlButtons) {
+                    const buttons = data.controlButtons[key];
+                    buttons.forEach(obj => {
+                        obj.button.addEventListener("click", data.onButtonClick);
+                    });
+                }
+
+                data.refresh();
+
+                function createButton(text) {
+                    return createElement("button", "button button--yellow", text, "type=button");
+                }
+            },
+            onButtonClick(event) {
+                const button = event.target;
+                let buttonData;
+                for (let obj of Object.values(data.controlButtons)) {
+                    for (let subObj of obj) {
+                        if (subObj.button === button) {
+                            buttonData = subObj;
+                            break;
+                        }
+                    }
+                }
+                const checked = this.unfilteredPublications.filter(node => {
+                    const cb = node.querySelector(data.nodeCheckboxSelector);
+                    return cb.checked;
+                });
+                const currentDate = new Date();
+                const currentDateStr =
+                    `${currentDate.getDate()} ${dateMethods.monthsGenitive[currentDate.getMonth()].toLowerCase()} ${currentDate.getFullYear()}`;
+
+                switch (buttonData.action) {
+                    case "withdraw":
+                        checked.forEach(node => {
+                            const template = this.stateTabs.cachedTemplates.done;
+                            if (!template) return;
+
+                            const deleteBlocksSelector = [".ads-table-item__ad-renewal", ".ads-table-item__ad-links"];
+
+                            const withdrawed = node.cloneNode(true);
+                            withdrawed.classList.add("ads-table-item--closed");
+                            withdrawed.insertAdjacentHTML("afterbegin", `
+                                <div class="ads-table-item__close-bg ads-table-item__close-bg--done"></div>
+                            `);
+                            const statusPublication = withdrawed.querySelector(".ads-table-item__status-publication");
+                            if (statusPublication) {
+                                statusPublication.innerHTML = `
+                                <div class="ads-table-item__ad-status">
+                                    <div class="ads-table-item__archived">
+                                        Перенесено в архив
+                                        <span class="fw-700">${currentDateStr}</span>
+                                    </div>
+                                </div>
+                                `;
+                            }
+                            deleteBlocksSelector.forEach(sel => {
+                                const block = withdrawed.querySelector(sel);
+                                if (!block) return;
+                                block.remove();
+                            });
+                            withdrawed.querySelectorAll("input").forEach(i => i.checked = false);
+
+                            template.append(withdrawed);
+                            node.remove();
+                        });
+                        break;
+                    case "activate":
+                        break;
+                    case "remove":
+                        checked.forEach(node => {
+                            const template = this.stateTabs.cachedTemplates.removed;
+                            if (!template) return;
+
+                            const deleteBlocksSelector = [".ads-table-item__ad-renewal", ".ads-table-item__ad-links"];
+
+                            const removed = node.cloneNode(true);
+                            const statusPublication = removed.querySelector(".ads-table-item__status-publication");
+                            const background = removed.querySelector(".ads-table-item__close-bg");
+                            if (background) background.remove();
+                            if (statusPublication) {
+                                statusPublication.innerHTML = `
+                                <div class="ads-table-item__ad-status">
+                                    <div class="ads-table-item__archived">
+                                        <div class="publication__fieldset-container text-input--standard" data-params="noCross::true">
+                                            <fieldset class="publication__change-date fieldset text-input--standard__wrapper">
+                                                <legend class="fieldset__legend">Дата депубликации</legend>
+                                                <div class="fieldset__body calendar" data-params="defaultDate::05.12.2023">
+                                                    <div class="calendar__preview">
+                                                        <div class="text-input--standard__input">
+                                                            <div class="calendar__preview-inputs date-inputs">
+                                                                <input type="text" class="date-inputs__input date-inputs__input--date"
+                                                                    placeholder="ДД">
+                                                                <div class="date-inputs__delimeter">.</div>
+                                                                <input type="text" class="date-inputs__input date-inputs__input--month"
+                                                                    placeholder="ММ">
+                                                                <div class="date-inputs__delimeter">.</div>
+                                                                <input type="text" class="date-inputs__input date-inputs__input--year"
+                                                                    placeholder="ГГГГ">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                                `;
+                            }
+                            deleteBlocksSelector.forEach(sel => {
+                                const block = removed.querySelector(sel);
+                                if (!block) return;
+                                block.remove();
+                            });
+                            removed.querySelectorAll("input").forEach(i => i.checked = false);
+
+                            template.append(removed);
+                            node.remove();
+                        });
+                        break;
+                    case "clear":
+                        checked.forEach(node => {
+                            node.remove();
+                        });
+                        break;
+                }
+
+                this.update();
+            },
+            refresh() {
+                if (this.unfilteredPublications.length > 1) {
+                    data.selectAllCheckboxContainer.classList.remove("none");
+                } else {
+                    data.selectAllCheckboxContainer.classList.add("none");
+                    data.selectAllCheckbox.checked = false;
+                }
+
+                data.setControlButtons();
+                data.onBoardChange();
+                this.stateTabs.setAmounts();
+            },
+            onCheckboxChange() {
+                this.unfilteredPublications.forEach(node => {
+                    const cb = node.querySelector(data.nodeCheckboxSelector);
+                    if (data.selectAllCheckbox.checked) cb.checked = true;
+                    else cb.checked = false;
+                });
+            },
+            onBoardChange() {
+                const checked = this.unfilteredPublications
+                    .filter(node => node.querySelector(data.nodeCheckboxSelector).checked);
+                data.selectAllCheckbox.checked = checked.length === this.unfilteredPublications.length;
+
+                const btns = data.controlButtons[data.currentButtonsState];
+                if (Array.isArray(btns)) {
+                    btns.forEach(obj => {
+                        checked.length > 0
+                            ? obj.button.removeAttribute("disabled") : obj.button.setAttribute("disabled", true);
+                    });
+                }
+            },
+            setControlButtons() {
+                if (this.stateTabs.currentState === data.currentButtonsState) return;
+                data.currentButtonsState = this.stateTabs.currentState;
+
+                // удалить все прошлые кнопки
+                for (let key in data.controlButtons) {
+                    data.controlButtons[key].forEach(obj => obj.button.remove());
+                }
+
+                // выставить текущие кнопки
+                const buttons = data.controlButtons[this.stateTabs.currentState];
+                if (!Array.isArray(buttons)) return;
+
+                buttons.forEach(obj => {
+                    data.container.append(obj.button);
+                });
+            }
+        });
+        data.init();
+
+        return data;
     }
     initStateTabs() {
         const data = bindMethods(this, {
             container: this.rootElem.querySelector(".ads-board__tabs-list--states"),
+            buttons: [],
+            templatesContainer: createElement("div", "none"),
+            currentState: "",
+            cachedTemplates: {},
+            init() {
+                fetch(`${rootPath}ad-templates.html`)
+                    .then(res => res.text())
+                    .then(layout => {
+                        data.templatesContainer.insertAdjacentHTML("beforeend", layout);
+                        data.buttons.forEach(obj => {
+                            data.cachedTemplates[obj.stateName] = data.getTemplate(obj.stateName);
+                        });
+                        data.changeState("active");
+                    });
+
+                data.buttons = Array.from(data.container.querySelectorAll(".ads-board__tabs-button"))
+                    .map(button => {
+                        const stateText = textContentMethods.getContent(button);
+                        const stateName = button.dataset.stateName;
+                        return { button, stateText, stateName };
+                    });
+                data.buttons.forEach(obj => {
+                    obj.button.addEventListener("click", data.onClick);
+                });
+            },
+            setAmounts() {
+                data.buttons.forEach(obj => {
+                    const isOnPage = data.currentState === obj.stateName;
+                    if (isOnPage) {
+                        const amount = this.tableBody.querySelectorAll(".ads-table-item").length;
+                        textContentMethods.setContent(obj.button, `${obj.stateText} ${amount || ""}`.trim());
+                        return;
+                    }
+
+                    const cached = data.cachedTemplates[obj.stateName];
+                    let amount;
+                    if (cached) {
+                        amount = cached.querySelectorAll(".ads-table-item").length;
+                    } else {
+                        const template = data.getTemplate(obj.stateName);
+                        if (!template) return;
+
+                        amount = template.querySelectorAll(".ads-table-item").length;
+                    }
+                    textContentMethods.setContent(obj.button, `${obj.stateText} ${amount || ""}`.trim());
+                });
+            },
+            onClick(event) {
+                const buttonObj = data.buttons.find(obj => obj.button === event.target);
+                const stateName = buttonObj.stateName;
+                data.changeState(stateName, buttonObj.button);
+            },
+            changeState(stateName, button = null) {
+                if (data.currentState === stateName) return;
+
+                // попробовать найти закэшированный (в data.cachedTemplates) или взять из ad-templates.html
+                const template = data.cachedTemplates[stateName]
+                    || data.getTemplate(stateName).cloneNode(true);
+                if (!template) return;
+
+                // закэшировать текущую верстку, которая будет заменена новой
+                data.cachedTemplates[data.currentState] = this.tableBody.querySelector(".ads-table__body div");
+
+                data.currentState = stateName;
+                this.tableBody.innerHTML = "";
+                this.tableBody.append(template);
+
+                data.buttons.forEach(obj => obj.button.classList.remove("__active"));
+                if (!button) button = data.buttons.find(obj => obj.stateName === stateName).button;
+                button.classList.add("__active");
+            },
+            getTemplate(stateName) {
+                return data.templatesContainer.querySelector(`[data-ad-template-name="${stateName}"]`);
+            },
         });
+        data.init();
 
         return data;
     }
     initTypeTabs() {
         const data = bindMethods(this, {
             container: this.rootElem.querySelector(".ads-board__tabs-list--types"),
+            buttons: [],
+            currentType: "",
+            init() {
+                data.buttons = Array.from(data.container.querySelectorAll(".ads-board__tabs-button"))
+                    .map(button => {
+                        const typeText = textContentMethods.getContent(button);
+                        const typeName = button.dataset.typeName;
+                        return { button, typeText, typeName };
+                    });
+                data.buttons.forEach(obj => {
+                    obj.button.addEventListener("click", data.onClick);
+                });
+                setTimeout(() => data.changeType("all"), 0);
+            },
+            onClick(event) {
+                const buttonObj = data.buttons.find(obj => obj.button === event.target);
+                const typeName = buttonObj.typeName;
+                data.changeType(typeName, buttonObj.button);
+                this.filter.doFilter();
+            },
+            changeType(typeName, button = null) {
+                if (data.currentType === typeName) return;
+
+                data.currentType = typeName;
+                data.buttons.forEach(obj => obj.button.classList.remove("__active"));
+                if (!button) button = data.buttons.find(obj => obj.typeName === typeName).button;
+                button.classList.add("__active");
+            }
         });
+        data.init();
 
         return data;
     }
-    initTimeTabs() {
+    initPeriodTabs() {
         const data = bindMethods(this, {
             container: this.rootElem.querySelector(".ads-board__tabs-list--times"),
+            buttons: [],
+            currentPeriod: "",
+            init() {
+                data.buttons = Array.from(data.container.querySelectorAll(".ads-board__tabs-button"))
+                    .map(button => {
+                        const periodText = textContentMethods.getContent(button);
+                        const periodName = button.dataset.periodName;
+                        return { button, periodText, periodName };
+                    });
+                data.buttons.forEach(obj => {
+                    obj.button.addEventListener("click", data.onClick);
+                });
+                setTimeout(() => data.changePeriod("all"), 0);
+            },
+            onClick(event) {
+                const buttonObj = data.buttons.find(obj => obj.button === event.target);
+                const periodName = buttonObj.periodName;
+                data.changePeriod(periodName, buttonObj.button);
+            },
+            changePeriod(periodName, button = null) {
+                if (data.currentPeriod === periodName) return;
+
+                data.currentPeriod = periodName;
+                data.buttons.forEach(obj => obj.button.classList.remove("__active"));
+                if (!button) button = data.buttons.find(obj => obj.periodName === periodName).button;
+                button.classList.add("__active");
+
+                if (!this.filter) return;
+                const calendarDouble = this.filter.datesFilter;
+                if (!calendarDouble) return;
+
+                const currentDate = new Date();
+                const currentMonthday = currentDate.getDate();
+                const currentMonth = currentDate.getMonth() + 1;
+                const currentYear = currentDate.getFullYear();
+                let endDateStr = `${currentMonthday}.${currentMonth}.${currentYear}`;
+                let startDateStr;
+                let startDate;
+                switch (periodName) {
+                    case "all":
+                    default:
+                        calendarDouble.calendarStart.previewData.inpParams.clear();
+                        calendarDouble.calendarEnd.previewData.inpParams.clear();
+                        return;
+                    case "today":
+                        startDateStr = endDateStr;
+                        break;
+                    case "last_week":
+                        startDate = new Date(Date.now() - 7 * 24 * 3600 * 1000);
+                        break;
+                    case "last_month":
+                        startDate = new Date(Date.now() - 30 * 24 * 3600 * 1000);
+                        break;
+                    case "last_half_year":
+                        startDate = new Date(Date.now() - 182 * 24 * 3600 * 1000);
+                        break;
+                    case "last_year":
+                        startDate = new Date(Date.now() - 365 * 24 * 3600 * 1000);
+                        break;
+                }
+                if (!startDateStr)
+                    startDateStr =
+                        `${startDate.getDate()}.${parseInt(startDate.getMonth()) + 1}.${startDate.getFullYear()}`;
+                calendarDouble.calendarStart.setDate(startDateStr);
+                calendarDouble.calendarEnd.setDate(endDateStr);
+                calendarDouble.calendarDoubleData.apply();
+            }
         });
+        data.init();
 
         return data;
     }
@@ -30,6 +640,8 @@ class PublicationsTable {
 
 class Publication {
     constructor(node) {
+        this.onCheckboxChange = this.onCheckboxChange.bind(this);
+
         this.rootElem = node;
         if (this.rootElem.classList.contains("ads-table-item--applicant"))
             this.type = "applicant";
@@ -38,6 +650,12 @@ class Publication {
         this.publicationStatus = this.initPublicationStatus();
         this.editableList = this.initEditableList();
         this.title = this.initTitle();
+        this.checkbox = this.rootElem.querySelector(".ads-table-item__checkbox input[type='checkbox']");
+        this.checkbox.addEventListener("change", this.onCheckboxChange);
+    }
+    onCheckboxChange() {
+        const publicationsTable = findInittedInput(".ads-board");
+        if (publicationsTable) publicationsTable.rootElem.dispatchEvent(new Event("change"));
     }
     initPublicationStatus() {
         const data = bindMethods(this, {
@@ -46,10 +664,11 @@ class Publication {
             refreshedDate: null,
             init() {
                 data.node = this.rootElem.querySelector(".ads-table-item__status-publication");
+                if (!data.node) return;
+
                 data.refreshLink = data.node.querySelector(".publication__refresh-link");
                 data.refreshedDate = data.node.querySelector(".publication__refreshed-date");
-
-                data.refreshLink.addEventListener("click", data.refresh);
+                if (data.refreshLink) data.refreshLink.addEventListener("click", data.refresh);
             },
             // возможно на бэкенд
             refresh(event) {
@@ -109,7 +728,7 @@ class Publication {
             value: "",
             init() {
                 data.value = textContentMethods.getContent(data.container).trim();
-                if(data.value.length > data.maxlength) {
+                if (data.value.length > data.maxlength) {
                     data.container.parentNode.setAttribute("data-hover-title", data.value);
                     data.container.append(createElement("div", "fog"));
                 }
@@ -191,7 +810,7 @@ class TextInput {
                 }
             },
             setPrefix() {
-                if (!this.params.prefix) return;
+                if (!this.params.prefix || this.input.value.trim() === this.params.prefix.trim()) return;
                 this.input.value = `${this.params.prefix} ${this.input.value}`;
             },
             typeNumberOnly() {
@@ -628,6 +1247,7 @@ class DateInputs {
                     this.value = null;
                     return;
                 }
+
                 this.value =
                     `${date.length < 2 ? `0${date}` : date}.${month.length < 2 ? `0${month}` : month}.${year}`;
             }
@@ -757,14 +1377,16 @@ class DateInputs {
     }
     clear() {
         this.inputs.forEach(inp => inp.value = "");
-        this.inputs[0].dispatchEvent(new Event("input"));
-        this.inputs[0].dispatchEvent(new Event("change"));
+        const detail = { detail: { clear: true } };
+        this.inputs[0].dispatchEvent(new CustomEvent("input", detail));
+        this.inputs[0].dispatchEvent(new CustomEvent("change", detail));
     }
 }
 
 class Select {
     constructor(node) {
         this.getOptions = this.getOptions.bind(this);
+        this.clear = this.clear.bind(this);
 
         this.rootElem = node;
         this.valueBlock = createElement("div", "select__value icon-chevron-down");
@@ -772,9 +1394,15 @@ class Select {
         this.list = this.rootElem.querySelector(".select__options-list");
         this.options = [];
         this.params = getParams(this);
+        this.placeholder = this.params.placeholder || "";
         this.listMethods = this.createListMethods();
         if (this.params.enablePagination)
             this.paginationData = this.createPagination();
+        if (this.params.cross) {
+            this.container.insertAdjacentHTML("beforeend", renderMisc.cross());
+            this.clearButton = this.container.querySelector(".cross");
+            this.clearButton.addEventListener("click", this.clear);
+        }
 
         this.getOptions();
         this.list.before(this.valueBlock);
@@ -787,7 +1415,15 @@ class Select {
 
         this.valueBlock.addEventListener("click", this.listMethods.toggle);
 
-        if (this.options[0]) this.setOption(this.options[0].value);
+        if (this.params.initialIndex) {
+            const index = parseInt(this.params.initialIndex);
+            if (index < 0 || !this.options[index]) {
+                this.clear();
+                return;
+            }
+
+            this.setOption(this.options[index].value);
+        }
     }
     getOptions() {
         this.options = this.options.concat(getNewOptions.call(this));
@@ -800,10 +1436,15 @@ class Select {
                     if (input.getAttribute("name") !== this.params.name)
                         input.setAttribute("name", this.params.name);
                     const value = input.value.trim();
-                    const textSpan = createElement("span", "", value);
-                    node.append(textSpan);
+                    let textSpan = node.querySelector("span");
+                    if (!textSpan) {
+                        textSpan = createElement("span", "", value);
+                        node.append(textSpan);
+                    }
+                    const insertingValue = this.params.useSpanAsValue
+                        ? textSpan.outerHTML : value;
 
-                    return { node, value, input, textSpan };
+                    return { node, value, input, textSpan, insertingValue };
                 });
 
             newOptions.forEach(obj => {
@@ -822,11 +1463,11 @@ class Select {
             return;
         }
 
-        textContentMethods.setContent(this.valueBlock, value);
+        this.valueBlock.innerHTML = optionObj.insertingValue;
         this.value = value;
         this.valueIndex = this.options.findIndex(obj => obj.value === this.value);
-        this.rootElem.dispatchEvent(new Event("change"));
         this.listMethods.hide();
+        this.rootElem.classList.add("__has-value");
     }
     onOptionsEdited(callback = function () { }, args = []) {
         callCallback = callCallback.bind(this);
@@ -922,6 +1563,15 @@ class Select {
 
         return data;
     }
+    clear() {
+        this.valueBlock.innerHTML = `<span class="placeholder">${this.placeholder}</span>`;
+        this.value = "";
+        this.valueIndex = -1;
+        this.rootElem.dispatchEvent(new Event("change"));
+        this.listMethods.hide();
+        this.rootElem.classList.remove("__has-value");
+        this.options.forEach(obj => obj.input.checked = false);
+    }
 }
 
 class InputsRange {
@@ -954,6 +1604,7 @@ class InputsRange {
     }
     onInputChange() {
         compareValues.call(this);
+        this.rootElem.dispatchEvent(new Event("change"));
 
         function compareValues() {
             const startValue = parseInt(this.textInputs[0].input.value.replace(/\D/g, "").trim());
@@ -1077,76 +1728,6 @@ class Modal {
     }
 }
 
-class CreateModal {
-    constructor(node) {
-        this.onClick = this.onClick.bind(this);
-
-        this.rootElem = node;
-        this.inputWrapper = this.rootElem.querySelector(".input-like__wrapper");
-        this.textBlock = this.rootElem.querySelector(".input-like__text");
-        this.defaultText = textContentMethods.getContent(this.textBlock).trim();
-        this.params = getParams(this);
-        this.modalName = this.rootElem.dataset.createModal;
-
-        let modalName = this.modalName;
-        const options = Object.assign(this.params, { modalName });
-        this.modalParams = new Modal(options);
-
-        this.rootElem.removeAttribute("data-create-modal");
-        this.rootElem.addEventListener("click", this.onClick);
-
-        // если создает CheckboxesModal, инициализирует компонент напрямую, без функции initInputs()
-        if (this.modalName.match(/checkboxesmodal/i)) {
-            const cmRootElem = this.modalParams.modal.querySelector(".checkboxes-modal");
-            const isAlreadyInitted = inittedInputs.find(inpP => {
-                return inpP.rootElem === cmRootElem && inpP instanceof CheckboxesModal;
-            });
-            if (isAlreadyInitted) return;
-
-            let inst = getClassInstance();
-
-            this.checkboxesModal = new inst(cmRootElem);
-            inittedInputs.push(this.checkboxesModal);
-            this.checkboxesModal.createModal = this;
-            this.checkboxesModal.modalParams = this.modalParams;
-            const params = this.rootElem.dataset.checkboxesModalParams || "";
-            this.checkboxesModal.params = assignPropertiesToObj(params);
-            this.rootElem.removeAttribute("data-checkboxes-modal-params");
-            setCross.call(this);
-            setHoverTitle.call(this);
-
-            function getClassInstance() {
-                if (cmRootElem.className.match(/checkboxes-modal--regions/)) return CheckboxesModalRegions;
-                return CheckboxesModal;
-            }
-            function setCross() {
-                if (!this.inputWrapper) return;
-
-                this.inputWrapper.insertAdjacentHTML("beforeend", renderMisc.cross());
-                this.clearButton = this.inputWrapper.querySelector(".cross");
-                this.clearButton.addEventListener("click", this.checkboxesModal.fullClear);
-            }
-            function setHoverTitle() {
-                this.inputWrapper.setAttribute("data-hover-title", this.defaultText);
-                const observer = new MutationObserver(() => {
-                    const text = textContentMethods.getContent(this.textBlock);
-                    this.inputWrapper.setAttribute("data-hover-title", text);
-                });
-                observer.observe(this.textBlock, { childList: true, subtree: true });
-            }
-        }
-    }
-    onClick(event) {
-        if (this.clearButton && checkIfTargetOrClosest(event.target, [this.clearButton])) return;
-        // не забыть убрать, т.к. возможно, что в будущем, бэкенд будет привязываться к этой ссылке с помощью GET-запроса
-        event.preventDefault();
-        this.create();
-    }
-    create() {
-        this.modalParams.append();
-    }
-}
-
 // методы, которые могут быть использованы и в Calendar, и в CalendarDouble
 const calendarMethods = {
     async show(ctx, params = { showEl: null }) {
@@ -1195,13 +1776,18 @@ class Calendar {
 
         this.selectsData = this.initSelects();
         this.calendarData = this.initCalendar();
+        this.errorsData = this.initErrors();
 
         nextInitTick(() => {
-            this.previewData.hide(true);
+            this.previewData.hideInputs(true);
             this.calendarData.hide();
 
-            if (this.params.defaultDate) this.setDate(this.params.defaultDate);
-            else this.previewData.show({ noFocus: true });
+            if (this.params.defaultDate) {
+                setTimeout(() => {
+                    this.setDate(this.params.defaultDate);
+                }, 100);
+            }
+            else this.previewData.showInputs({ noFocus: true });
 
             this.calendarBox.classList.remove("none");
         });
@@ -1212,7 +1798,25 @@ class Calendar {
             textBlock: createElement("div", "calendar__preview-text"),
             inputsBlock: this.rootElem.querySelector(".calendar__preview-inputs"),
             inpParams: null,
-            show(paramsOrEvent = {}) {
+            init() {
+                const inpParams = findInittedInput(data.inputsBlock);
+                data.inpParams = inpParams;
+                data.previewBlock.addEventListener("click", data.showInputs);
+                inpParams.inputs.forEach(inp => {
+                    inp.addEventListener("change", data.onChange);
+                    inp.addEventListener("blur", data.onBlur);
+                });
+
+                const thisMinYear = parseInt(this.params.minYear);
+                const thisMaxYear = parseInt(this.params.maxYear);
+                if (this.params.minYear) inpParams.params.minYear = thisMinYear;
+                else this.params.minYear = inpParams.params.minYear;
+                if (this.params.maxYear) inpParams.params.maxYear = thisMaxYear;
+                else this.params.maxYear = inpParams.params.maxYear;
+
+                document.addEventListener("click", data.onDocumentClick);
+            },
+            showInputs(paramsOrEvent = {}) {
                 if (paramsOrEvent.target && checkIfTargetOrClosest(paramsOrEvent.target, [data.inputsBlock]))
                     return;
                 data.textBlock.classList.add("none");
@@ -1226,7 +1830,7 @@ class Calendar {
                     if (lastUnfilled) lastUnfilled.focus();
                 }
             },
-            hide(isForced = false) {
+            hideInputs(isForced = false) {
                 if (!isForced) {
                     if (!data.inpParams.rootElem.closest(".__has-value")) return;
                 }
@@ -1247,14 +1851,30 @@ class Calendar {
             },
             onDocumentClick(event) {
                 if (checkIfTargetOrClosest(event.target, [this.rootElem])) return;
-                data.hide();
+                data.hideInputs();
                 this.calendarData.hide();
             },
+            async onBlur() {
+                await delay(0);
+
+                if (data.inpParams.inputs.includes(document.activeElement)) return;
+                data.hideInputs();
+            },
             onChange(event = {}) {
+                const eventDetail = event.detail || {};
                 data.setText();
-                const hasValue = data.inpParams.inputs.find(inp => inp.value);
-                if (!hasValue) data.show();
-                if (event.detail && event.detail.setDate) return;
+                const inputs = data.inpParams.inputs;
+                const hasValue = inputs.find(inp => inp.value);
+                if (!hasValue) {
+                    data.showInputs({ noFocus: true });
+                    this.calendarData.tableCells.forEach(obj => obj.td.classList.remove("__selected"));
+                }
+
+                this.rootElem.dispatchEvent(new Event("change"));
+                this.errorsData.getErrors();
+
+                if (eventDetail.clear) this.calendarData.apply();
+                if (eventDetail.setDate) return;
 
                 setTimeout(() => {
                     const date = data.inpParams.value;
@@ -1263,19 +1883,8 @@ class Calendar {
             }
         });
 
-        nextInitTick(onNextTick.bind(this));
+        nextInitTick(data.init);
         return data;
-
-        function onNextTick() {
-            const inpParams = findInittedInput(data.inputsBlock);
-            data.inpParams = inpParams;
-            data.previewBlock.addEventListener("click", data.show);
-            inpParams.inputs.forEach(inp => {
-                inp.addEventListener("change", data.onChange);
-            });
-
-            document.addEventListener("click", data.onDocumentClick);
-        }
     }
     setDate(date = "01.01.2000") {
         const split = date.split(".");
@@ -1289,11 +1898,26 @@ class Calendar {
             return;
 
         month = dateMethods.months[month - 1];
+
+        const invalidMonthOrYear = month < 1
+            || month > 12
+            || year < this.params.minYear
+            || year > this.params.maxYear;
+        if (invalidMonthOrYear) return;
         monthsSelect.setOption(month);
         yearsSelect.setOption(year);
 
         const monthdayCell = this.calendarData.tableCells.find(obj => parseInt(obj.value) === monthday);
         if (monthdayCell) this.calendarData.onTableCellClick({ target: monthdayCell.td });
+    }
+    getDateStr() {
+        const inputs = this.previewData.inpParams;
+        const date = inputs.inputDate.value;
+        const month = inputs.inputMonth.value;
+        const year = inputs.inputYear.value;
+
+        if (!date || !month || !year) return "";
+        return `${date}.${month}.${year}`;
     }
     initSelects() {
         const data = bindMethods(this, {
@@ -1329,10 +1953,10 @@ class Calendar {
                     data.yearsSelect = findInittedInput(yearsSelect);
                     data.monthsSelect = findInittedInput(monthsSelect);
 
-                    yearsSelect.addEventListener("change", data.onChange);
-                    monthsSelect.addEventListener("change", data.onChange);
-                    // yearsSelect.dispatchEvent(new Event("change"));
-                    // monthsSelect.dispatchEvent(new Event("change"));
+                    setTimeout(() => {
+                        yearsSelect.addEventListener("change", data.onChange);
+                        monthsSelect.addEventListener("change", data.onChange);
+                    }, 100);
                 });
             },
             onChange(event = {}, params = { recursed: false }) {
@@ -1375,6 +1999,13 @@ class Calendar {
             tableContainer: null,
             cachedTableLayouts: [],
             tableCells: [],
+            init() {
+                data.createTable();
+                data.createApplyButton();
+                if (!this.calendarDouble) {
+                    this.previewData.previewBlock.addEventListener("click", data.show);
+                }
+            },
             async show() {
                 if (this.calendarDouble) return;
 
@@ -1404,6 +2035,14 @@ class Calendar {
                     });
             },
             renderTableRows() {
+                if (!this.year) this.year = new Date().getFullYear();
+                if (!this.month) this.month = 1;
+
+                if (data.monthOnLastRender === this.month && data.yearOnLastRender === this.year) return;
+
+                data.monthOnLastRender = this.month;
+                data.yearOnLastRender = this.year;
+
                 data.removeAllMonthDays();
                 const cached = data.cachedTableLayouts
                     .find(obj => obj.year === this.year && obj.month === this.month);
@@ -1430,6 +2069,8 @@ class Calendar {
                         td.addEventListener("click", data.onTableCellClick);
                     });
                 });
+
+                if (!this.year || !this.month) return;
                 data.cachedTableLayouts.push({
                     month: this.month,
                     year: this.year,
@@ -1459,16 +2100,14 @@ class Calendar {
                 this.selectsData.yearsSelect.rootElem.dispatchEvent(new CustomEvent("change", detail));
             },
             apply() {
+                this.rootElem.dispatchEvent(new CustomEvent("apply"));
                 if (this.calendarDouble) return;
 
                 data.hide();
+                this.previewData.hideInputs();
             }
         });
-        data.createTable();
-        data.createApplyButton();
-        if (!this.calendarDouble) {
-            this.previewData.previewBlock.addEventListener("click", data.show);
-        }
+        data.init();
 
         return data;
     }
@@ -1482,11 +2121,51 @@ class Calendar {
         const calendarBottom = previewBlockCoords.bottom + calendarHeight + 20;
         const willBeAboveTopBorder = (previewBlockCoords.top - calendarHeight - 20) < 0;
 
-        if (calendarBottom > bottomBorder && !willBeAboveTopBorder) {
+        if (calendarBottom - 50 > bottomBorder && !willBeAboveTopBorder) {
             calendarBox.classList.add("calendar-box--above");
         } else {
             calendarBox.classList.remove("calendar-box--above");
         }
+    }
+    initErrors() {
+        const data = bindMethods(this, {
+            errorBlock: null,
+            errorMessage: "",
+            init() {
+                this.rootElem.addEventListener("change", data.getErrors);
+                if (this.calendarDouble) return;
+
+                data.errorBlock = createElement("div", "calendar__error error");
+                this.rootElem.append(data.errorBlock);
+            },
+            getErrors() {
+                const previewParams = this.previewData.inpParams;
+                const year = parseInt(previewParams.inputYear.value);
+                setTimeout(() => {
+                    this.rootElem.dispatchEvent(new CustomEvent("get-errors"));
+                }, 0);
+
+                const invalidYear = year < this.params.minYear || year > this.params.maxYear;
+                if (invalidYear) {
+                    const message = `Неверно указан год. Минимальный год: ${this.params.minYear}, максимальный год: ${this.params.maxYear}`;
+                    data.setErrorMessage(message);
+                    return;
+                }
+                data.setErrorMessage("");
+            },
+            setErrorMessage(message) {
+                if (!message) message = "";
+                data.errorMessage = message.trim();
+                if (!data.errorBlock) return;
+
+                textContentMethods.setContent(data.errorBlock, data.errorMessage);
+                if (data.errorMessage) data.errorBlock.classList.remove("none");
+                else data.errorBlock.classList.add("none");
+            }
+        });
+        data.init();
+
+        return data;
     }
 }
 
@@ -1508,6 +2187,7 @@ class CalendarDouble {
         this.calendarBoxes.append(this.calendarStart.calendarBox);
         this.calendarBoxes.append(this.calendarEnd.calendarBox);
         this.calendarDoubleData = this.initCalendarDouble();
+        this.errorsData = this.initErrors();
 
         this.calendars.forEach(inpP => {
             inpP.previewData.previewBlock.addEventListener("click", this.calendarDoubleData.show);
@@ -1515,12 +2195,28 @@ class CalendarDouble {
     }
     initCalendarDouble() {
         const data = bindMethods(this, {
+            init() {
+                document.addEventListener("click", data.onDocumentClick);
+                this.calendars.forEach(cParams => {
+                    cParams.rootElem.addEventListener("apply", data.apply);
+                });
+                this.applyButton = calendarMethods.createApplyButton({
+                    callback: data.apply, appendTo: this.calendarBoxes
+                });
+                this.calendars.forEach(cParams => {
+                    cParams.rootElem.addEventListener("change", data.onAnyChange);
+                    cParams.previewData.inpParams.rootElem.addEventListener("change", data.onAnyChange);
+                });
+            },
             hide() {
                 calendarMethods.hide(this, { hideEl: this.calendarBoxes });
             },
             show() {
                 this.calendarBoxes.classList.remove("none");
                 calendarMethods.show(this, { showEl: this.calendarBoxes });
+            },
+            onAnyChange() {
+                data.checkDateRange();
             },
             onDocumentClick(event) {
                 if (checkIfTargetOrClosest(event.target, [this.rootElem])) return;
@@ -1529,14 +2225,150 @@ class CalendarDouble {
             },
             apply() {
                 data.hide();
-            }
+                this.rootElem.dispatchEvent(new CustomEvent("apply"));
+            },
+            checkDateRange() {
+                const dateStart = this.calendarStart.getDateStr();
+                const dateEnd = this.calendarEnd.getDateStr();
+
+                const compareData = dateMethods.compare(dateStart, dateEnd);
+
+                this.isCorrectRange = compareData.isCorrectRange && !compareData.hasIncorrectDate;
+            },
         });
-        document.addEventListener("click", data.onDocumentClick);
-        this.applyButton = calendarMethods.createApplyButton({
-            callback: data.apply, appendTo: this.calendarBoxes
-        });
+        data.init();
 
         return data;
+    }
+    initErrors() {
+        const data = bindMethods(this, {
+            errorBlock: null,
+            errorMessage: "",
+            init() {
+                this.calendars
+                    .forEach(cParams => cParams.rootElem.addEventListener("get-errors", data.onGetErrors));
+                data.errorBlock = createElement("div", "calendar__error error");
+                this.rootElem.append(data.errorBlock);
+            },
+            checkCorrectRange() {
+                const cStart = this.calendarStart.previewData.inpParams;
+                const cEnd = this.calendarEnd.previewData.inpParams;
+                const startDate = `${cStart.inputDate.value}.${cStart.inputMonth.value}.${cStart.inputYear.value}`;
+                const endDate = `${cEnd.inputDate.value}.${cEnd.inputMonth.value}.${cEnd.inputYear.value}`;
+
+                return dateMethods.compare(startDate, endDate);
+            },
+            onGetErrors() {
+                const singleCalendar = this.calendars.find(cParams => cParams.errorsData.errorMessage);
+                if (singleCalendar) {
+                    const errorMessage = singleCalendar.errorsData.errorMessage;
+                    data.setErrorMessage(errorMessage);
+                    return;
+                }
+
+                const compareData = data.checkCorrectRange();
+                const incorrectRange = !compareData.isCorrectRange && !compareData.hasIncorrectDate;
+                if (incorrectRange) {
+                    data.setErrorMessage("Дата начала диапазона не может быть позднее даты конца диапазона");
+                    return;
+                }
+
+                data.setErrorMessage("");
+            },
+            setErrorMessage(message) {
+                if (!message) message = "";
+                data.errorMessage = message.trim();
+
+                textContentMethods.setContent(data.errorBlock, data.errorMessage);
+                if (data.errorMessage) data.errorBlock.classList.remove("none");
+                else data.errorBlock.classList.add("none");
+            }
+        });
+        data.init();
+
+        return data;
+    }
+}
+
+class CreateModal {
+    constructor(node) {
+        this.onClick = this.onClick.bind(this);
+
+        this.rootElem = node;
+        this.inputWrapper = this.rootElem.querySelector(".input-like__wrapper");
+        this.textBlock = this.rootElem.querySelector(".input-like__text");
+        this.defaultText = textContentMethods.getContent(this.textBlock).trim();
+        this.params = getParams(this);
+        this.modalName = this.rootElem.dataset.createModal;
+
+        let modalName = this.modalName;
+        const options = Object.assign(this.params, { modalName });
+        this.modalParams = new Modal(options);
+
+        this.rootElem.removeAttribute("data-create-modal");
+        this.rootElem.addEventListener("click", this.onClick);
+
+        // если создает CheckboxesModal, инициализирует компонент напрямую, без функции initInputs()
+        if (this.modalName.match(/checkboxesmodal/i)) {
+            const cmRootElem = this.modalParams.modal.querySelector(".checkboxes-modal");
+            const isAlreadyInitted = inittedInputs.find(inpP => {
+                return inpP.rootElem === cmRootElem && inpP instanceof CheckboxesModal;
+            });
+            if (isAlreadyInitted) return;
+
+            let inst = getClassInstance();
+
+            this.checkboxesModal = new inst(cmRootElem);
+            inittedInputs.push(this.checkboxesModal);
+            this.checkboxesModal.createModal = this;
+            this.checkboxesModal.modalParams = this.modalParams;
+            const params = this.rootElem.dataset.checkboxesModalParams || "";
+            this.checkboxesModal.params = assignPropertiesToObj(params);
+            this.rootElem.removeAttribute("data-checkboxes-modal-params");
+            setCross.call(this);
+            setHoverTitle.call(this);
+            initHiddenInput.call(this);
+
+            function getClassInstance() {
+                if (cmRootElem.className.match(/checkboxes-modal--regions/)) return CheckboxesModalRegions;
+                return CheckboxesModal;
+            }
+            function setCross() {
+                if (!this.inputWrapper) return;
+
+                this.inputWrapper.insertAdjacentHTML("beforeend", renderMisc.cross());
+                this.clearButton = this.inputWrapper.querySelector(".cross");
+                this.clearButton.addEventListener("click", this.checkboxesModal.fullClear);
+            }
+            function setHoverTitle() {
+                this.inputWrapper.setAttribute("data-hover-title", this.defaultText);
+                const observer = new MutationObserver(() => {
+                    const text = textContentMethods.getContent(this.textBlock);
+                    this.inputWrapper.setAttribute("data-hover-title", text);
+                });
+                observer.observe(this.textBlock, { childList: true, subtree: true });
+            }
+            // hiddenInput может быть переинициализирован в дочерних классах CheckboxesModal, как следствие, this.hiddenInput может быть перезаписан
+            function initHiddenInput() {
+                this.hiddenInput = this.rootElem.querySelector("input[type='hidden']");
+                if (!this.hiddenInput) {
+                    this.hiddenInput = createElement("input");
+                    this.hiddenInput.setAttribute("type", "hidden");
+                    this.rootElem.append(this.hiddenInput);
+                }
+                if (!this.hiddenInput.getAttribute("name"))
+                    this.hiddenInput.setAttribute("name", this.checkboxesModal.params.name);
+            }
+        }
+    }
+    onClick(event) {
+        if (this.clearButton && checkIfTargetOrClosest(event.target, [this.clearButton])) return;
+        // не забыть убрать, т.к. возможно, что в будущем, бэкенд будет привязываться к этой ссылке с помощью GET-запроса
+        event.preventDefault();
+        this.create();
+    }
+    create() {
+        this.modalParams.append();
     }
 }
 
@@ -1681,13 +2513,38 @@ class CheckboxesModal {
 
         return data;
     }
-    apply() {
+    apply(returnMethods = false) {
         this.isApplying = true;
-        this.listsData.forEach(listData => {
-            listData.allValues.forEach(obj => obj.checkedState = obj.checkbox.checked);
+
+        const methods = bindMethods(this, {
+            handleListsData() {
+                this.listsData.forEach(listData => {
+                    listData.allValues.forEach(obj => obj.checkedState = obj.checkbox.checked);
+                });
+            },
+            toggleHasValue() {
+                if (hasChecked) {
+                    this.createModal.rootElem.classList.add("__has-value");
+                } else {
+                    this.createModal.rootElem.classList.remove("__has-value");
+                }
+            },
+            setValues() {
+                this.values = this.listsData[0].values
+                    .filter(obj => obj.checkbox.checked)
+                    .map(obj => obj.value)
+                    .join("|");
+                this.hiddenInput.value = this.values;
+            },
+            finalMethod() {
+                this.modalParams.remove();
+                setTimeout(() => {
+                    this.isApplying = false;
+                    this.rootElem.dispatchEvent(new CustomEvent("apply"));
+                    this.createModal.rootElem.dispatchEvent(new CustomEvent("apply"));
+                }, 0);
+            }
         });
-        this.modalParams.remove();
-        setTimeout(() => this.isApplying = false, 0);
 
         const hasChecked = this.listsData.find(listData => {
             const checkedValue = listData.values.find(obj => obj.checkbox.checked);
@@ -1699,10 +2556,12 @@ class CheckboxesModal {
             });
             return checkedSubvalue;
         });
-        if (hasChecked) {
-            this.createModal.rootElem.classList.add("__has-value");
+        if (returnMethods) {
+            return methods;
         } else {
-            this.createModal.rootElem.classList.remove("__has-value");
+            for (let key in methods) {
+                if (typeof methods[key] === "function") methods[key]();
+            }
         }
     }
     fullClear() {
@@ -1865,7 +2724,7 @@ class CheckboxesModal {
                     removeAll();
                     return;
                 }
-                const regexp = new RegExp(value);
+                const regexp = new RegExp(value, "i");
                 removeExtras.call(this);
                 addNew.call(this);
 
@@ -2011,6 +2870,21 @@ class CheckboxesModalRegions extends CheckboxesModal {
                     values: regions
                 }, 0);
             });
+
+        nextInitTick(() => {
+            initHiddenInputs.call(this);
+        });
+
+        function initHiddenInputs() {
+            this.regionsInput = this.createModal.hiddenInput;
+            this.citiesInput = createElement("input");
+            this.citiesInput.setAttribute("type", "hidden");
+            this.createModal.rootElem.append(this.citiesInput);
+            const thisName = this.params.name || "";
+            this.regionsInput.setAttribute("name", `${thisName}-regions`);
+            this.citiesInput.setAttribute("name", `${thisName}-cities`);
+            this.createModal.hiddenInput = { regionsInput: this.regionsInput, citiesInput: this.citiesInput };
+        }
     }
     initSecondList() {
         const data = bindMethods(this, {
@@ -2173,24 +3047,58 @@ class CheckboxesModalRegions extends CheckboxesModal {
 
     }
     apply() {
-        super.apply();
-        const createModalPars = this.createModal;
-        if (!createModalPars.rootElem.classList.contains("__has-value")) {
-            textContentMethods.setContent(createModalPars.textBlock, createModalPars.defaultText);
-            return;
-        }
+        const parentMethods = super.apply(true);
+        let methods = Object.assign(parentMethods, {
+            async setCreateModalText() {
+                if (!createModalPars.rootElem.classList.contains("__has-value")) {
+                    textContentMethods.setContent(createModalPars.textBlock, createModalPars.defaultText);
+                    return;
+                }
 
+                // ждет, пока выполнится methods.setValues()
+                await delay(0);
+
+                const checkedRegionsAmount = this.values.regions.split("|").length;
+                const checkedCitiesAmount = this.values.cities.split("|").length;
+                const text = `Регионов: ${checkedRegionsAmount}, Населенных пунктов: ${checkedCitiesAmount}`;
+                textContentMethods.setContent(createModalPars.textBlock, text);
+            },
+        })
+        methods.setValues = function () {
+            let regions = this.listsData[0].values
+                .filter(obj => obj.checkbox.checked)
+                .map(obj => obj.value);
+            let cities = "";
+            const capitalRegions = [];
+            this.listsData[1].values.forEach(obj => {
+                if (obj.params.isCapital) {
+                    if (obj.checkbox.checked) cities += obj.value.replace(/\(.+\)/g, "").trim() + "|";
+                    capitalRegions.push(obj.params.region);
+                    return;
+                }
+
+                obj.subValues.forEach(subCheckbox => {
+                    if (subCheckbox.checked) cities += subCheckbox.value.trim() + "|";
+                });
+            });
+
+            capitalRegions.forEach(reg => {
+                if (!regions.includes(reg)) regions.push(reg);
+            });
+            regions = regions.join("|");
+            cities = cities.slice(0, cities.length - 1);
+            this.values = { regions, cities };
+            this.regionsInput.value = regions;
+            this.citiesInput.value = cities;
+        }
+        methods = bindMethods(this, methods);
+
+        const createModalPars = this.createModal;
         const checkedRegionsAmount = this.listsData[0].values.filter(obj => obj.checkbox.checked).length;
         let checkedCitiesAmount = 0;
-        this.listsData[1].values.forEach(obj => {
-            if (Array.isArray(obj.subValues) && obj.subValues.length > 0) {
-                const checked = obj.subValues.filter(subCheckbox => subCheckbox.checked);
-                checkedCitiesAmount += checked.length;
-            } else if (obj.params.isCapital && obj.checkbox.checked) checkedCitiesAmount++;
-        });
-
-        const text = `Регионов: ${checkedRegionsAmount}, Населенных пунктов: ${checkedCitiesAmount}`;
-        textContentMethods.setContent(createModalPars.textBlock, text);
+        for (let key in methods) {
+            if (typeof methods[key] === "function") methods[key]();
+        }
     }
     clear(listIndex) {
         super.clear(listIndex);
