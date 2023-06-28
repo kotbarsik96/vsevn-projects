@@ -20,6 +20,40 @@ class DateMethods {
 
         return 30;
     }
+    compare(dateStr1 = "01.01.2000", dateStr2 = "01.01.2000") {
+        // format: dd.mm.yyyy
+        const split1 = dateStr1.split(".");
+        const split2 = dateStr2.split(".");
+        const date1 = new Date(`${split1[1]}-${split1[0]}-${split1[2]}`);
+        const date2 = new Date(`${split2[1]}-${split2[0]}-${split2[2]}`);
+
+        const isEquals = date1.getFullYear() == date2.getFullYear()
+            && date1.getMonth() === date2.getMonth()
+            && date1.getDate() === date2.getDate();
+        const isCorrectRange = date1 < date2 || isEquals;
+        const hasIncorrectDate = !date1.getFullYear() || !date2.getFullYear();
+
+        // isCorrectRange === true значит, что date1 меньше date2
+        return { isEquals, isCorrectRange, hasIncorrectDate };
+    }
+    isInDateRange(dateStartStr, dateEndStr, dateBetweenStr = "") {
+        // format: dd.mm.yyyy
+        if (!dateStartStr) dateStartStr = "01.01.1900";
+        if (!dateEndStr) dateEndStr = `31.12.${new Date().getFullYear()}`;
+        const splitStart = dateStartStr.split(".");
+        const splitEnd = dateEndStr.split(".");
+        const splitBetween = dateBetweenStr.split(".");
+        const dateStart = new Date(`${splitStart[1]}.${splitStart[0]}.${splitStart[2]}`);
+        const dateEnd = new Date(`${splitEnd[1]}.${splitEnd[0]}.${splitEnd[2]}`);
+        const dateBetween = new Date(`${splitBetween[1]}.${splitBetween[0]}.${splitBetween[2]}`);
+
+        const hasIncorrectDate = !dateStart.getFullYear()
+            || !dateEnd.getFullYear()
+            || !dateBetween.getFullYear();
+        const isInDateRange = dateStart <= dateBetween && dateBetween <= dateEnd;
+
+        return { hasIncorrectDate, isInDateRange };
+    }
 }
 const dateMethods = new DateMethods();
 
@@ -47,14 +81,17 @@ function getBrowser() {
     return browser;
 }
 
-const rootPath = "/vsevn-my_ads/";
-
 const browser = getBrowser();
 const mobileRegexp = /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i;
 let isMobileBrowser = Boolean(navigator.userAgent.match(mobileRegexp));
 
 window.addEventListener("resize", () => {
     isMobileBrowser = Boolean(navigator.userAgent.match(mobileRegexp));
+    if (isMobileBrowser) {
+        document.body.classList.add("__mobile");
+    } else {
+        document.body.classList.remove("__mobile");
+    }
 });
 
 function browsersFix() {
@@ -88,16 +125,17 @@ class HtmlElementCustoms {
             }, params.transitionDur);
         });
     }
-    insert(element, parentNode, params = {}) {
+    insert(element, parentOrReplacement, params = {}) {
         /* params:
             transitionDur: 0 (в мс)
-            insertType: "prepend"|"append"
+            insertType: "prepend"|"append|replace"
         */
         function setDefaultParams() {
             if (!parseInt(params.transitionDur))
                 params.transitionDur = 0;
-            if (params.insertType !== "prepend" && params.insertType !== "append")
-                params.insertType = "prepend";
+            if (params.insertType !== "prepend"
+                && params.insertType !== "append"
+                && params.insertType !== "replace") params.insertType = "prepend";
         }
         setDefaultParams();
 
@@ -106,7 +144,8 @@ class HtmlElementCustoms {
             opacity: 0; 
             transition: all ${params.transitionDur / 1000}s ease;
         `;
-            parentNode[params.insertType](element);
+            if (params.insertType.match(/replace/)) parentOrReplacement.replaceWith(element)
+            else parentOrReplacement[params.insertType || "append"](element);
 
             setTimeout(() => {
                 element.style.opacity = "1";
@@ -263,10 +302,16 @@ function checkIfTargetOrClosest(eventTarget, array = []) {
     return isTargetOrClosest;
 }
 
+function delay(ms) {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms);
+    });
+}
+
 class TextContent {
     getContent(node) {
         if (!node) return "";
-        return node.textContent || node.innerText;
+        return node.textContent ? node.textContent.trim() : node.innerText.trim();
     }
     setContent(node, text) {
         if (!node) return;

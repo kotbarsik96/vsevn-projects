@@ -1,0 +1,5 @@
+1. Верстка шапки уже находится в index.html
+
+2. Необходимые скрипты находятся в js/main.js (Header, FullsizeImage);
+
+3. Стили шапки находятся в header.css, fonts.css (иконочный шрифт, файлы которого находятся в fonts/IconFont. Для добавлений новых иконок в шрифт используется сайт https://icomoon.io/app/#/select)

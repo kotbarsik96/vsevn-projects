@@ -1,745 +1,3 @@
-class PublicationsTable {
-    constructor(node) {
-        this.rootElem = node;
-        this.tableBody = this.rootElem.querySelector(".ads-table__body");
-        this.stateTabs = this.initStateTabs();
-        this.typeTabs = this.initTypeTabs();
-        this.periodTabs = this.initPeriodTabs();
-        this.shownPublications = [];
-
-        nextInitTick(() => {
-            this.update();
-            this.filter = this.initFilter();
-            this.sort = this.initSort();
-            this.selectionControls = this.initSelectionControls();
-            this.selectionControls.onBoardChange();
-        });
-    }
-    update() {
-        this.stateTabs.setAmounts();
-        this.shownPublications = Array.from(this.tableBody.querySelectorAll(".ads-table-item"));
-        if (this.filter) this.filter.doFilter();
-        this.unfilteredPublications = this.shownPublications
-            .filter(node => !node.classList.contains("__filtered"));
-        if (this.sort) this.sort.doSort();
-        if (this.selectionControls) this.selectionControls.refresh();
-    }
-    initFilter() {
-        const data = bindMethods(this, {
-            datesFilter: findInittedInput(this.rootElem.querySelector(".ads-board__filter-date")),
-            salaryFilter: findInittedInput(this.rootElem.querySelector(".ads-board__filter-salary")),
-            regionFilter: findInittedInput(this.rootElem.querySelector(".ads-board__filter-regions")),
-            searchFilter: findInittedInput(this.rootElem.querySelector(".ads-board__filter-search")),
-            init() {
-                data.datesFilter.rootElem.addEventListener("apply", data.doFilter);
-                data.salaryFilter.rootElem.addEventListener("input", data.doFilter);
-                data.regionFilter.rootElem.addEventListener("apply", data.doFilter);
-                data.searchFilter.input.addEventListener("input", data.doFilter);
-            },
-            doFilter() {
-                if (data.isFiltering) return;
-                data.isFiltering = true;
-                setTimeout(() => data.isFiltering = false, 0);
-
-                const filterData = data.getFilterData();
-                if (!filterData) return;
-                this.shownPublications.forEach(node => {
-                    const nodeData = data.getNodeData(node);
-                    const callbacks = data.getFilterCallbacks(nodeData, filterData);
-
-                    let isUnmatched = false;
-                    // вызывает по очереди все методы из getFilterCallbacks, если хотя бы один метод вернул false, isUnmatched становится true и node считается не подходящим по фильтрам
-                    for (let key in callbacks) {
-                        if (typeof callbacks[key] === "function") {
-                            isUnmatched = !callbacks[key]();
-                            if (isUnmatched) break;
-                        }
-                    }
-
-                    if (isUnmatched) {
-                        node.classList.add("__filtered");
-                        return;
-                    }
-                    node.classList.remove("__filtered");
-                });
-            },
-            getFilterData() {
-                if (!data.datesFilter.calendarStart || !data.datesFilter.calendarEnd) return;
-
-                const dateStart = data.datesFilter.calendarStart.getDateStr();
-                const dateEnd = data.datesFilter.calendarEnd.getDateStr();
-                const salaryStart = parseInt(data.salaryFilter.textInputs[0].input.value.replace(/\D/g, "")) || 0;
-                const salaryEnd = parseInt(data.salaryFilter.textInputs[1].input.value.replace(/\D/g, ""))
-                    || salaryStart;
-                const regions = data.regionFilter.hiddenInput.regionsInput.value.split("|");
-                const cities = data.regionFilter.hiddenInput.citiesInput.value.split("|");
-                const searchString = data.searchFilter.input.value.trim();
-                const searchRegexp = searchString ? new RegExp(searchString, "i") : null;
-
-                return { dateStart, dateEnd, salaryStart, salaryEnd, regions, cities, searchString, searchRegexp };
-            },
-            getNodeData(node) {
-                let type;
-                if (node.classList.contains("ads-table-item--applicant")) type = "applicant";
-                else if (node.classList.contains("ads-table-item--employer")) type = "employer";
-
-                let dateValue, salaryValue, locationValues, titleValue;
-                const dateBlock = node.querySelector(".publication__date-value");
-                const salaryBlock = node.querySelector(".ads-table-item__ad-salary");
-                const locationsInput =
-                    node.querySelector(".ads-table-item__ad-locations input[type='hidden']");
-                const titleBlock = node.querySelector(".ads-table-item__ad-title");
-
-                if (dateBlock) dateValue = textContentMethods.getContent(dateBlock);
-                if (salaryBlock) {
-                    salaryValue = parseInt(textContentMethods.getContent(salaryBlock)
-                        .replace(/\D/g, ""));
-                }
-                if (locationsInput) locationValues = locationsInput.value.split("|");
-                if (titleBlock) titleValue = textContentMethods.getContent(titleBlock);
-
-                return { type, dateValue, salaryValue, locationValues, titleValue }
-            },
-            getFilterCallbacks(nodeData, filterData) {
-                const methods = bindMethods(this, {
-                    byType() {
-                        return this.typeTabs.currentType === "all" || nodeData.type === this.typeTabs.currentType;
-                    },
-                    byDate() {
-                        const dateRangeData = dateMethods.isInDateRange(
-                            filterData.dateStart,
-                            filterData.dateEnd,
-                            nodeData.dateValue
-                        );
-                        return dateRangeData.hasIncorrectDate || dateRangeData.isInDateRange;
-                    },
-                    bySalary() {
-                        if (filterData.salaryStart && filterData.salaryEnd) {
-                            return filterData.salaryStart <= nodeData.salaryValue
-                                && nodeData.salaryValue >= filterData.salaryEnd;
-                        }
-                        else if (filterData.salaryStart) return filterData.salaryStart <= nodeData.salaryValue;
-                        else if (filterData.salaryEnd) return filterData.salaryEnd >= nodeData.salaryValue;
-
-                        return true;
-                    },
-                    byLocationsMatch() {
-                        const regions = filterData.regions.filter(v => v);
-                        const cities = filterData.cities.filter(v => v);
-
-                        if (!regions || !cities) return true;
-                        if (regions.length < 0 && cities.length < 0) return true;
-
-                        const hasAllRegionsMatch = regions.length > 0
-                            && regions.length ===
-                            nodeData.locationValues.filter(str => regions.includes(str)).length;
-                        const hasAllCitiesMatch =
-                            cities.length === nodeData.locationValues.filter(str => cities.includes(str)).length;
-
-                        return hasAllRegionsMatch || hasAllCitiesMatch;
-                    },
-                    bySearchString() {
-                        if (!filterData.searchRegexp) return true;
-                        return nodeData.titleValue.match(filterData.searchRegexp);
-                    }
-                });
-
-                return methods;
-            },
-        });
-        data.init();
-
-        return data;
-    }
-    initSort() {
-        const data = bindMethods(this, {
-            selectBlock: this.rootElem.querySelector(".ads-board__controls-sort .select"),
-            selectParams: null,
-            init() {
-                data.selectParams = findInittedInput(data.selectBlock);
-                data.selectParams.rootElem.addEventListener("change", data.onChange);
-                data.onChange();
-            },
-            onChange() {
-                data.startSort();
-            },
-            startSort() {
-                const value = data.selectParams.value;
-                if (!value) return;
-
-                switch (value) {
-                    case "date_up": data.doSort("sortByDate", false);
-                        break;
-                    case "date_down": data.doSort("sortByDate", true);
-                        break;
-                    case "title_up": data.doSort("sortByTitle", false);
-                        break;
-                    case "title_down": data.doSort("sortByTitle", true);
-                        break;
-                    case "salary_up": data.doSort("sortBySalary", false);
-                        break;
-                    case "salary_down": data.doSort("sortBySalary", true);
-                        break;
-                    default: data.doSort("sortByTitle", true);
-                        break;
-                }
-            },
-            doSort(callbackTitle = "sortByTitle", biggestToLowest = true) {
-                const methods = bindMethods(this, {
-                    sortByDate(node1, node2) {
-                        const dateBlock1 = node1.querySelector(".publication__date-value");
-                        const dateBlock2 = node2.querySelector(".publication__date-value");
-                        if (!dateBlock1 || !dateBlock1) return 0;
-
-                        const dateStr1 = textContentMethods.getContent(dateBlock1);
-                        const dateStr2 = textContentMethods.getContent(dateBlock2);
-                        const compareData = dateMethods.compare(dateStr1, dateStr2);
-                        if (compareData.isCorrectRange && !compareData.isEquals) return -1;
-                        if (compareData.isEquals) return 0;
-                        return 1;
-                    },
-                    sortByTitle(node1, node2) {
-                        const titleBlock1 = node1.querySelector(".ads-table-item__ad-title");
-                        const titleBlock2 = node2.querySelector(".ads-table-item__ad-title");
-                        if (!titleBlock1 || !titleBlock2) return 0;
-
-                        const title1 = textContentMethods.getContent(titleBlock1);
-                        const title2 = textContentMethods.getContent(titleBlock2);
-                        if (title1 < title2) return -1;
-                        if (title1 > title2) return 1;
-                        return 0;
-                    },
-                    sortBySalary(node1, node2) {
-                        const salaryBlock1 = node1.querySelector(".ads-table-item__ad-salary");
-                        const salaryBlock2 = node2.querySelector(".ads-table-item__ad-salary");
-                        if (!salaryBlock1 || !salaryBlock2) return 0;
-
-                        const salary1 = parseInt(textContentMethods.getContent(salaryBlock1).replace(/\D/g, ""));
-                        const salary2 = parseInt(textContentMethods.getContent(salaryBlock2).replace(/\D/g, ""));
-                        if (salary1 < salary2) return -1;
-                        if (salary1 > salary2) return 1;
-                        return 0;
-                    }
-                });
-
-                let callback = methods[callbackTitle];
-                if (!callback) callback = methods.sortByDate;
-                let sorted = this.unfilteredPublications.sort(callback);
-                if (biggestToLowest) sorted = sorted.reverse();
-                sorted.forEach(node => node.parentNode.append(node));
-            },
-        });
-        data.init();
-
-        return data;
-    }
-    initSelectionControls() {
-        const data = bindMethods(this, {
-            container: null,
-            placeAdButton: null,
-            selectAllCheckboxContainer: null,
-            selectAllCheckbox: null,
-            nodeCheckboxSelector: ".ads-table-item__checkbox input[type='checkbox']",
-            controlButtons: {},
-            currentButtonsState: "",
-            init() {
-                data.container = this.rootElem.querySelector(".ads-board__publications-controls");
-                data.selectAllCheckboxContainer =
-                    data.container.querySelector(".ads-board__publication-checkbox");
-                data.selectAllCheckbox = data.selectAllCheckboxContainer.querySelector("input[type='checkbox']");
-                data.placeAdButton = data.container.querySelector(".ads-board__place-ad-button");
-
-                data.selectAllCheckboxContainer.addEventListener("change", data.onCheckboxChange);
-                this.rootElem.addEventListener("change", data.onBoardChange);
-
-                data.controlButtons.active = [{ action: "withdraw", button: createButton("Снять с публикации") }];
-                data.controlButtons.done = [
-                    { action: "activate", button: createButton("Активировать") },
-                    { action: "remove", button: createButton("Удалить") }
-                ];
-                data.controlButtons.draft = [{ action: "remove", button: createButton("Удалить") }];
-                data.controlButtons.removed = [{ action: "clear", button: createButton("Очистить корзину") }];
-
-                for (let key in data.controlButtons) {
-                    const buttons = data.controlButtons[key];
-                    buttons.forEach(obj => {
-                        obj.button.addEventListener("click", data.onButtonClick);
-                    });
-                }
-
-                data.refresh();
-
-                function createButton(text) {
-                    return createElement("button", "button button--yellow", text, "type=button");
-                }
-            },
-            onButtonClick(event) {
-                const button = event.target;
-                let buttonData;
-                for (let obj of Object.values(data.controlButtons)) {
-                    for (let subObj of obj) {
-                        if (subObj.button === button) {
-                            buttonData = subObj;
-                            break;
-                        }
-                    }
-                }
-                const checked = this.unfilteredPublications.filter(node => {
-                    const cb = node.querySelector(data.nodeCheckboxSelector);
-                    return cb.checked;
-                });
-                const currentDate = new Date();
-                const currentDateStr =
-                    `${currentDate.getDate()} ${dateMethods.monthsGenitive[currentDate.getMonth()].toLowerCase()} ${currentDate.getFullYear()}`;
-
-                switch (buttonData.action) {
-                    case "withdraw":
-                        checked.forEach(node => {
-                            const template = this.stateTabs.cachedTemplates.done;
-                            if (!template) return;
-
-                            const deleteBlocksSelector = [".ads-table-item__ad-renewal", ".ads-table-item__ad-links"];
-
-                            const withdrawed = node.cloneNode(true);
-                            withdrawed.classList.add("ads-table-item--closed");
-                            withdrawed.insertAdjacentHTML("afterbegin", `
-                                <div class="ads-table-item__close-bg ads-table-item__close-bg--done"></div>
-                            `);
-                            const statusPublication = withdrawed.querySelector(".ads-table-item__status-publication");
-                            if (statusPublication) {
-                                statusPublication.innerHTML = `
-                                <div class="ads-table-item__ad-status">
-                                    <div class="ads-table-item__archived">
-                                        Перенесено в архив
-                                        <span class="fw-700">${currentDateStr}</span>
-                                    </div>
-                                </div>
-                                `;
-                            }
-                            deleteBlocksSelector.forEach(sel => {
-                                const block = withdrawed.querySelector(sel);
-                                if (!block) return;
-                                block.remove();
-                            });
-                            withdrawed.querySelectorAll("input").forEach(i => i.checked = false);
-
-                            template.append(withdrawed);
-                            node.remove();
-                        });
-                        break;
-                    case "activate":
-                        break;
-                    case "remove":
-                        checked.forEach(node => {
-                            const template = this.stateTabs.cachedTemplates.removed;
-                            if (!template) return;
-
-                            const deleteBlocksSelector = [".ads-table-item__ad-renewal", ".ads-table-item__ad-links"];
-
-                            const removed = node.cloneNode(true);
-                            const statusPublication = removed.querySelector(".ads-table-item__status-publication");
-                            const background = removed.querySelector(".ads-table-item__close-bg");
-                            if (background) background.remove();
-                            if (statusPublication) {
-                                statusPublication.innerHTML = `
-                                <div class="ads-table-item__ad-status">
-                                    <div class="ads-table-item__archived">
-                                        <div class="publication__fieldset-container text-input--standard" data-params="noCross::true">
-                                            <fieldset class="publication__change-date fieldset text-input--standard__wrapper">
-                                                <legend class="fieldset__legend">Дата депубликации</legend>
-                                                <div class="fieldset__body calendar" data-params="defaultDate::05.12.2023">
-                                                    <div class="calendar__preview">
-                                                        <div class="text-input--standard__input">
-                                                            <div class="calendar__preview-inputs date-inputs">
-                                                                <input type="text" class="date-inputs__input date-inputs__input--date"
-                                                                    placeholder="ДД">
-                                                                <div class="date-inputs__delimeter">.</div>
-                                                                <input type="text" class="date-inputs__input date-inputs__input--month"
-                                                                    placeholder="ММ">
-                                                                <div class="date-inputs__delimeter">.</div>
-                                                                <input type="text" class="date-inputs__input date-inputs__input--year"
-                                                                    placeholder="ГГГГ">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </div>
-                                `;
-                            }
-                            deleteBlocksSelector.forEach(sel => {
-                                const block = removed.querySelector(sel);
-                                if (!block) return;
-                                block.remove();
-                            });
-                            removed.querySelectorAll("input").forEach(i => i.checked = false);
-
-                            template.append(removed);
-                            node.remove();
-                        });
-                        break;
-                    case "clear":
-                        checked.forEach(node => {
-                            node.remove();
-                        });
-                        break;
-                }
-
-                this.update();
-            },
-            refresh() {
-                if (this.unfilteredPublications.length > 1) {
-                    data.selectAllCheckboxContainer.classList.remove("none");
-                } else {
-                    data.selectAllCheckboxContainer.classList.add("none");
-                    data.selectAllCheckbox.checked = false;
-                }
-
-                data.setControlButtons();
-                data.onBoardChange();
-                this.stateTabs.setAmounts();
-            },
-            onCheckboxChange() {
-                this.unfilteredPublications.forEach(node => {
-                    const cb = node.querySelector(data.nodeCheckboxSelector);
-                    if (data.selectAllCheckbox.checked) cb.checked = true;
-                    else cb.checked = false;
-                });
-            },
-            onBoardChange() {
-                const checked = this.unfilteredPublications
-                    .filter(node => node.querySelector(data.nodeCheckboxSelector).checked);
-                data.selectAllCheckbox.checked = checked.length === this.unfilteredPublications.length;
-
-                const btns = data.controlButtons[data.currentButtonsState];
-                if (Array.isArray(btns)) {
-                    btns.forEach(obj => {
-                        checked.length > 0
-                            ? obj.button.removeAttribute("disabled") : obj.button.setAttribute("disabled", true);
-                    });
-                }
-            },
-            setControlButtons() {
-                if (this.stateTabs.currentState === data.currentButtonsState) return;
-                data.currentButtonsState = this.stateTabs.currentState;
-
-                // удалить все прошлые кнопки
-                for (let key in data.controlButtons) {
-                    data.controlButtons[key].forEach(obj => obj.button.remove());
-                }
-
-                // выставить текущие кнопки
-                const buttons = data.controlButtons[this.stateTabs.currentState];
-                if (!Array.isArray(buttons)) return;
-
-                buttons.forEach(obj => {
-                    data.container.append(obj.button);
-                });
-            }
-        });
-        data.init();
-
-        return data;
-    }
-    initStateTabs() {
-        const data = bindMethods(this, {
-            container: this.rootElem.querySelector(".ads-board__tabs-list--states"),
-            buttons: [],
-            templatesContainer: createElement("div", "none"),
-            currentState: "",
-            cachedTemplates: {},
-            init() {
-                fetch(`${rootPath}ad-templates.html`)
-                    .then(res => res.text())
-                    .then(layout => {
-                        data.templatesContainer.insertAdjacentHTML("beforeend", layout);
-                        data.buttons.forEach(obj => {
-                            data.cachedTemplates[obj.stateName] = data.getTemplate(obj.stateName);
-                        });
-                        data.changeState("active");
-                    });
-
-                data.buttons = Array.from(data.container.querySelectorAll(".ads-board__tabs-button"))
-                    .map(button => {
-                        const stateText = textContentMethods.getContent(button);
-                        const stateName = button.dataset.stateName;
-                        return { button, stateText, stateName };
-                    });
-                data.buttons.forEach(obj => {
-                    obj.button.addEventListener("click", data.onClick);
-                });
-            },
-            setAmounts() {
-                data.buttons.forEach(obj => {
-                    const isOnPage = data.currentState === obj.stateName;
-                    if (isOnPage) {
-                        const amount = this.tableBody.querySelectorAll(".ads-table-item").length;
-                        textContentMethods.setContent(obj.button, `${obj.stateText} ${amount || ""}`.trim());
-                        return;
-                    }
-
-                    const cached = data.cachedTemplates[obj.stateName];
-                    let amount;
-                    if (cached) {
-                        amount = cached.querySelectorAll(".ads-table-item").length;
-                    } else {
-                        const template = data.getTemplate(obj.stateName);
-                        if (!template) return;
-
-                        amount = template.querySelectorAll(".ads-table-item").length;
-                    }
-                    textContentMethods.setContent(obj.button, `${obj.stateText} ${amount || ""}`.trim());
-                });
-            },
-            onClick(event) {
-                const buttonObj = data.buttons.find(obj => obj.button === event.target);
-                const stateName = buttonObj.stateName;
-                data.changeState(stateName, buttonObj.button);
-            },
-            changeState(stateName, button = null) {
-                if (data.currentState === stateName) return;
-
-                // попробовать найти закэшированный (в data.cachedTemplates) или взять из ad-templates.html
-                const template = data.cachedTemplates[stateName]
-                    || data.getTemplate(stateName).cloneNode(true);
-                if (!template) return;
-
-                // закэшировать текущую верстку, которая будет заменена новой
-                data.cachedTemplates[data.currentState] = this.tableBody.querySelector(".ads-table__body div");
-
-                data.currentState = stateName;
-                this.tableBody.innerHTML = "";
-                this.tableBody.append(template);
-
-                data.buttons.forEach(obj => obj.button.classList.remove("__active"));
-                if (!button) button = data.buttons.find(obj => obj.stateName === stateName).button;
-                button.classList.add("__active");
-            },
-            getTemplate(stateName) {
-                return data.templatesContainer.querySelector(`[data-ad-template-name="${stateName}"]`);
-            },
-        });
-        data.init();
-
-        return data;
-    }
-    initTypeTabs() {
-        const data = bindMethods(this, {
-            container: this.rootElem.querySelector(".ads-board__tabs-list--types"),
-            buttons: [],
-            currentType: "",
-            init() {
-                data.buttons = Array.from(data.container.querySelectorAll(".ads-board__tabs-button"))
-                    .map(button => {
-                        const typeText = textContentMethods.getContent(button);
-                        const typeName = button.dataset.typeName;
-                        return { button, typeText, typeName };
-                    });
-                data.buttons.forEach(obj => {
-                    obj.button.addEventListener("click", data.onClick);
-                });
-                setTimeout(() => data.changeType("all"), 0);
-            },
-            onClick(event) {
-                const buttonObj = data.buttons.find(obj => obj.button === event.target);
-                const typeName = buttonObj.typeName;
-                data.changeType(typeName, buttonObj.button);
-                this.filter.doFilter();
-            },
-            changeType(typeName, button = null) {
-                if (data.currentType === typeName) return;
-
-                data.currentType = typeName;
-                data.buttons.forEach(obj => obj.button.classList.remove("__active"));
-                if (!button) button = data.buttons.find(obj => obj.typeName === typeName).button;
-                button.classList.add("__active");
-            }
-        });
-        data.init();
-
-        return data;
-    }
-    initPeriodTabs() {
-        const data = bindMethods(this, {
-            container: this.rootElem.querySelector(".ads-board__tabs-list--times"),
-            buttons: [],
-            currentPeriod: "",
-            init() {
-                data.buttons = Array.from(data.container.querySelectorAll(".ads-board__tabs-button"))
-                    .map(button => {
-                        const periodText = textContentMethods.getContent(button);
-                        const periodName = button.dataset.periodName;
-                        return { button, periodText, periodName };
-                    });
-                data.buttons.forEach(obj => {
-                    obj.button.addEventListener("click", data.onClick);
-                });
-                setTimeout(() => data.changePeriod("all"), 0);
-            },
-            onClick(event) {
-                const buttonObj = data.buttons.find(obj => obj.button === event.target);
-                const periodName = buttonObj.periodName;
-                data.changePeriod(periodName, buttonObj.button);
-            },
-            changePeriod(periodName, button = null) {
-                if (data.currentPeriod === periodName) return;
-
-                data.currentPeriod = periodName;
-                data.buttons.forEach(obj => obj.button.classList.remove("__active"));
-                if (!button) button = data.buttons.find(obj => obj.periodName === periodName).button;
-                button.classList.add("__active");
-
-                if (!this.filter) return;
-                const calendarDouble = this.filter.datesFilter;
-                if (!calendarDouble) return;
-
-                const currentDate = new Date();
-                const currentMonthday = currentDate.getDate();
-                const currentMonth = currentDate.getMonth() + 1;
-                const currentYear = currentDate.getFullYear();
-                let endDateStr = `${currentMonthday}.${currentMonth}.${currentYear}`;
-                let startDateStr;
-                let startDate;
-                switch (periodName) {
-                    case "all":
-                    default:
-                        calendarDouble.calendarStart.previewData.inpParams.clear();
-                        calendarDouble.calendarEnd.previewData.inpParams.clear();
-                        return;
-                    case "today":
-                        startDateStr = endDateStr;
-                        break;
-                    case "last_week":
-                        startDate = new Date(Date.now() - 7 * 24 * 3600 * 1000);
-                        break;
-                    case "last_month":
-                        startDate = new Date(Date.now() - 30 * 24 * 3600 * 1000);
-                        break;
-                    case "last_half_year":
-                        startDate = new Date(Date.now() - 182 * 24 * 3600 * 1000);
-                        break;
-                    case "last_year":
-                        startDate = new Date(Date.now() - 365 * 24 * 3600 * 1000);
-                        break;
-                }
-                if (!startDateStr)
-                    startDateStr =
-                        `${startDate.getDate()}.${parseInt(startDate.getMonth()) + 1}.${startDate.getFullYear()}`;
-                calendarDouble.calendarStart.setDate(startDateStr);
-                calendarDouble.calendarEnd.setDate(endDateStr);
-                calendarDouble.calendarDoubleData.apply();
-            }
-        });
-        data.init();
-
-        return data;
-    }
-}
-
-class Publication {
-    constructor(node) {
-        this.onCheckboxChange = this.onCheckboxChange.bind(this);
-
-        this.rootElem = node;
-        if (this.rootElem.classList.contains("ads-table-item--applicant"))
-            this.type = "applicant";
-        else this.type = "employer";
-
-        this.publicationStatus = this.initPublicationStatus();
-        this.editableList = this.initEditableList();
-        this.title = this.initTitle();
-        this.checkbox = this.rootElem.querySelector(".ads-table-item__checkbox input[type='checkbox']");
-        this.checkbox.addEventListener("change", this.onCheckboxChange);
-    }
-    onCheckboxChange() {
-        const publicationsTable = findInittedInput(".ads-board");
-        if (publicationsTable) publicationsTable.rootElem.dispatchEvent(new Event("change"));
-    }
-    initPublicationStatus() {
-        const data = bindMethods(this, {
-            node: null,
-            refreshLink: null,
-            refreshedDate: null,
-            init() {
-                data.node = this.rootElem.querySelector(".ads-table-item__status-publication");
-                if (!data.node) return;
-
-                data.refreshLink = data.node.querySelector(".publication__refresh-link");
-                data.refreshedDate = data.node.querySelector(".publication__refreshed-date");
-                if (data.refreshLink) data.refreshLink.addEventListener("click", data.refresh);
-            },
-            // возможно на бэкенд
-            refresh(event) {
-                event.preventDefault();
-                const currentDate = new Date();
-                const day = getValue(currentDate.getDate());
-                const month = getValue(currentDate.getMonth());
-                const year = currentDate.getFullYear();
-                const hours = getValue(currentDate.getHours());
-                const minutes = getValue(currentDate.getMinutes());
-                data.refreshedDate.innerHTML =
-                    `${day}.${month}.${year}, ${hours}:${minutes}`;
-                data.refreshLink.remove();
-
-                function getValue(val) {
-                    val = val.toString();
-                    return val.length === 1 ? `0${val}` : val;
-                }
-            }
-        });
-        data.init();
-
-        return data;
-    }
-    initEditableList() {
-        const data = bindMethods(this, {
-            node: null,
-            params: null,
-            symbolsMaxlength: 10,
-            init() {
-                data.node = this.rootElem.querySelector(".editable-list");
-                nextInitTick(() => {
-                    data.params = findInittedInput(data.node);
-                    data.initNewNodes();
-                    const observer = new MutationObserver(data.initNewNodes);
-                    observer.observe(data.node, { childList: true, subtree: true });
-                });
-            },
-            initNewNodes() {
-                data.params.items.forEach(obj => {
-                    if (obj.isHoverTitle || obj.valueText.length <= data.symbolsMaxlength) return;
-
-                    obj.node.setAttribute("data-hover-title", obj.valueText);
-                    obj.node.append(createElement("div", "fog"));
-                    obj.isHoverTitle = true;
-                });
-            }
-        });
-        data.init();
-
-        return data;
-    }
-    initTitle() {
-        const data = bindMethods(this, {
-            maxlength: 40,
-            container: this.rootElem.querySelector(".ads-table-item__ad-title"),
-            value: "",
-            init() {
-                data.value = textContentMethods.getContent(data.container).trim();
-                if (data.value.length > data.maxlength) {
-                    data.container.parentNode.setAttribute("data-hover-title", data.value);
-                    data.container.append(createElement("div", "fog"));
-                }
-            }
-        });
-        data.init();
-
-        return data;
-    }
-}
-
 class TextInput {
     constructor(node) {
         this.clear = this.clear.bind(this);
@@ -1468,7 +726,6 @@ class Select {
         this.valueIndex = this.options.findIndex(obj => obj.value === this.value);
         this.listMethods.hide();
         this.rootElem.classList.add("__has-value");
-        this.rootElem.dispatchEvent(new Event("change"));
     }
     onOptionsEdited(callback = function () { }, args = []) {
         callCallback = callCallback.bind(this);
@@ -1622,6 +879,92 @@ class InputsRange {
                 if (this.warning.closest("body")) this.warning.remove();
             }
         }
+    }
+}
+
+class ToggleOnchecked {
+    constructor(node) {
+        this.onChange = this.onChange.bind(this);
+
+        this.rootElem = node;
+        this.selectors = assignPropertiesToObj(this.rootElem.dataset.toggleOnchecked || "");
+        this.toggleable = {};
+        this.transitionDur = 200;
+        for (let key in this.selectors) {
+            const selectorsList = this.selectors[key];
+            this.selectors[key] = selectorsList.split(", ");
+            this.toggleable[key] = [];
+        }
+
+        this.getToggleable();
+        const name = this.rootElem.getAttribute("name");
+        const type = this.rootElem.getAttribute("type");
+        const inputsOnName = Array.from(document.querySelectorAll(`[name="${name}"]`))
+            .filter(node => node.getAttribute("type") === type);
+        inputsOnName.forEach(node => node.addEventListener("change", this.onChange));
+        this.onChange();
+
+        for (let key in this.toggleable) {
+            if (this.toggleable[key].length < this.selectors[key].length) {
+                document.addEventListener("init-inputs", onInputsInit);
+                break;
+            }
+        }
+
+        function onInputsInit() {
+            this.getToggleable();
+
+            let isAll = true;
+            for (let key in this.toggleable) {
+                if (this.toggleable[key].length < this.selectors[key].length) {
+                    isAll = false;
+                    break;
+                }
+            }
+            if (isAll) document.removeEventListener("init-inputs", onInputsInit);
+        }
+    }
+    getToggleable() {
+        for (let key in this.selectors) {
+            this.selectors[key].forEach((selector, index, thisArr) => {
+                const el = findClosest(this.rootElem, selector);
+                if (!el) return;
+
+                const anchor = createElement("div", "none");
+                const parentNode = el.parentNode;
+                this.toggleable[key].push({ el, anchor, parentNode });
+                thisArr.splice(index, 1);
+            });
+        }
+    }
+    async onChange() {
+        const timeout = this.isChanging ? this.transitionDur : 0;
+        this.isChanging = true;
+
+        const methods = bindMethods(this, {
+            async onChecked() {
+                await delay(this.transitionDur);
+                this.toggleable.show.forEach(obj => {
+                    htmlElementMethods.insert(obj.el, obj.anchor, {
+                        transitionDur: this.transitionDur,
+                        insertType: "replace"
+                    });
+                });
+            },
+            onUnchecked() {
+                this.toggleable.show.forEach(obj => {
+                    obj.el.after(obj.anchor);
+                    htmlElementMethods.remove(obj.el, { transitionDur: this.transitionDur });
+                });
+            }
+        });
+
+        await delay(timeout);
+
+        if (this.rootElem.checked) methods.onChecked();
+        else methods.onUnchecked();
+
+        setTimeout(() => this.isChanging = false, 0);
     }
 }
 
@@ -1788,14 +1131,7 @@ class Calendar {
                     this.setDate(this.params.defaultDate);
                 }, 100);
             }
-            else {
-                this.previewData.showInputs({ noFocus: true });
-                const currentDate = new Date();
-                    const currentYear = currentDate.getFullYear();
-                    const month = dateMethods.months[0];
-                    this.selectsData.yearsSelect.setOption(currentYear);
-                    this.selectsData.monthsSelect.setOption(month);
-            }
+            else this.previewData.showInputs({ noFocus: true });
 
             this.calendarBox.classList.remove("none");
         });
@@ -3199,13 +2535,12 @@ class CheckboxesModalRegions extends CheckboxesModal {
 }
 
 const inputsSelectors = [
-    { selector: ".ads-board", classInstance: PublicationsTable },
-    { selector: ".ads-table-item", classInstance: Publication },
     { selector: ".text-input--standard", classInstance: TextInput },
     { selector: ".text-input--checkboxes", classInstance: TextInputCheckbox },
     { selector: ".date-inputs", classInstance: DateInputs },
     { selector: ".select", classInstance: Select },
     { selector: ".inputs-range", classInstance: InputsRange },
+    { selector: "[data-toggle-onchecked]", classInstance: ToggleOnchecked },
     { selector: "[data-create-modal]", classInstance: CreateModal },
     { selector: ".calendar", classInstance: Calendar },
     { selector: ".calendar-double", classInstance: CalendarDouble },

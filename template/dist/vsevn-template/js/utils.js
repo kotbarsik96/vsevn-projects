@@ -1,7 +1,71 @@
 // здесь находятся функции общего назначения
 let inittedInputs = [];
 
-const months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+class DateMethods {
+    constructor() {
+        this.months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+        this.monthsGenitive = ["Января", "Февраля", "Марта", "Апреля", "Мая", "Июня", "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"];
+    }
+    getMaxMonthDay(month, year = null) {
+        month = parseInt(month);
+        year = parseInt(year) || null;
+        if (!month) return 31;
+
+        const highest = [1, 3, 5, 7, 8, 10, 12];
+        if (highest.includes(month)) return 31;
+        else if (month === 2) {
+            if (year && year % 4 === 0) return 29;
+            return 28;
+        }
+
+        return 30;
+    }
+    compare(dateStr1 = "01.01.2000", dateStr2 = "01.01.2000") {
+        // format: dd.mm.yyyy
+        const split1 = dateStr1.split(".");
+        const split2 = dateStr2.split(".");
+        const date1 = new Date(`${split1[1]}-${split1[0]}-${split1[2]}`);
+        const date2 = new Date(`${split2[1]}-${split2[0]}-${split2[2]}`);
+
+        const isEquals = date1.getFullYear() == date2.getFullYear()
+            && date1.getMonth() === date2.getMonth()
+            && date1.getDate() === date2.getDate();
+        const isCorrectRange = date1 < date2 || isEquals;
+        const hasIncorrectDate = !date1.getFullYear() || !date2.getFullYear();
+
+        // isCorrectRange === true значит, что date1 меньше date2
+        return { isEquals, isCorrectRange, hasIncorrectDate };
+    }
+    isInDateRange(dateStartStr, dateEndStr, dateBetweenStr = "") {
+        // format: dd.mm.yyyy
+        if (!dateStartStr) dateStartStr = "01.01.1900";
+        if (!dateEndStr) dateEndStr = `31.12.${new Date().getFullYear()}`;
+        const splitStart = dateStartStr.split(".");
+        const splitEnd = dateEndStr.split(".");
+        const splitBetween = dateBetweenStr.split(".");
+        const dateStart = new Date(`${splitStart[1]}.${splitStart[0]}.${splitStart[2]}`);
+        const dateEnd = new Date(`${splitEnd[1]}.${splitEnd[0]}.${splitEnd[2]}`);
+        const dateBetween = new Date(`${splitBetween[1]}.${splitBetween[0]}.${splitBetween[2]}`);
+
+        const hasIncorrectDate = !dateStart.getFullYear()
+            || !dateEnd.getFullYear()
+            || !dateBetween.getFullYear();
+        const isInDateRange = dateStart <= dateBetween && dateBetween <= dateEnd;
+
+        return { hasIncorrectDate, isInDateRange };
+    }
+}
+const dateMethods = new DateMethods();
+
+function findInittedInput(rootElem, others = {}) {
+    return inittedInputs.find(inpP => {
+        const isRootElem = inpP.rootElem === rootElem;
+        if (isRootElem) return true;
+
+        if (others.input && inpP.input === others.input) return true;
+        return false;
+    });
+}
 
 // определить браузер
 function getBrowser() {
@@ -17,36 +81,83 @@ function getBrowser() {
     return browser;
 }
 
-const rootPath = "/vsevn-template/";
-
 const browser = getBrowser();
-const isMobileBrowser = Boolean(
-    navigator.userAgent.match(
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i
-    )
-);
+const mobileRegexp = /Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i;
+let isMobileBrowser = Boolean(navigator.userAgent.match(mobileRegexp));
+
+window.addEventListener("resize", () => {
+    isMobileBrowser = Boolean(navigator.userAgent.match(mobileRegexp));
+    if (isMobileBrowser) {
+        document.body.classList.add("__mobile");
+    } else {
+        document.body.classList.remove("__mobile");
+    }
+});
 
 function browsersFix() {
-    if (browser !== "firefox" && browser !== "safari") {
-        let addFixClass = [];
-
-        addFixClass.forEach(el => {
-            el.classList.add("__chromium-fix");
-        });
-    }
     if (browser === "firefox") {
-        let addMozfixClass = [];
-        // addMozfixClass = addMozfixClass
-        //     .concat(Array.from(document.querySelectorAll("input")))
-
-
-        addMozfixClass.forEach(el => {
-            el.classList.add("__moz-fix");
-        });
+        document.body.classList.add("__moz-fix");
     }
 }
 browsersFix();
 
+// работа с вставкой/удалением HTML-элементов, когда нужно применить анимацию
+class HtmlElementCustoms {
+    remove(element, params = {}) {
+        /* params:
+            transitionDur: 0 (в мс)
+        */
+        function setDefaultParams() {
+            if (!parseInt(params.transitionDur)) params.transitionDur = 0;
+            else params.transitionDur = parseInt(params.transitionDur);
+        }
+        setDefaultParams();
+
+        return new Promise(resolve => {
+            element.style.cssText = `
+            opacity: 0; 
+            transition: all ${params.transitionDur / 1000}s ease;
+        `;
+            setTimeout(() => {
+                element.remove();
+                element.style.removeProperty("transition");
+                resolve();
+            }, params.transitionDur);
+        });
+    }
+    insert(element, parentOrReplacement, params = {}) {
+        /* params:
+            transitionDur: 0 (в мс)
+            insertType: "prepend"|"append|replace"
+        */
+        function setDefaultParams() {
+            if (!parseInt(params.transitionDur))
+                params.transitionDur = 0;
+            if (params.insertType !== "prepend"
+                && params.insertType !== "append"
+                && params.insertType !== "replace") params.insertType = "prepend";
+        }
+        setDefaultParams();
+
+        return new Promise(resolve => {
+            element.style.cssText = `
+            opacity: 0; 
+            transition: all ${params.transitionDur / 1000}s ease;
+        `;
+            if (params.insertType.match(/replace/)) parentOrReplacement.replaceWith(element)
+            else parentOrReplacement[params.insertType || "append"](element);
+
+            setTimeout(() => {
+                element.style.opacity = "1";
+                resolve();
+            }, 0);
+            setTimeout(() => {
+                element.style.removeProperty("transition");
+            }, params.transitionDur);
+        });
+    }
+}
+const htmlElementMethods = new HtmlElementCustoms();
 
 function capitalize(string) {
     const arr = string.split("");
@@ -106,22 +217,104 @@ function sugsQuery(
     });
 }
 
-function assignPropertiesToObj(propertiesArray, obj = {}, delimeter = ":") {
-    propertiesArray.forEach(str => {
+function assignPropertiesToObj(properties, obj = {}, delimeter = "::") {
+    if (!Array.isArray(properties)) properties = properties.split("; ");
+
+    const lastItem = properties[properties.length - 1].trim();
+    if (lastItem.endsWith(";"))
+        properties[properties.length - 1] = lastItem.slice(0, lastItem.length - 1);
+
+    properties.forEach(str => {
         const property = str.split(delimeter);
         const key = property[0];
-        const value = property[1];
+        let value = property[1];
+        if (value === "false") value = false;
+        if (value === "true") value = true;
         obj[key] = value;
     });
 
     return obj;
 }
 
+function getParams(ctx, datasetName = "params", obj = {}) {
+    const params = ctx.rootElem.dataset[datasetName] || "";
+    const assigned = assignPropertiesToObj(params, obj);
+    for (let key in assigned) {
+        if (!assigned[key]) delete assigned[key];
+    }
+
+    ctx.rootElem.removeAttribute(`data-${camelCaseToKebab(datasetName)}`);
+    return assigned;
+}
+
+function kebabToCamelCase(string) {
+    let newStr = "";
+    let skipI = -1;
+    string.split("").forEach((s, i, arr) => {
+        if (skipI === i) return;
+        if (i === 0 || s !== "-") {
+            newStr += s;
+            return;
+        }
+
+        skipI = i + 1;
+        newStr += arr[skipI].toUpperCase();
+    });
+
+    return newStr;
+}
+
+function camelCaseToKebab(string) {
+    return string.split("")
+        .map((s, i) => {
+            if (i === 0 || !s.match(/[A-Z]/)) return s;
+
+            return `-${s.toLowerCase()}`;
+        })
+        .join("");
+}
+
+function bindMethods(ctx, methods = {}) {
+    for (let key in methods) {
+        const f = methods[key];
+        if (typeof f !== "function") continue;
+        methods[key] = f.bind(ctx);
+    }
+
+    return methods;
+}
+
+function checkIfTargetOrClosest(eventTarget, array = []) {
+    let isTargetOrClosest = false;
+    for (let elOrSelector of array) {
+        if (typeof elOrSelector === "string") elOrSelector = document.querySelector(elOrSelector);
+
+        if (eventTarget === elOrSelector) {
+            isTargetOrClosest = true;
+            break;
+        }
+        const classSelector = elOrSelector.className.split(" ")[0];
+        if (eventTarget.closest(`.${classSelector}`) === elOrSelector) {
+            isTargetOrClosest = true;
+            break;
+        }
+    }
+    return isTargetOrClosest;
+}
+
+function delay(ms) {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms);
+    });
+}
+
 class TextContent {
     getContent(node) {
-        return node.textContent || node.innerText;
+        if (!node) return "";
+        return node.textContent ? node.textContent.trim() : node.innerText.trim();
     }
     setContent(node, text) {
+        if (!node) return;
         if (node.textContent) node.textContent = text;
         else node.innerText = text;
     }
@@ -144,22 +337,6 @@ function calcSize(bytes) {
 
     if (mb < 1) return `${parseInt(kb)} кб`;
     if (mb >= 1) return `${parseInt(mb * 100) / 100} мб`;
-}
-
-function findInittedInput(selector, isAll = false) {
-    // isAll == true: вернет array, isAll == false: вернет первый найденный по селектору элемент
-    const selectorNodes = Array.from(document.querySelectorAll(selector));
-    if (!isAll) {
-        const input = inittedInputs.find(arrayHandler);
-        return input || null;
-    } else {
-        const inputs = inittedInputs.filter(arrayHandler);
-        return inputs || null;
-    }
-
-    function arrayHandler(inpClass) {
-        return selectorNodes.includes(inpClass.rootElem);
-    }
 }
 
 function isQuerySelectorString(string) {
@@ -218,7 +395,8 @@ function getScrollWidth() {
 
 function getHeight(node) {
     let clone = node.cloneNode(true);
-    clone.style.cssText = "position: absolute; z-index: -99; top: -100vh; left: -100vw; max-height: none;";
+    const width = node.offsetWidth;
+    clone.style.cssText = `position: absolute; z-index: -99; top: -100vh; left: -100vw; max-height: none; width: ${width}px;`;
     document.body.append(clone);
     let height = clone.offsetHeight;
     clone.remove();
@@ -241,6 +419,30 @@ function getDateFromString(string) {
     if (year) year = parseInt(year.trim());
     return { day, month, year, };
 }
+
+// блокировать/разблокировать скролл на странице
+class ScrollToggle {
+    constructor() {
+        // при пропадании скролла им будет задан padding-right
+        this.paddingRightSelectors = ["body"];
+    }
+    lock() {
+        const scrollWidth = getScrollWidth();
+        document.body.classList.add("__locked-scroll");
+        this.paddingRightSelectors.forEach(selector => {
+            const el = document.querySelector(selector);
+            if (el) el.style.paddingRight = `${scrollWidth}px`;
+        });
+    }
+    unlock() {
+        document.body.classList.remove("__locked-scroll");
+        this.paddingRightSelectors.forEach(selector => {
+            const el = document.querySelector(selector);
+            if (el) el.style.removeProperty("padding-right");
+        });
+    }
+}
+const scrollToggle = new ScrollToggle();
 
 // нужно вызвать на input, для которого ставится возможность указания только времени
 class TypeTime {

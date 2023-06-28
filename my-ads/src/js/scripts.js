@@ -1468,6 +1468,7 @@ class Select {
         this.valueIndex = this.options.findIndex(obj => obj.value === this.value);
         this.listMethods.hide();
         this.rootElem.classList.add("__has-value");
+        this.rootElem.dispatchEvent(new Event("change"));
     }
     onOptionsEdited(callback = function () { }, args = []) {
         callCallback = callCallback.bind(this);
@@ -1787,7 +1788,14 @@ class Calendar {
                     this.setDate(this.params.defaultDate);
                 }, 100);
             }
-            else this.previewData.showInputs({ noFocus: true });
+            else {
+                this.previewData.showInputs({ noFocus: true });
+                const currentDate = new Date();
+                    const currentYear = currentDate.getFullYear();
+                    const month = dateMethods.months[0];
+                    this.selectsData.yearsSelect.setOption(currentYear);
+                    this.selectsData.monthsSelect.setOption(month);
+            }
 
             this.calendarBox.classList.remove("none");
         });

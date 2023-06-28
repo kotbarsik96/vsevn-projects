@@ -65,10 +65,13 @@ aside {
 
 input, textarea {
     outline: none;
+    font-family: inherit;
+    width: 100%;
 }
 
 button{
     background: transparent;
+    font-family: inherit;
 }
 
 ul, li{

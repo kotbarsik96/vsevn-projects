@@ -183,6 +183,34 @@ class Header {
     }
 }
 
+class Cookie {
+    constructor(node) {
+        this.onOkClick = this.onOkClick.bind(this);
+
+        this.rootElem = node;
+        this.cookieKey = "vsevn_ad_cookie";
+        this.okButton = this.rootElem.querySelector(".cookie__button--ok");
+        this.learnMoreButton = this.rootElem.querySelector(".cookie__link--learn-more");
+
+        const cookieData = _localStorage.getItem(this.cookieKey);
+        if (cookieData && typeof cookieData === "object" && cookieData.accept) this.removeModal();
+        else this.rootElem.classList.remove("none");
+
+        this.okButton.addEventListener("click", this.onOkClick);
+        this.learnMoreButton.addEventListener("click", this.onLearnMoreClick);
+    }
+    onOkClick() {
+        this.removeModal();
+        let cookieData = _localStorage.getItem(this.cookieKey);
+        if (!cookieData || typeof cookieData !== "object") cookieData = {};
+        cookieData.accept = true;
+        _localStorage.setItem(this.cookieKey, cookieData);
+    }
+    removeModal() {
+        this.rootElem.remove();
+    }
+}
+
 class ScrollArrow {
     constructor(node) {
         this.onClick = this.onClick.bind(this);
@@ -253,12 +281,181 @@ class ScrollArrow {
     }
 }
 
+class Spoiler {
+    constructor(node) {
+        this.rootElem = node;
+        this.params = getParams(this);
+        this.button = this.rootElem.querySelector(".spoiler__button");
+        this.buttonBack = this.rootElem.querySelector(".spoiler__button--back");
+        this.body = this.rootElem.querySelector(".spoiler__body");
+        this.bodyStylesText = this.body.style.cssText;
+        this.spoilerMethods = this.createSpoilerMethods();
+
+        if (this.params.defaultShow) this.spoilerMethods.show();
+        else this.spoilerMethods.hide();
+        this.button.addEventListener("click", this.spoilerMethods.toggle);
+        if (this.buttonBack) this.buttonBack.addEventListener("click", this.spoilerMethods.toggle);
+    }
+    createSpoilerMethods() {
+        const methods = bindMethods(this, {
+            toggle() {
+                this.isShown
+                    ? methods.hide()
+                    : methods.show();
+            },
+            show() {
+                const height = getHeight(this.body);
+
+                this.rootElem.classList.add("__spoiler-shown");
+                this.body.style.removeProperty("padding");
+                this.body.style.removeProperty("margin");
+                this.body.style.cssText = `max-height: ${height}px; ${this.bodyStylesText}`;
+                if (this.buttonBack) {
+                    this.button.classList.add("none");
+                    this.buttonBack.classList.remove("none");
+                }
+
+                this.isShown = true;
+            },
+            hide() {
+                this.rootElem.classList.remove("__spoiler-shown");
+                this.body.style.removeProperty("max-height");
+                this.body.style.padding = this.body.style.margin = "0";
+                if (this.buttonBack) {
+                    this.button.classList.remove("none");
+                    if (!this.buttonBack.closest(".spoiler__body"))
+                        this.buttonBack.classList.add("none");
+                }
+
+                this.isShown = false;
+            }
+        });
+
+        return methods;
+    }
+}
+
+class HoverTitle {
+    constructor(node) {
+        this.onPointerover = this.onPointerover.bind(this);
+        this.onPointerleave = this.onPointerleave.bind(this);
+
+        this.rootElem = node;
+        this.text = this.rootElem.getAttribute("data-hover-title");
+        this.block = createElement("span", "hint hint--triangle hover-title __shown", this.text);
+
+        this.rootElem.addEventListener("pointerover", this.onPointerover);
+        this.rootElem.addEventListener("pointerleave", this.onPointerleave);
+
+        setTextChangeObserver.call(this);
+
+        function setTextChangeObserver() {
+            const observer = new MutationObserver(callback.bind(this));
+            observer.observe(this.rootElem, { attributes: true });
+
+            function callback() {
+                let newText = this.rootElem.getAttribute("data-hover-title");
+                if (typeof newText === "string") newText = newText.trim();
+                if (newText === this.text) return;
+
+                if (!newText) {
+                    this.text = null;
+                    return;
+                }
+                this.text = newText;
+                this.block.innerHTML = "";
+                this.block.insertAdjacentHTML("afterbegin", this.text);
+            }
+        }
+    }
+    onPointerover() {
+        if (!this.text) return;
+        this.rootElem.append(this.block);
+    }
+    onPointerleave() {
+        if (!this.text) return;
+
+        this.block.remove();
+    }
+}
+
+class CopyLink {
+    constructor(node) {
+        this.rootElem = node;
+        this.params = getParams(this);
+        this.link = this.rootElem.dataset.copyLink;
+        this.copyModalObj = renderMisc.copyLink({ link: this.link });
+        this.modalMethods = this.createModalMethods();
+
+        this.rootElem.removeAttribute("data-copy-link");
+        initButton.call(this);
+        initCopyButton.call(this);
+        document.addEventListener("click", onDocumentClick.bind(this));
+
+        function initButton() {
+            this.rootElem.addEventListener("click", this.modalMethods.toggle);
+        }
+        function initCopyButton() {
+            const btn = this.copyModalObj.button;
+            btn.addEventListener("click", this.modalMethods.copyLink);
+        }
+        function onDocumentClick(event) {
+            if (checkIfTargetOrClosest(event.target, [this.rootElem, this.copyModalObj.node]))
+                return;
+            // if (checkIfTargetOrClosest(event.target, this.rootElem)
+            //     || checkIfTargetOrClosest(event.target, this.copyModalObj.node)) return;
+
+            this.modalMethods.hide();
+        }
+    }
+    createModalMethods() {
+        const methods = bindMethods(this, {
+            show() {
+                this.copyModalObj.shown = true;
+                this.rootElem.after(this.copyModalObj.node);
+            },
+            hide() {
+                this.copyModalObj.shown = false;
+                textContentMethods.setContent(this.copyModalObj.text, "Скопировать ссылку");
+                this.copyModalObj.node.remove();
+            },
+            toggle() {
+                this.copyModalObj.shown
+                    ? methods.hide()
+                    : methods.show();
+            },
+            copyLink() {
+                navigator.clipboard.writeText(this.link);
+                textContentMethods.setContent(this.copyModalObj.text, "Ссылка скопирована");
+            }
+        });
+
+        return methods;
+    }
+}
+
 let inittingSelectors = [
     { selector: "[data-dynamic-adaptive]", classInstance: DynamicAdaptive },
     { selector: "[data-fullsize-image]", classInstance: FullsizeImage },
     { selector: ".header", classInstance: Header },
+    { selector: ".cookie", classInstance: Cookie },
     { selector: ".scroll-arrows__arrow", classInstance: ScrollArrow },
+    { selector: ".spoiler", classInstance: Spoiler },
+    { selector: "[data-hover-title]", classInstance: HoverTitle },
+    { selector: "[data-copy-link]", classInstance: CopyLink },
 ];
+
+function createSvgForRadioContainer() {
+    const radioContainers = document.querySelectorAll("[data-radio-container]");
+    radioContainers.forEach(label => {
+        label.removeAttribute("data-radio-container");
+        const input = label.querySelector("input");
+        const animatedRadio = renderMisc.animatedRadio();
+
+        if (input) input.insertAdjacentHTML("afterend", animatedRadio);
+        else label.insertAdjacentHTML("afterend", animatedRadio)
+    });
+}
 
 function initInputs() {
     inittingSelectors.forEach(selectorData => {
@@ -285,6 +482,7 @@ function initInputs() {
 
     document.dispatchEvent(new CustomEvent("init-inputs"));
     browsersFix();
+    createSvgForRadioContainer();
 }
 
 let isInitting = false;
@@ -302,12 +500,12 @@ inittingInputsBodyObserver.observe(document.body, { childList: true, subtree: tr
 initInputs();
 
 // позволяет запустить callback после события инициализации ("init-inputs")
-function nextInitTick(callback = function () { }) {
+function nextInitTick(callback = function () { }, args = []) {
     document.addEventListener("init-inputs", onNextTick);
 
     function onNextTick() {
         document.removeEventListener("init-inputs", onNextTick);
-        callback();
+        setTimeout(() => callback(...args), 100);
     }
 }
 

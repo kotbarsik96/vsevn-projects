@@ -91,6 +91,10 @@
   transform: translate(0px, 4px);
 }
 
+.icon-cross-thinner::before {
+  content: "\e900";
+}
+
 .icon-ruble::before {
   content: "\20bd";
 }

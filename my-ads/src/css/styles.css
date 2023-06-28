@@ -658,6 +658,10 @@ h1.title {
     z-index: 11;
 }
 
+.__has-value .text-input__icon+input {
+    padding-right: 75px;
+}
+
 .text-input.__has-value .text-input__icon {
     right: 55px;
 }
@@ -1167,6 +1171,8 @@ h1.title {
     background: #fff;
     position: absolute;
     top: 100%;
+    left: 50%;
+    transform: translate(-50%, 0);
     z-index: 50;
     transition-property: max-height, visibility;
     transition-duration: var(--transition_dur);
@@ -2425,7 +2431,7 @@ body:not(.__mobile) .ads-table-item__ad-links-user.__spoiler-shown {
     }
 }
 
-@media (max-width: 499px){
+@media (max-width: 499px) {
     .ads-table-item__close-bg {
         background-size: 100% 50px;
     }
